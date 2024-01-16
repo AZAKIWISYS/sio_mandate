@@ -53,7 +53,7 @@ sap.ui.define([
 		 */
 		_onObjectMatched: function (oEvent) {
 			var that = this;
-			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			// this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 
 			//bind context
 			var oDataModel = this.getModel();
@@ -142,32 +142,7 @@ sap.ui.define([
 		/* =========================================================== */
 		/* begin: internal methods                                     */
 		/* =========================================================== */
-
-		/**
-		 * Set the full screen mode to false and navigate to master page
-		 */
-		onCloseCreatePress: function () {
-			this.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
-			// No item should be selected on master after create page is closed
-			this.getOwnerComponent().oListSelector.clearMasterListSelection();
-			this.getRouter().navTo("master");
-		},
-
-		/**
-		 * Toggle between full and non full screen mode.
-		 */
-		toggleFullScreen: function () {
-			var bFullScreen = this.getModel("appView").getProperty("/actionButtonsInfo/midColumn/fullScreen");
-			this.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", !bFullScreen);
-			if (!bFullScreen) {
-				// store current layout and go full screen
-				this.getModel("appView").setProperty("/previousLayout", this.getModel("appView").getProperty("/layout"));
-				this.getModel("appView").setProperty("/layout", "MidColumnFullScreen");
-			} else {
-				// reset to previous layout
-				this.getModel("appView").setProperty("/layout", this.getModel("appView").getProperty("/previousLayout"));
-			}
-		},
+		
 		onChagePernr: function (oEvent) {
 			
 			// this.byId("lineItemsList").getBinding("items").refresh();
@@ -363,7 +338,7 @@ sap.ui.define([
 		navtoDetail: function (Reqno) {
 			var bReplace = !Device.system.phone;
 			// set the layout property of FCL control to show two columns
-			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			// this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 			this.getRouter().navTo("object", {
 				objectId : Reqno
 			}, bReplace);

@@ -52,6 +52,9 @@
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Maorg}"/>
 									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Mists}"/>
+									</smartForm:GroupElement>
 								</smartForm:Group>
 								<smartForm:Group visible="{= ${Inksa} === 'X' }">
 									<smartForm:GroupElement>

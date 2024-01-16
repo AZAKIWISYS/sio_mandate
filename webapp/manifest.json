@@ -82,7 +82,6 @@
 				"viewType": "XML",
 				"viewPath": "sio.hcm.mandate.view",
 				"controlId": "layout",
-				"controlAggregation": "beginColumnPages",
 				"bypassed": {
 					"target": "notFound"
 				},
@@ -115,7 +114,8 @@
 				"master": {
 					"viewName": "Master",
 					"viewLevel": 1,
-					"viewId": "master"
+					"viewId": "master",
+					"controlAggregation": "beginColumnPages"
 				},
 				"object": {
 					"viewName": "Detail",

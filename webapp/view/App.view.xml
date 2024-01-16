@@ -9,6 +9,9 @@
 		id="app"
 		busy="{appView>/busy}"
 		busyIndicatorDelay="{appView>/delay}">
+		<!--<Page id="layout">-->
+			
+		<!--</Page>-->
 		<f:FlexibleColumnLayout
 			id="layout"
 			layout="{appView>/layout}"
