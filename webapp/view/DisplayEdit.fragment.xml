@@ -1,0 +1,146 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield"
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap">
+   
+   <uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false" showFooter="true">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle>
+				<!--<uxap:heading>-->
+				<!--	<Title text="{i18n>Mandate}" wrapping="true"/>-->
+				<!--</uxap:heading>-->
+				<uxap:snappedTitleOnMobile>
+					<Title text="{i18n>Mandate}"/>
+				</uxap:snappedTitleOnMobile>
+				<!--<uxap:actions>-->
+				<!--	<Button id="saveButton" text="{i18n>Save}" press=".onSave" icon="sap-icon://save" type="Accept"/>-->
+				<!--	<Button id="cancelButton" text="{i18n>Cancel}" press=".onCancel" icon="sap-icon://cancel" type="Reject"/>-->
+				<!--</uxap:actions>-->
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:headerContent>
+			<Title text="{Status}" titleStyle="H6"/>
+		</uxap:headerContent>
+		<uxap:sections>
+			<uxap:ObjectPageSection titleUppercase="false" id="HeaderSec" title="{i18n>MandateData}">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="section3_SS1" title=" " titleUppercase="false">
+						<uxap:blocks>
+							<smartForm:SmartForm id="smartFormColumn" editable="{viewModel>/editable}" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
+								<smartForm:layout>
+									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
+								</smartForm:layout>
+								<!--<smartForm:Group label="{i18n>GeneralDetails}">-->
+								<smartForm:Group>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Reqno}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Inksa}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField id="idBegda" value="{Begda}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField id="idEndda" value="{Endda}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Marsn}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Maorg}"/>
+									</smartForm:GroupElement>
+								</smartForm:Group>
+								<smartForm:Group visible="{= ${Inksa} === 'X' }">
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Land1}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Cclas}"/>
+									</smartForm:GroupElement>
+								</smartForm:Group>
+								<smartForm:Group>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Changedat}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Changedby}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement >
+										<smartField:SmartField value="{Createdat}"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Createdby}"/>
+									</smartForm:GroupElement>
+								</smartForm:Group>
+							</smartForm:SmartForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection titleUppercase="false" id="EmployeesSec" title="{i18n>Employees}">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="section3_SS2" title=" " titleUppercase="false">
+						<uxap:blocks>
+							<Table id="lineItemsList" width="auto" items="{to_items}" updateFinished=".onListUpdateFinished" delete=".onDelete"
+								mode="{= ${viewModel>/editable} ? 'Delete' : 'None'}"
+								noDataText="{i18n>createLineItemTableNoDataText}" busyIndicatorDelay="{viewModel>/lineItemTableDelay}">
+								<headerToolbar>
+									<Toolbar>
+										<Title id="lineItemsTitle" text="{viewModel>/lineItemListTitle}" titleStyle="H3" level="H3"/>
+										<ToolbarSpacer/>
+										<!--<Button id="addButton" press=".onAddLine" icon="sap-icon://add" type="Emphasized"/>-->
+										<Button id="addButton" press=".onAddLine" enabled="{viewModel>/editable}" icon="sap-icon://add-employee" type="Emphasized"/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column>
+										<Text text="{i18n>Pernr}"/>
+									</Column>
+									<!--<Column>-->
+									<!--	<Text text="{i18n>PersonFullName}"/>-->
+									<!--</Column>-->
+									<Column>
+										<Text text="{i18n>Mdtyp}"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<smartField:SmartField value="{Pernr}" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
+											<!--<smartField:SmartField value="{PersonFullName}" />-->
+											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
+											<!--<ObjectIdentifier title="{viewModel>Pernr}" text="{viewModel>Reqno}"/>-->
+											<!--<ObjectNumber/>-->
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+		<uxap:footer>
+			<OverflowToolbar>
+				<Button id="messagePopoverBtn"
+					visible="{=!!${msgModel>/messageSet}.length}"
+					icon="{msgModel>/messageButtonIcon}"
+					type="{msgModel>/messageButtonType}"
+					text= "{msgModel>/highestSeverityMessages}"
+					press=".handleMessagePopoverPress"
+					ariaHasPopup="Dialog"/>
+				<ToolbarSpacer/>
+				<Button id="editButton" text="{i18n>Edit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} }" press=".onEdit"
+					icon="sap-icon://edit" type="Emphasized"/>
+				<Button id="saveButton" text="{i18n>Save}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }" press=".onSave"
+					icon="sap-icon://save" type="Emphasized"/>
+				<Button id="cancelButton" text="{i18n>Cancel}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }"
+					press=".onCancel" icon="sap-icon://cancel" type="Transparent"/>
+			</OverflowToolbar>
+		</uxap:footer>
+	</uxap:ObjectPageLayout>
+	
+</core:FragmentDefinition>
