@@ -33,7 +33,8 @@ sap.ui.define([
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 
 			this.setModel(oViewModel, "viewModel");
-
+			this.initMsgPopup();
+			
 			this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 		},
 
@@ -217,13 +218,14 @@ sap.ui.define([
 				// groupId: "createGroup",
 				success: function onSuccess(oData, oResponse) {
 					
-					sap.m.MessageToast.show(SuccessMessage);
+					// sap.m.MessageToast.show(SuccessMessage);
+					that.messageBuilder(oData);
 					
 					// that.navtoDetail(oData.Reqno);s
 				},
 				error: function onError(oError) {
-					
-					sap.m.MessageToast.show(ErrorMessage);
+					that.messageBuilder(oError);
+					// sap.m.MessageToast.show(ErrorMessage);
 				}
 			});
 			

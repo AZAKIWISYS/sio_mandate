@@ -1,7 +1,6 @@
 <mvc:View controllerName="sio.hcm.mandate.controller.Master" xmlns="sap.m" xmlns:semantic="sap.f.semantic"
 	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
 	xmlns:smartTable="sap.ui.comp.smarttable"
-	xmlns:table="sap.ui.table"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	
@@ -13,21 +12,21 @@
 		
 		<!--<semantic:titleContent>-->
 		<semantic:headerContent>
-			<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZI_MANDREQ_HDR" persistencyKey="SmartFilter_Explored" 
+			<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZI_MANDREQ_HDR" persistencyKey="SmartFilter_Explored"
 				basicSearchFieldName="Status" enableBasicSearch="false" >
 				
 				<smartFilterBar:controlConfiguration>
-					<smartFilterBar:ControlConfiguration id="Reqno" key="Reqno" visibleInAdvancedArea="true">
-						
-					</smartFilterBar:ControlConfiguration>
-					<smartFilterBar:ControlConfiguration id="Status" key="Status" visibleInAdvancedArea="true">
-						<smartFilterBar:defaultFilterValues>
-							<smartFilterBar:SelectOption low="NEW">
-							</smartFilterBar:SelectOption>
-						</smartFilterBar:defaultFilterValues>
-					</smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration id="Reqno" key="Reqno" visibleInAdvancedArea="true"/>
+					<smartFilterBar:ControlConfiguration id="Status" key="Status" visibleInAdvancedArea="true"/>
+					<smartFilterBar:ControlConfiguration id="Land1" key="Land1" visibleInAdvancedArea="true"/>
+					<smartFilterBar:ControlConfiguration id="Mists" key="Mists" visibleInAdvancedArea="true"/>
 					
-					
+					<!--<smartFilterBar:ControlConfiguration id="Status" key="Status" visibleInAdvancedArea="true">-->
+						<!--<smartFilterBar:defaultFilterValues>-->
+						<!--	<smartFilterBar:SelectOption low="NEW">-->
+						<!--	</smartFilterBar:SelectOption>-->
+						<!--</smartFilterBar:defaultFilterValues>-->
+					<!--</smartFilterBar:ControlConfiguration>-->
 				</smartFilterBar:controlConfiguration>
 				<!-- layout data used to make the table growing but the filter bar fixed -->
 				<smartFilterBar:layoutData>
@@ -41,66 +40,15 @@
 			
 		<semantic:content>
 			
-			<smartTable:SmartTable id="smartTable" entitySet="ZI_MANDREQ_HDR" smartFilterId="smartFilterBar" tableType="Table"
+			<!--ResponsiveTable-->
+			<smartTable:SmartTable id="smartTable" entitySet="ZI_MANDREQ_HDR" smartFilterId="smartFilterBar" tableType="ResponsiveTable"
 				useExportToExcel="true" beforeExport="onBeforeExport" useTablePersonalisation="true"
 				header="Requests" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" 
 				class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="false" app:useSmartToggle="true"
 				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqno,Status">
 				
+				<Table mode="SingleSelectMaster" selectionChange=".onSelectionChange"></Table>
 				
-				<!--<table:Table rowSelectionChange="onSelectionChange" selectionMode="SingleSelect">-->
-				<!--	<table:columns>-->
-				<!--		<table:Column width="11rem">-->
-				<!--			<Label text="test" />-->
-				<!--			<table:template>-->
-				<!--				<Text text="{test}" wrapping="false" />-->
-				<!--			</table:template>-->
-				<!--		</table:Column>-->
-				<!--	</table:columns>-->
-				<!--</table:Table>-->
-						
-				<Table mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" selectionChange=".onSelectionChange">
-				<!--id="list" smartFilterId="smartFilterBar" width="auto" class="sapFDynamicPageAlignContent"-->
-				<!--items="{ path: '/ZI_MANDREQ_HDR', sorter: { path: 'Status', descending: false }, groupHeaderFactory: '.createGroupHeader' }"-->
-				<!--busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}"-->
-				<!--mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true"-->
-				<!--updateFinished=".onUpdateFinished" selectionChange=".onSelectionChange">-->
-					
-				<!--<headerToolbar>-->
-				<!--	<OverflowToolbar>-->
-				<!--		<SearchField id="searchField" showRefreshButton="true" tooltip="{i18n>masterSearchTooltip}" search=".onSearch" width="auto">-->
-				<!--			<layoutData>-->
-				<!--				<OverflowToolbarLayoutData minWidth="150px" maxWidth="240px" shrinkable="true" priority="NeverOverflow"/>-->
-				<!--			</layoutData>-->
-				<!--		</SearchField>-->
-				<!--		<ToolbarSpacer/>-->
-				<!--		<Button id="createButton" press=".onCreate" icon="sap-icon://add" type="Emphasized"/>-->
-				<!--		<Button id="sortButton" press=".onOpenViewSettings" icon="sap-icon://sort" type="Transparent"/>-->
-				<!--	</OverflowToolbar>-->
-				<!--</headerToolbar>-->
-				
-				
-				<columns>
-					<Column visible="false">
-						<Text text="{i18n>Reqno}"/>
-					</Column>
-					<!--<Column>-->
-					<!--	<Text text="{i18n>Status}"/>-->
-					<!--</Column>-->
-				</columns>
-				<items>
-					<ColumnListItem>
-						<cells>
-			<!--				<ObjectListItem type="Navigation" press=".onSelectionChange" intro="{Status}" title="{Reqno}"></ObjectListItem>-->
-							<ObjectIdentifier title="{Reqno}" text="{Status}"/>
-						<!--<Text text="{Reqno}"/>-->
-						<!--<Text text="{Status}"/>-->
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
-			
-			
 				<smartTable:layoutData>
 					<FlexItemData growFactor="1" baseSize="0%"/>
 				</smartTable:layoutData>
