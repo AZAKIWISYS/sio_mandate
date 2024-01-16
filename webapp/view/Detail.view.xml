@@ -1,0 +1,6 @@
+<mvc:View controllerName="sio.hcm.mandate.controller.Detail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
+	
+	<Page showNavButton="true" navButtonPress="onNavBack">
+		<core:Fragment fragmentName="sio.hcm.mandate.view.DisplayEdit" type="XML"/>
+	</Page>
+</mvc:View>
