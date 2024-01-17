@@ -99,10 +99,10 @@ sap.ui.define([
 		_showDetail : function (oItem) {
 			var bReplace = !Device.system.phone;
 			// set the layout property of FCL control to show two columns
-			// this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
-			this.getModel("appView").setProperty("/layout", "MidColumnFullScreen");
+			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			// this.getModel("appView").setProperty("/layout", "MidColumnFullScreen");
 			this.getRouter().navTo("object", {
-				objectId : oItem.getBindingContext().getProperty("Reqno")
+				objectId : oItem.getBindingContext().getProperty("Reqid")
 			}, bReplace);
 		},
 		onShowDetails: function(oEvent){
@@ -111,8 +111,8 @@ sap.ui.define([
 		onCreate: function(oEvent){
 			// var bReplace = !Device.system.phone;
 			// set the layout property of FCL control to show two columns
-			// this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
-			this.getModel("appView").setProperty("/layout", "MidColumnFullScreen");
+			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			// this.getModel("appView").setProperty("/layout", "MidColumnFullScreen");
 			// this.getRouter().navTo("object", {}, bReplace);
 			this.getRouter().navTo("create");
 			

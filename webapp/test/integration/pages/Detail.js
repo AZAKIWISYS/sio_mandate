@@ -77,9 +77,9 @@ sap.ui.define([
 						viewName: sViewName,
 						check: function (oList) {
 							var aEntitySet = this.getEntitySet("to_items");
-							var sObjectID = oList.getBindingContext().getProperty("Reqno");
+							var sObjectID = oList.getBindingContext().getProperty("Reqid");
 							var iLength = aEntitySet.filter(function (oLineItem) {
-								return oLineItem.Reqno === sObjectID;
+								return oLineItem.Reqid === sObjectID;
 							}).length;
 
 							return oList.getItems().length === iLength;

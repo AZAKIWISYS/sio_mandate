@@ -115,7 +115,7 @@
 											<smartField:SmartField value="{Pernr}" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
 											<!--<smartField:SmartField value="{PersonFullName}" />-->
 											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
-											<!--<ObjectIdentifier title="{viewModel>Pernr}" text="{viewModel>Reqno}"/>-->
+											<!--<ObjectIdentifier title="{viewModel>Pernr}" text="{viewModel>Reqid}"/>-->
 											<!--<ObjectNumber/>-->
 										</cells>
 									</ColumnListItem>

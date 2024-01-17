@@ -3,8 +3,8 @@
 	<edmx:DataServices m:DataServiceVersion="2.0">
 		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZHCM_MAND_REQ_SRV" xml:lang="en" sap:schema-version="1"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
 			<EntityType Name="Mandate" sap:content-version="1">
-				<Key><PropertyRef Name="Reqno"/></Key><Property Name="Mandateuuid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="Node Key" sap:creatable="false"
-					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Reqno" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Mandate Number"
+				<Key><PropertyRef Name="Reqid"/></Key><Property Name="Mandateuuid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="Node Key" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Reqid" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Mandate Number"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Action Type" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Changedat" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Time Stamp"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Changedby" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false"
@@ -13,15 +13,15 @@
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="to_items" Relationship="ZHCM_MAND_REQ_SRV.MandateEmployeeAssoc" FromRole="FromRole_MandateEmployeeAssoc"
 					ToRole="ToRole_MandateEmployeeAssoc"/></EntityType>
 			<EntityType Name="Employee" sap:content-version="1">
-				<Key><PropertyRef Name="Reqno"/></Key><Property Name="Mandateitemuuid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="Node Key" sap:creatable="false"
+				<Key><PropertyRef Name="Reqid"/></Key><Property Name="Mandateitemuuid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="Node Key" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Mandateuuid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="Node Key" sap:creatable="false"
-					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Reqno" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Mandate Number"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Reqid" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Mandate Number"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Personnel No." sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
 			<Association Name="MandateEmployeeAssoc" sap:content-version="1"><End Type="ZHCM_MAND_REQ_SRV.Mandate" Multiplicity="1" Role="FromRole_MandateEmployeeAssoc"/><End Type="ZHCM_MAND_REQ_SRV.Employee" Multiplicity="*" Role="ToRole_MandateEmployeeAssoc"/>
 				<ReferentialConstraint>
-					<Principal Role="FromRole_MandateEmployeeAssoc"><PropertyRef Name="Reqno"/></Principal>
-					<Dependent Role="ToRole_MandateEmployeeAssoc"><PropertyRef Name="Reqno"/></Dependent>
+					<Principal Role="FromRole_MandateEmployeeAssoc"><PropertyRef Name="Reqid"/></Principal>
+					<Dependent Role="ToRole_MandateEmployeeAssoc"><PropertyRef Name="Reqid"/></Dependent>
 				</ReferentialConstraint>
 			</Association>
 			<EntityContainer Name="ZHCM_MAND_REQ_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="ZI_MANDREQ_HDR" EntityType="ZHCM_MAND_REQ_SRV.Mandate" sap:creatable="false" sap:updatable="false" sap:deletable="false"

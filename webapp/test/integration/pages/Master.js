@@ -137,22 +137,22 @@ sap.ui.define([
 							var aEntityData = this.getEntitySet("ZI_MANDREQ_HDR");
 							var aObjectsNotInTheList = aEntityData.filter(function (oObject) {
 								return !oList.getItems().some(function (oListItem) {
-									return oListItem.getBindingContext().getProperty("Reqno") === oObject.Reqno;
+									return oListItem.getBindingContext().getProperty("Reqid") === oObject.Reqid;
 								});
 							});
 							var sObjectNotInTheListId;
 
 							if (aObjectsNotInTheList.length) {
-								sObjectNotInTheListId = aObjectsNotInTheList[0].Reqno;
+								sObjectNotInTheListId = aObjectsNotInTheList[0].Reqid;
 							} else {
 								// Not enough items all of them are displayed so we take the last one
-								sObjectNotInTheListId = aEntityData[aEntityData.length - 1].Reqno;
+								sObjectNotInTheListId = aEntityData[aEntityData.length - 1].Reqid;
 							}
 
 							var oCurrentItem = this.getContext().currentItem;
 							// Construct a binding path since the list item is not created yet and we only have the id.
 							oCurrentItem.bindingPath = "/" + oList.getModel().createKey("ZI_MANDREQ_HDR", {
-								Reqno: sObjectNotInTheListId
+								Reqid: sObjectNotInTheListId
 							});
 							oCurrentItem.id = sObjectNotInTheListId;
 						},
@@ -217,7 +217,7 @@ sap.ui.define([
 					var oBindingContext = oListItem.getBindingContext();
 					this.getContext().currentItem = {
 						bindingPath: oBindingContext.getPath(),
-						id: oBindingContext.getProperty("Reqno"),
+						id: oBindingContext.getProperty("Reqid"),
 						title: oBindingContext.getProperty("Status")
 					};
 				}

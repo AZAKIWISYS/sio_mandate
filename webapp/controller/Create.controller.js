@@ -38,7 +38,7 @@ sap.ui.define([
 				// ,
 				// to_items: [{
 				// 	Pernr: "",
-				// 	Reqno: ""
+				// 	Reqid: ""
 				// }]
 			});
 			this.setModel(oViewModel, "viewModel");
@@ -53,7 +53,7 @@ sap.ui.define([
 		 */
 		_onObjectMatched: function (oEvent) {
 			var that = this;
-			// this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 
 			//bind context
 			var oDataModel = this.getModel();
@@ -220,7 +220,7 @@ sap.ui.define([
 			// }
 			// oDataModel.setProperty("/to_items", to_items);
 			
-			// oDataModel.read("/Head('" + this._businessPartnerID + "')/ToSalesOrders('" + this.Reqno + "')/to_items", {
+			// oDataModel.read("/Head('" + this._businessPartnerID + "')/ToSalesOrders('" + this.Reqid + "')/to_items", {
 			// 	urlParameters: {
 			// 		"$top": 1,
 			// 		"$select": "ItemPosition"
@@ -232,7 +232,7 @@ sap.ui.define([
 			// 		var latestItemPosition = oData.results && oData.results.length > 0 ? parseInt(oData.results[0].ItemPosition, 10) + 1 : 0;
 			// 		that.oNewItemContext = oDataModel.createEntry("/SalesOrderLineItemSet", {
 			// 			properties: {
-			// 				SalesOrderID: that.Reqno, 
+			// 				SalesOrderID: that.Reqid, 
 			// 				DeliveryDate: new Date(),
 			// 				Quantity: "1",
 			// 				ItemPosition: "" + latestItemPosition
@@ -253,7 +253,7 @@ sap.ui.define([
 		onAddLineLocal: function (oEvent) {
 			var newObj = {
 				Pernr: "",
-				Reqno: ""
+				Reqid: ""
 			};
 			var viewModel = this.getModel("viewModel");
 			var to_items = viewModel.getProperty("/to_items");
@@ -323,9 +323,9 @@ sap.ui.define([
 					
 					that.messageBuilder(oData);
 					
-					var Reqno = that.getView().getBindingContext().getProperty("Reqno");; //oData.Reqno
-					if (Reqno){
-						that.navtoDetail(Reqno);
+					var Reqid = that.getView().getBindingContext().getProperty("Reqid");; //oData.Reqid
+					if (Reqid){
+						that.navtoDetail(Reqid);
 					}
 				},
 				error: function onError(oError) {
@@ -335,12 +335,12 @@ sap.ui.define([
 			});
 
 		},
-		navtoDetail: function (Reqno) {
+		navtoDetail: function (Reqid) {
 			var bReplace = !Device.system.phone;
 			// set the layout property of FCL control to show two columns
-			// this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 			this.getRouter().navTo("object", {
-				objectId : Reqno
+				objectId : Reqid
 			}, bReplace);
 		},
 		onNavBack: function () {

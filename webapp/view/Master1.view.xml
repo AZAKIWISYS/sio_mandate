@@ -26,9 +26,9 @@
 					</OverflowToolbar>
 				</headerToolbar>
 				<items>
-					<!--<ObjectListItem type="Navigation" press=".onSelectionChange" title="{Reqno}"></ObjectListItem>-->
+					<!--<ObjectListItem type="Navigation" press=".onSelectionChange" title="{Reqid}"></ObjectListItem>-->
 					<!--number-->
-					<ObjectListItem type="Navigation" press=".onSelectionChange" intro="{Status}" title="{Reqno}"></ObjectListItem>
+					<ObjectListItem type="Navigation" press=".onSelectionChange" intro="{Status}" title="{Reqid}"></ObjectListItem>
 				</items>
 			</List>
 		</semantic:content>

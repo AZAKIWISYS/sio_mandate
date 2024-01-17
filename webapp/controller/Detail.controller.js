@@ -109,10 +109,10 @@ sap.ui.define([
 		 */
 		_onObjectMatched : function (oEvent) {
 			var sObjectId =  oEvent.getParameter("arguments").objectId;
-			// this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 			this.getModel().metadataLoaded().then( function() {
 				var sObjectPath = this.getModel().createKey("ZI_MANDREQ_HDR", {
-					Reqno :  sObjectId
+					Reqid :  sObjectId
 				});
 				this._bindView("/" + sObjectPath);
 			}.bind(this));
@@ -162,7 +162,7 @@ sap.ui.define([
 			var sPath = oElementBinding.getPath(),
 				oResourceBundle = this.getResourceBundle(),
 				oObject = oView.getModel().getObject(sPath),
-				sObjectId = oObject.Reqno,
+				sObjectId = oObject.Reqid,
 				sObjectName = oObject.Status,
 				oViewModel = this.getModel("viewModel");
 
@@ -221,7 +221,7 @@ sap.ui.define([
 					// sap.m.MessageToast.show(SuccessMessage);
 					that.messageBuilder(oData);
 					
-					// that.navtoDetail(oData.Reqno);s
+					// that.navtoDetail(oData.Reqid);s
 				},
 				error: function onError(oError) {
 					that.messageBuilder(oError);
