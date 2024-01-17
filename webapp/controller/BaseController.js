@@ -201,6 +201,10 @@ sap.ui.define([
 		initMessagePopup: function () {
 			this.buttonIconFormatter();
 			this.highestSeverityMessages();
+			
+			// //clear message property
+			// var oMsgModel = this.getModel("msgModel");
+			// oMsgModel.setProperty("/messageSet", []);
 		},
 		messageBuilder: function (oData) {
 			var oController = this;
@@ -236,9 +240,14 @@ sap.ui.define([
 			var oItemsTable = oEvent.getSource().getParent().getParent();
 			var oItemsBinding = oItemsTable.getBinding("items");
 			// var oModel = this.getView().getModel();
-
+			
+			var Reqid = this.getModel().getProperty("/Reqid");
+			var Reqno = this.getModel().getProperty("/Reqno");
+			
 			// create transient context for subentity (sales order line item) and display it in the items table
 			var newObj = {
+				Reqid: Reqid,
+				Reqno: Reqno,
 				Pernr: ""
 			};
 			var oItemContext = oItemsBinding.create(newObj);

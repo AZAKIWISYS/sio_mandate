@@ -47,7 +47,7 @@
 										<smartField:SmartField id="idEndda" value="{Endda}"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Marsn}"/>
+										<smartField:SmartField id="idMarsn" value="{Marsn}"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Maorg}"/>
