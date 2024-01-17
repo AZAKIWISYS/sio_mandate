@@ -16,7 +16,7 @@
 				basicSearchFieldName="Status" enableBasicSearch="false" >
 				
 				<smartFilterBar:controlConfiguration>
-					<smartFilterBar:ControlConfiguration id="Reqno" key="Reqno" visibleInAdvancedArea="true"/>
+					<smartFilterBar:ControlConfiguration id="Reqid" key="Reqid" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Status" key="Status" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Land1" key="Land1" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Mists" key="Mists" visibleInAdvancedArea="true"/>
@@ -45,7 +45,7 @@
 				useExportToExcel="true" beforeExport="onBeforeExport" useTablePersonalisation="true"
 				header="Requests" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" 
 				class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="false" app:useSmartToggle="true"
-				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqno,Status">
+				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqid,Status">
 				
 				<Table mode="SingleSelectMaster" selectionChange=".onSelectionChange"></Table>
 				

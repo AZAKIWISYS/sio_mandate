@@ -35,7 +35,7 @@
 								<!--<smartForm:Group label="{i18n>GeneralDetails}">-->
 								<smartForm:Group>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Reqno}"/>
+										<smartField:SmartField value="{Reqid}"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Inksa}"/>
