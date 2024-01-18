@@ -101,6 +101,7 @@ sap.ui.define([
 			// set the layout property of FCL control to show two columns
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 			// this.getModel("appView").setProperty("/layout", "MidColumnFullScreen");
+			oItem.setSelected(false);
 			this.getRouter().navTo("object", {
 				objectId : oItem.getBindingContext().getProperty("Reqid")
 			}, bReplace);
