@@ -1,5 +1,6 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
+	xmlns:layout="sap.ui.layout"
 	xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield"
 	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:semantic="sap.f.semantic"
 	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
@@ -8,6 +9,18 @@
    <uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false" showFooter="true">
 		<uxap:headerTitle>
 			<uxap:ObjectPageDynamicHeaderTitle>
+			<uxap:expandedHeading>
+					<HBox>
+						<!-- <Avatar src="sap-icon://travel-itinerary" displaySize="M" class="sapUiTinyMarginEnd"/> -->
+						<Title text="{Reqid}" wrapping="true"/>
+					</HBox>
+				</uxap:expandedHeading>
+				<uxap:snappedHeading>
+					<FlexBox fitContainer="true" alignItems="Center">
+						<Avatar src="sap-icon://travel-itinerary" displaySize="S" class="sapUiTinyMarginEnd"/>
+						<Title text="{Reqid}" wrapping="true" />
+					</FlexBox>
+				</uxap:snappedHeading>
 				<!--<uxap:heading>-->
 				<!--	<Title text="{i18n>Mandate}" wrapping="true"/>-->
 				<!--</uxap:heading>-->
@@ -21,7 +34,51 @@
 			</uxap:ObjectPageDynamicHeaderTitle>
 		</uxap:headerTitle>
 		<uxap:headerContent>
-			<Title text="{Status}" titleStyle="H6"/>
+			<!-- <Title text="{Status}" titleStyle="H6"/> -->
+			<FlexBox wrap="Wrap" fitContainer="true" >
+				<Avatar class="sapUiSmallMarginEnd" src="sap-icon://travel-itinerary" displaySize="L" />
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<ObjectStatus
+			class="sapUiSmallMarginBottom"
+			text="{Status}"
+			state="Information" />
+					<!-- <Link text="DeniseSmith@sap.com"/> -->
+				</layout:VerticalLayout>
+
+				<!-- <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd">
+					<Image src="./test-resources/sap/uxap/images/linkedin.png"/>
+					<Image src="./test-resources/sap/uxap/images/Twitter.png" class="sapUiSmallMarginBegin"/>
+			    </layout:HorizontalLayout> -->
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<ObjectAttribute title="{i18n>CreatedBy}" text="{Createdby}" />
+					<ObjectAttribute title="{i18n>CreateDate}">
+					<customContent>
+						<Text text="{
+						path : 'Createdat',
+						type : 'sap.ui.model.odata.type.DateTimeOffset'
+					}" />
+					</customContent>
+					</ObjectAttribute>
+					<!-- <VBox>
+						<Label text="Achieved goals"/>
+						<ProgressIndicator percentValue="30" displayValue="30%"/>
+					</VBox> -->
+				</layout:VerticalLayout>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<ObjectAttribute title="{i18n>CreatedBy}" text="{Changedby}" />
+					<ObjectAttribute title="{i18n>CreateDate}">
+					<customContent>
+						<Text text="{
+						path : 'Changedat',
+						type : 'sap.ui.model.odata.type.DateTimeOffset'
+					}" />
+					</customContent>
+					</ObjectAttribute>
+				</layout:VerticalLayout>
+			</FlexBox>
 		</uxap:headerContent>
 		<uxap:sections>
 			<uxap:ObjectPageSection titleUppercase="false" id="HeaderSec" title="{i18n>MandateData}">
@@ -34,9 +91,9 @@
 								</smartForm:layout>
 								<!--<smartForm:Group label="{i18n>GeneralDetails}">-->
 								<smartForm:Group>
-									<smartForm:GroupElement>
+									<!-- <smartForm:GroupElement>
 										<smartField:SmartField value="{Reqid}"/>
-									</smartForm:GroupElement>
+									</smartForm:GroupElement> -->
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Inksa}"/>
 									</smartForm:GroupElement>
@@ -64,7 +121,7 @@
 										<smartField:SmartField value="{Cclas}"/>
 									</smartForm:GroupElement>
 								</smartForm:Group>
-								<smartForm:Group>
+								<!-- <smartForm:Group>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Changedat}"/>
 									</smartForm:GroupElement>
@@ -77,7 +134,7 @@
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Createdby}"/>
 									</smartForm:GroupElement>
-								</smartForm:Group>
+								</smartForm:Group> -->
 							</smartForm:SmartForm>
 						</uxap:blocks>
 					</uxap:ObjectPageSubSection>
@@ -108,13 +165,21 @@
 									<Column>
 										<Text text="{i18n>Mdtyp}"/>
 									</Column>
+									<Column>
+										<Text text="{i18n>OragnizationalUnitText}"/>
+									</Column>
+									<Column>
+										<Text text="{i18n>PositionText}"/>
+									</Column>
 								</columns>
 								<items>
 									<ColumnListItem>
 										<cells>
 											<smartField:SmartField value="{Pernr}" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
 											<!--<smartField:SmartField value="{PersonFullName}" />-->
-											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
+											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>											
+											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
+											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
 											<!--<ObjectIdentifier title="{viewModel>Pernr}" text="{viewModel>Reqid}"/>-->
 											<!--<ObjectNumber/>-->
 										</cells>

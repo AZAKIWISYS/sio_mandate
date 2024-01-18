@@ -61,6 +61,7 @@ sap.ui.define([
 				that.oContext = oDataModel.createEntry("/ZI_MANDREQ_HDR", {
 					// inactive: true,
 					refreshAfterChange: true,
+					Status: 'NEW',
 					// groupId: "createGroup",
 					success: function onSuccess(oSuccess) {
 						
