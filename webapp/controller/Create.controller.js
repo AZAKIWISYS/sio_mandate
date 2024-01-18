@@ -144,10 +144,6 @@ sap.ui.define([
 		/* begin: internal methods                                     */
 		/* =========================================================== */
 		
-		onChagePernr: function (oEvent) {
-			
-			// this.byId("lineItemsList").getBinding("items").refresh();
-		},
 		// onAddLine: function (oEvent) {
 			
 		// 	// var oItemsTable = this.byId("lineItemsList"); // table with "rows" bound with path "ToLineItems" (navigation property of sales order)

@@ -284,6 +284,15 @@ sap.ui.define([
 				this.getModel("appView").setProperty("/layout", this.getModel("appView").getProperty("/previousLayout"));
 			}
 		},
+		onChagePernr: function (oEvent) {
+			var oModel = this.getModel();
+			var oSource = oEvent.getSource();
+			var sPath = oSource.getParent().getBindingContext().getPath();
+			var oSelected = oModel.getProperty("/ZI_MANAGERSEMPS('"+oEvent.getParameter("newValue")+"')");
+			oModel.setProperty( sPath + "/OragnizationalUnitText", oSelected.OragnizationalUnitText );
+			oModel.setProperty( sPath + "/PositionText", oSelected.PositionText );
+			// this.byId("lineItemsList").getBinding("items").refresh();
+		}
 
 	});
 
