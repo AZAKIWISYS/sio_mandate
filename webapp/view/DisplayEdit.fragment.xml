@@ -52,8 +52,8 @@
 			    </layout:HorizontalLayout> -->
 
 				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<ObjectAttribute title="{i18n>CreatedBy}" text="{Createdby}" />
-					<ObjectAttribute title="{i18n>CreateDate}">
+					<ObjectAttribute title="{i18n>Createdby}" text="{Createdby}" />
+					<ObjectAttribute title="{i18n>Createdat}">
 					<customContent>
 						<Text text="{
 						path : 'Createdat',
@@ -68,8 +68,8 @@
 				</layout:VerticalLayout>
 
 				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<ObjectAttribute title="{i18n>CreatedBy}" text="{Changedby}" />
-					<ObjectAttribute title="{i18n>CreateDate}">
+					<ObjectAttribute title="{i18n>Changedby}" text="{Changedby}" />
+					<ObjectAttribute title="{i18n>Changedat}">
 					<customContent>
 						<Text text="{
 						path : 'Changedat',
