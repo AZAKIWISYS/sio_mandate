@@ -31,6 +31,8 @@ sap.ui.define([
 			});
 
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
+			this.getRouter().getRoute("wfobject").attachPatternMatched(this._onWFObjectMatched, this);
+			
 
 			this.setModel(oViewModel, "viewModel");
 			this.initMsgPopup();
@@ -113,6 +115,22 @@ sap.ui.define([
 			this.getModel().setDefaultBindingMode("TwoWay");
 				
 			var sObjectId =  oEvent.getParameter("arguments").objectId;
+			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+			this.getModel().metadataLoaded().then( function() {
+				var sObjectPath = this.getModel().createKey("ZI_MANDREQ_HDR", {
+					Reqid :  sObjectId
+				});
+				this._bindView("/" + sObjectPath);
+			}.bind(this));
+		},
+		_onWFObjectMatched: function (oEvent) {
+			// debugger;
+
+			//to save aupdates
+			this.getModel().setDefaultBindingMode("TwoWay");
+				
+			// var sObjectId =  oEvent.getParameter("arguments").objectId;
+			var sObjectId = this.getOwnerComponent().getComponentData().startupParameters.RequestNumber[0]
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 			this.getModel().metadataLoaded().then( function() {
 				var sObjectPath = this.getModel().createKey("ZI_MANDREQ_HDR", {

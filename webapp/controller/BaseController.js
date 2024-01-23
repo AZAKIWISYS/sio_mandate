@@ -236,8 +236,8 @@ sap.ui.define([
 		},
 		onAddLine: function (oEvent) {
 
-			// var oItemsTable = this.byId("lineItemsList"); // table with "rows" bound with path "ToLineItems" (navigation property of sales order)
-			var oItemsTable = oEvent.getSource().getParent().getParent();
+			var oItemsTable = this.byId("lineItemsList"); // table with "rows" bound with path "ToLineItems" (navigation property of sales order)
+			// var oItemsTable = oEvent.getSource().getParent().getParent();
 			var oItemsBinding = oItemsTable.getBinding("items");
 			// var oModel = this.getView().getModel();
 			
