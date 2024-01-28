@@ -54,28 +54,38 @@ sap.ui.define([
 		_onObjectMatched: function (oEvent) {
 			var that = this;
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
-
+			
 			//bind context
 			var oDataModel = this.getModel();
+			
+			that.getView().setBusy(true);
 			// oDataModel.attachMetadataLoaded(function () {
+			// oDataModel.metadataLoaded().then(function(){
 				that.oContext = oDataModel.createEntry("/ZI_MANDREQ_HDR", {
 					// inactive: true,
 					refreshAfterChange: true,
 					Status: 'NEW',
 					// groupId: "createGroup",
+					// context: that.getView().getBindingContext(),
+					created: function onCreated(oContext) {
+						debugger;
+						that.getView().setBindingContext(oContext);
+						that.getView().setBusy(false);
+					},
 					success: function onSuccess(oSuccess) {
-						
+						that.getView().setBusy(false);
 					},
 					error: function onError(oError) {
-						
+						that.getView().setBusy(false);
 					}
 				});
 
-				that.getView().setBindingContext(that.oContext);
-				
-				that.initMessagePopup();
+				// that.getView().setBindingContext(that.oContext);
 				
 				oDataModel.setDefaultBindingMode("TwoWay");
+				that.initMessagePopup();
+				
+			// });
 			// });
 		},
 
