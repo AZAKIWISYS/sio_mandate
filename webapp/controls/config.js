@@ -5,7 +5,7 @@
 */
 sap.ui.define([
 	"./MemoryConfigurationProvider",
-	"ui5loader-autoconfig"
+	"./ui5loader-autoconfig"
 ], (
 	MemoryConfigurationProvider
 	/*autoconfig*/
