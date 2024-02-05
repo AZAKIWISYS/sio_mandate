@@ -3,10 +3,12 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/ui/model/json/JSONModel",
 	'sap/m/MessagePopover',
-	'sap/m/MessageItem',
-	'../controls/ODataListBinding'
-], function (Controller, History, JSONModel, MessagePopover, MessageItem,ODataListBinding) {
+	'sap/m/MessageItem'
+], function (Controller, History, JSONModel, MessagePopover, MessageItem) {
 	"use strict";
+	
+	
+	
 
 
 	return Controller.extend("sio.hcm.mandate.controller.BaseController", {
@@ -236,7 +238,6 @@ sap.ui.define([
 			}
 		},
 		onAddLine: function (oEvent) {
-			sap.ui.model.odata.v2.ODataListBinding = ODataListBinding;
 			var oItemsTable = this.byId("lineItemsList"); // table with "rows" bound with path "ToLineItems" (navigation property of sales order)
 			// var oItemsTable = oEvent.getSource().getParent().getParent();
 			var oItemsBinding = oItemsTable.getBinding("items");

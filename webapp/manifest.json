@@ -64,7 +64,7 @@
             "id": "app"
         },
         "dependencies": {
-            "minUI5Version": "1.120.0",
+            "minUI5Version": "1.108.27",
             "libs": {
                 "sap.ui.core": {},
                 "sap.m": {},
@@ -120,8 +120,7 @@
                     "target": [
                         "master",
                         "object"
-                    ],
-                    "parent":"cross.fnd.fiori.inbox.Component:detail"
+                    ]
                 },
                 {
                     "pattern": "detail/{scenarioid}/{wfInstanceId}/{taskPath}",
