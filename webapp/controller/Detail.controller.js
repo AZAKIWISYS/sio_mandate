@@ -259,7 +259,32 @@ sap.ui.define([
 			viewModel.setProperty("/editable", true);
 			// this.getView().byId("cancelButton").setEnabled(true);
 			
+		},
+		onSubmit: function (oEvent) {
+			var that = this;
+			var viewModel = this.getModel("viewModel");
+			var oDataModel = this.getModel();
+			var bindingContext = this.getView().getBindingContext();
+			var Reqid = bindingContext.getProperty("Reqid");
 			
+			that.getView().setBusy(true);
+			oDataModel.callFunction("/PostRequest", {
+				method: "POST",
+				urlParameters : {
+					Reqid: Reqid ? Reqid : ""
+				},
+				refreshAfterChange: true,
+				success: function onSuccess(oData, oResponse) {
+					viewModel.setProperty("/editable", false);
+					that.getView().getElementBinding().refresh(true);
+					that.messageBuilder(oData);
+					that.getView().setBusy(false);
+				},
+				error: function onError(oError) {
+					that.messageBuilder(oError);
+					that.getView().setBusy(false);
+				}
+			});
 		},
 		onNavBack: function () {
 			var sPreviousHash = History.getInstance().getPreviousHash(),

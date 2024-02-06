@@ -13,13 +13,13 @@
 			<uxap:expandedHeading>
 					<HBox>
 						<!-- <Avatar src="sap-icon://travel-itinerary" displaySize="M" class="sapUiTinyMarginEnd"/> -->
-						<Title text="{Reqid}" wrapping="true"/>
+						<Title text="{= ${i18n>Reqid} + ' ' + parseInt(${Reqid}) }" wrapping="true"/>
 					</HBox>
 				</uxap:expandedHeading>
 				<uxap:snappedHeading>
 					<FlexBox fitContainer="true" alignItems="Center">
 						<Avatar src="sap-icon://travel-itinerary" displaySize="S" class="sapUiTinyMarginEnd"/>
-						<Title text="{Reqid}" wrapping="true" />
+						<Title text="{= ${i18n>Reqid} + ' ' + parseInt(${Reqid}) }" wrapping="true"/>
 					</FlexBox>
 				</uxap:snappedHeading>
 				<!--<uxap:heading>-->
@@ -107,9 +107,9 @@
 									<smartForm:GroupElement>
 										<smartField:SmartField id="idMarsn" value="{Marsn}"/>
 									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Maorg}"/>
-									</smartForm:GroupElement>
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField value="{Maorg}"/>-->
+									<!--</smartForm:GroupElement>-->
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Mists}"/>
 									</smartForm:GroupElement>
@@ -158,13 +158,10 @@
 								</headerToolbar>
 								<columns>
 									<Column>
-										<Text text="{i18n>Pernr}" />
+										<Text text="{i18n>Pernr}"/>
 									</Column>
-									<!--<Column>-->
-									<!--	<Text text="{i18n>PersonFullName}"/>-->
-									<!--</Column>-->
 									<Column>
-										<Text text="{i18n>Mdtyp}"/>
+										<Text text="{i18n>PersonFullName}"/>
 									</Column>
 									<Column>
 										<Text text="{i18n>OragnizationalUnitText}"/>
@@ -172,17 +169,18 @@
 									<Column>
 										<Text text="{i18n>PositionText}"/>
 									</Column>
+									<Column>
+										<Text text="{i18n>Mdtyp}"/>
+									</Column>
 								</columns>
 								<items>
 									<ColumnListItem>
 										<cells>
-											<smartField:SmartField value="{Pernr}" expandNavigationProperties="true" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
-											<!--<smartField:SmartField value="{PersonFullName}" />-->
-											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>											
+											<smartField:SmartField value="{Pernr}" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
+											<smartField:SmartField value="{PersonFullName}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>										
 											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
-											<!--<ObjectIdentifier title="{viewModel>Pernr}" text="{viewModel>Reqid}"/>-->
-											<!--<ObjectNumber/>-->
+											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -195,34 +193,34 @@
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS3" title=" " titleUppercase="false">
 						<uxap:blocks>
-						<commons:ProcessFlow
-			id="processflow1"
-			scrollable="false"
-			foldedCorners="true"
-			nodePress="onNodePress"
-			nodes="{viewModel>/nodes}"
-			lanes="{viewModel>/lanes}">
-			<commons:nodes>
-				<commons:ProcessFlowNode
-					laneId="{viewModel>lane}"
-					nodeId="{viewModel>id}"
-					title="{viewModel>title}"
-					titleAbbreviation="{viewModel>titleAbbreviation}"
-					children="{viewModel>children}"
-					state="{viewModel>state}"
-					stateText="{viewModel>stateText}"
-					texts="{viewModel>texts}"
-					highlighted="{viewModel>highlighted}"
-					focused="{viewModel>focused}" />
-			</commons:nodes>
-			<commons:lanes>
-				<commons:ProcessFlowLaneHeader
-					laneId="{viewModel>id}"
-					iconSrc="{viewModel>icon}"
-					text="{viewModel>label}"
-					position="{viewModel>position}" />
-			</commons:lanes>
-		</commons:ProcessFlow>
+							<commons:ProcessFlow
+								id="processflow1"
+								scrollable="false"
+								foldedCorners="true"
+								nodePress="onNodePress"
+								nodes="{viewModel>/nodes}"
+								lanes="{viewModel>/lanes}">
+								<commons:nodes>
+									<commons:ProcessFlowNode
+										laneId="{viewModel>lane}"
+										nodeId="{viewModel>id}"
+										title="{viewModel>title}"
+										titleAbbreviation="{viewModel>titleAbbreviation}"
+										children="{viewModel>children}"
+										state="{viewModel>state}"
+										stateText="{viewModel>stateText}"
+										texts="{viewModel>texts}"
+										highlighted="{viewModel>highlighted}"
+										focused="{viewModel>focused}" />
+								</commons:nodes>
+								<commons:lanes>
+									<commons:ProcessFlowLaneHeader
+										laneId="{viewModel>id}"
+										iconSrc="{viewModel>icon}"
+										text="{viewModel>label}"
+										position="{viewModel>position}" />
+								</commons:lanes>
+							</commons:ProcessFlow>
 						</uxap:blocks>
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
@@ -244,6 +242,10 @@
 					icon="sap-icon://save" type="Emphasized"/>
 				<Button id="cancelButton" text="{i18n>Cancel}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }"
 					press=".onCancel" icon="sap-icon://cancel" type="Transparent"/>
+				
+				<!--visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }"-->
+				<Button id="submitButton" text="{i18n>Submit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} }"
+					press=".onSubmit" icon="sap-icon://complete" type="Accept"/>
 			</OverflowToolbar>
 		</uxap:footer>
 	</uxap:ObjectPageLayout>
