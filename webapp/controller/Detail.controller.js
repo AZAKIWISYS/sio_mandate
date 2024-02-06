@@ -196,6 +196,8 @@ sap.ui.define([
 				oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
 			oViewModel.setProperty("/shareSendEmailMessage",
 				oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
+				this.buildApprovalProcess(sObjectId);
+				
 		},
 
 		_onMetadataLoaded : function () {

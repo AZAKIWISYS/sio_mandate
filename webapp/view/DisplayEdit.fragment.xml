@@ -3,6 +3,7 @@
 	xmlns:layout="sap.ui.layout"
 	xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield"
 	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:semantic="sap.f.semantic"
+	xmlns:commons="sap.suite.ui.commons"
 	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap">
    
@@ -95,10 +96,10 @@
 										<smartField:SmartField value="{Reqid}"/>
 									</smartForm:GroupElement> -->
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Inksa}"/>
+										<smartField:SmartField value="{Inksa}" />
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField id="idBegda" value="{Begda}"/>
+										<smartField:SmartField id="idBegda" value="{Begda}" />
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField id="idEndda" value="{Endda}"/>
@@ -152,12 +153,12 @@
 										<Title id="lineItemsTitle" text="{viewModel>/lineItemListTitle}" titleStyle="H3" level="H3"/>
 										<ToolbarSpacer/>
 										<!--<Button id="addButton" press=".onAddLine" icon="sap-icon://add" type="Emphasized"/>-->
-										<Button id="addButton" press=".onAddLine" enabled="{viewModel>/editable}" icon="sap-icon://add-employee" type="Emphasized"/>
+										<Button id="addButton" press="onAddLine" enabled="{viewModel>/editable}" icon="sap-icon://add-employee" type="Emphasized"/>
 									</Toolbar>
 								</headerToolbar>
 								<columns>
 									<Column>
-										<Text text="{i18n>Pernr}"/>
+										<Text text="{i18n>Pernr}" />
 									</Column>
 									<!--<Column>-->
 									<!--	<Text text="{i18n>PersonFullName}"/>-->
@@ -175,7 +176,7 @@
 								<items>
 									<ColumnListItem>
 										<cells>
-											<smartField:SmartField value="{Pernr}" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
+											<smartField:SmartField value="{Pernr}" expandNavigationProperties="true" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
 											<!--<smartField:SmartField value="{PersonFullName}" />-->
 											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>											
 											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
@@ -186,6 +187,42 @@
 									</ColumnListItem>
 								</items>
 							</Table>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection titleUppercase="false" id="ApprovalProcessSec" title="{i18n>ApprovalProcess}">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="section3_SS3" title=" " titleUppercase="false">
+						<uxap:blocks>
+						<commons:ProcessFlow
+			id="processflow1"
+			scrollable="false"
+			foldedCorners="true"
+			nodePress="onNodePress"
+			nodes="{viewModel>/nodes}"
+			lanes="{viewModel>/lanes}">
+			<commons:nodes>
+				<commons:ProcessFlowNode
+					laneId="{viewModel>lane}"
+					nodeId="{viewModel>id}"
+					title="{viewModel>title}"
+					titleAbbreviation="{viewModel>titleAbbreviation}"
+					children="{viewModel>children}"
+					state="{viewModel>state}"
+					stateText="{viewModel>stateText}"
+					texts="{viewModel>texts}"
+					highlighted="{viewModel>highlighted}"
+					focused="{viewModel>focused}" />
+			</commons:nodes>
+			<commons:lanes>
+				<commons:ProcessFlowLaneHeader
+					laneId="{viewModel>id}"
+					iconSrc="{viewModel>icon}"
+					text="{viewModel>label}"
+					position="{viewModel>position}" />
+			</commons:lanes>
+		</commons:ProcessFlow>
 						</uxap:blocks>
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>

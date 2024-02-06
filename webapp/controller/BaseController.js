@@ -294,6 +294,56 @@ sap.ui.define([
 			oModel.setProperty( sPath + "/OragnizationalUnitText", oSelected.OragnizationalUnitText );
 			oModel.setProperty( sPath + "/PositionText", oSelected.PositionText );
 			// this.byId("lineItemsList").getBinding("items").refresh();
+		},
+		buildApprovalProcess: function(sReqId){
+			var oModel = this.getModel();
+			var oViewModel = this.getModel("viewModel");
+			var oFilter = new sap.ui.model.Filter("RequestId", sap.ui.model.FilterOperator.EQ, (sReqId)?sReqId:"");
+			oModel.read("/ApprovalProcessSet",{
+				filters:[oFilter],
+				success: function(oData,oResponse){
+					if( oData.results.length > 0){
+						let oIconsMap = {
+							0 : "sap-icon://create-form"
+						}
+						let lanes = oData.results.map(function(oValue,index){
+							return {
+								"id": index.toString(),
+								"icon": (oIconsMap[index])? oIconsMap[index]: "sap-icon://employee-approvals",
+								"label": oValue.Username,
+								"position": parseInt(index)
+							};
+						});
+						oViewModel.setProperty("/lanes",lanes);
+						let oStateMap = {
+							"A" : "Positive",
+							"R" : "Nagative"
+						};
+						let oStateTextMap = {
+							"A" : "Approved",
+							"R" : "Rejected"
+						};
+						let nodes =oData.results.map(function(oValue,index){
+							return {
+								"id": (index*10).toString(),
+								"lane": index.toString(),
+								"title": (oValue.Fullname)?oValue.Fullname:oValue.Username,
+								"titleAbbreviation": oValue.Username,
+								"children": (index !== oData.results.length-1)?[(index+1)*10]:null,
+								"state": (oData.results.length === 1)?"Planned":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":"Planned",
+								"stateText": (oData.results.length === 1)?"Submit":(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?"Submitted":"Pending",
+								"focused": false,
+								"highlighted": false,
+								"texts": null
+							};
+						});
+						oViewModel.setProperty("/nodes",nodes);
+					}
+				},
+				error:function(oError){
+
+				}
+			});
 		}
 
 	});

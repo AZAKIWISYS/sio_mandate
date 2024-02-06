@@ -84,6 +84,7 @@ sap.ui.define([
 				
 				oDataModel.setDefaultBindingMode("TwoWay");
 				that.initMessagePopup();
+				that.buildApprovalProcess(null);
 				
 			// });
 			// });
