@@ -286,6 +286,17 @@ sap.ui.define([
 				this.getModel("appView").setProperty("/layout", this.getModel("appView").getProperty("/previousLayout"));
 			}
 		},
+		onCountryChange: function(oEvent){
+			//update value of test when test is changed
+			var oModel = this.getModel();
+			var country = oEvent.getParameter("newValue");
+			var oSelected = oModel.getProperty("/zmand_conf('"+country+"')");
+			debugger;
+			var sPath = this.getView().getBindingContext().getPath();
+			oModel.setProperty( sPath + "/Nmdys", oSelected.Nmdys);
+			oModel.setProperty( sPath + "/Trdsa", oSelected.Trdsa);
+			
+		},
 		onChagePernr: function (oEvent) {
 			var oModel = this.getModel();
 			var oSource = oEvent.getSource();

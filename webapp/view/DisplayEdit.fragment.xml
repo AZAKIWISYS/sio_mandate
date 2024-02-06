@@ -96,34 +96,49 @@
 										<smartField:SmartField value="{Reqid}"/>
 									</smartForm:GroupElement> -->
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Inksa}" />
-									</smartForm:GroupElement>
-									<smartForm:GroupElement>
 										<smartField:SmartField id="idBegda" value="{Begda}" />
 									</smartForm:GroupElement>
+									
 									<smartForm:GroupElement>
-										<smartField:SmartField id="idEndda" value="{Endda}"/>
+										<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Inksa} === 'X' }"/>
 									</smartForm:GroupElement>
+									
 									<smartForm:GroupElement>
 										<smartField:SmartField id="idMarsn" value="{Marsn}"/>
 									</smartForm:GroupElement>
-									<!--<smartForm:GroupElement>-->
-									<!--	<smartField:SmartField value="{Maorg}"/>-->
-									<!--</smartForm:GroupElement>-->
+								</smartForm:Group>
+								<smartForm:Group>
+									<smartForm:GroupElement>
+										<smartField:SmartField id="idEndda" value="{Endda}"/>
+									</smartForm:GroupElement>
+									
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Inksa} === 'X' }"/>
+									</smartForm:GroupElement>
+									
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Mists}"/>
 									</smartForm:GroupElement>
 								</smartForm:Group>
-								<smartForm:Group visible="{= ${Inksa} === 'X' }">
+								<smartForm:Group>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Land1}"/>
+										<smartField:SmartField value="{Inksa}" />
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Cclas}"/>
+										<smartField:SmartField value="{Land1}" visible="{= ${Inksa} === 'X' }" change="onCountryChange"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Cclas}" visible="{= ${Inksa} === 'X' }"/>
+									</smartForm:GroupElement>
+									
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Bocit}" visible="{= ${Inksa} === '' }"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Dscit}" visible="{= ${Inksa} === '' }"/>
 									</smartForm:GroupElement>
 								</smartForm:Group>
-								<!-- <smartForm:Group>
-									<smartForm:GroupElement>
+								<!-- <smartForm:GroupElement>
 										<smartField:SmartField value="{Changedat}"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
@@ -135,7 +150,9 @@
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Createdby}"/>
 									</smartForm:GroupElement>
-								</smartForm:Group> -->
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Maorg}"/>
+									</smartForm:GroupElement> -->
 							</smartForm:SmartForm>
 						</uxap:blocks>
 					</uxap:ObjectPageSubSection>
@@ -170,7 +187,7 @@
 										<Text text="{i18n>PositionText}"/>
 									</Column>
 									<Column>
-										<Text text="{i18n>Mdtyp}"/>
+										<Text text="{i18n>Travp}"/>
 									</Column>
 								</columns>
 								<items>
@@ -180,7 +197,7 @@
 											<smartField:SmartField value="{PersonFullName}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>										
 											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
-											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
+											<smartField:SmartField value="{Travp}" editable="{viewModel>/editable}"/>
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -225,6 +242,16 @@
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
+			
+			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
+						<uxap:blocks>
+							<Text text="{i18n>QararInfo}" />
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
 		</uxap:sections>
 		<uxap:footer>
 			<OverflowToolbar>
@@ -236,16 +263,14 @@
 					press=".handleMessagePopoverPress"
 					ariaHasPopup="Dialog"/>
 				<ToolbarSpacer/>
-				<Button id="editButton" text="{i18n>Edit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} }" press=".onEdit"
-					icon="sap-icon://edit" type="Emphasized"/>
+				<Button id="editButton" text="{i18n>Edit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }"
+					press=".onEdit" icon="sap-icon://edit" type="Emphasized"/>
 				<Button id="saveButton" text="{i18n>Save}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }" press=".onSave"
 					icon="sap-icon://save" type="Emphasized"/>
 				<Button id="cancelButton" text="{i18n>Cancel}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }"
 					press=".onCancel" icon="sap-icon://cancel" type="Transparent"/>
-				
-				<!--visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }"-->
-				<Button id="submitButton" text="{i18n>Submit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} }"
-					press=".onSubmit" icon="sap-icon://complete" type="Accept"/>
+				<Button id="submitButton" text="{i18n>Submit}" enabled="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }" 
+					visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }" press=".onSubmit" icon="sap-icon://complete" type="Accept"/>
 			</OverflowToolbar>
 		</uxap:footer>
 	</uxap:ObjectPageLayout>

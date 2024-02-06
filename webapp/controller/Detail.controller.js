@@ -267,6 +267,8 @@ sap.ui.define([
 			var bindingContext = this.getView().getBindingContext();
 			var Reqid = bindingContext.getProperty("Reqid");
 			
+			var SuccessMessage = this.getResourceBundle().getText("submit_suc");
+			
 			that.getView().setBusy(true);
 			oDataModel.callFunction("/PostRequest", {
 				method: "POST",
@@ -277,8 +279,11 @@ sap.ui.define([
 				success: function onSuccess(oData, oResponse) {
 					viewModel.setProperty("/editable", false);
 					that.getView().getElementBinding().refresh(true);
-					that.messageBuilder(oData);
+					
 					that.getView().setBusy(false);
+					
+					// that.messageBuilder(oData);
+					sap.m.MessageToast.show(SuccessMessage);
 				},
 				error: function onError(oError) {
 					that.messageBuilder(oError);
