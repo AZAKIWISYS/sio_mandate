@@ -330,8 +330,8 @@ sap.ui.define([
 								"title": (oValue.Fullname)?oValue.Fullname:oValue.Username,
 								"titleAbbreviation": oValue.Username,
 								"children": (index !== oData.results.length-1)?[(index+1)*10]:null,
-								"state": (oData.results.length === 1)?"Planned":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":"Planned",
-								"stateText": (oData.results.length === 1)?"Submit":(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?"Submitted":"Pending",
+								"state": (oData.results.length <= 2)?"Planned":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":"Planned",
+								"stateText": (oData.results.length <= 2)?"Submit":(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?"Submitted":"Pending",
 								"focused": false,
 								"highlighted": false,
 								"texts": null
