@@ -334,7 +334,7 @@ sap.ui.define([
 								"stateText": (oData.results.length <= 2 && index === 0)?"Submit":(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?"Submitted":"Pending",
 								"focused": false,
 								"highlighted": false,
-								"texts": null
+								"texts": oValue.PositionText
 							};
 						});
 						oViewModel.setProperty("/nodes",nodes);
