@@ -57,7 +57,7 @@
 					<ObjectAttribute title="{i18n>Createdat}">
 					<customContent>
 						<Text text="{
-						path : 'Createdat',
+						path : 'CreateTimestamp',
 						type : 'sap.ui.model.odata.type.DateTimeOffset'
 					}" />
 					</customContent>
@@ -73,7 +73,7 @@
 					<ObjectAttribute title="{i18n>Changedat}">
 					<customContent>
 						<Text text="{
-						path : 'Changedat', 
+						path : 'ChangeTimestamp', 
 						type : 'sap.ui.model.odata.type.DateTimeOffset'
 					}" />
 					</customContent>

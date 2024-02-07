@@ -342,11 +342,11 @@ sap.ui.define([
 								"title": (oValue.Fullname)?oValue.Fullname:oValue.Username,
 								"titleAbbreviation": oValue.Username,
 								"children": (index !== oData.results.length-1)?[(index+1)*10]:null,
-								"state": (oData.results.length <= 2)?"Planned":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":"Planned",
-								"stateText": (oData.results.length <= 2)?"Submit":(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?"Submitted":"Pending",
+								"state": (oData.results.length <= 2 && index === 0)?"Neutral":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":(oValue.Workitem === "999999999999")?"Planned":"Neutral",
+								"stateText": (oData.results.length <= 2 && index === 0)?"Submit":(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?"Submitted":"Pending",
 								"focused": false,
 								"highlighted": false,
-								"texts": null
+								"texts": oValue.PositionText
 							};
 						});
 						oViewModel.setProperty("/nodes",nodes);
