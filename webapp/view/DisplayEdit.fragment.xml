@@ -189,7 +189,7 @@
 										<Text text="{i18n>PositionText}"/>
 									</Column>
 									<Column>
-										<Text text="{i18n>Travp}"/>
+										<Text text="{i18n>Mdtyp}"/>
 									</Column>
 								</columns>
 								<items>
@@ -199,7 +199,7 @@
 											<smartField:SmartField value="{PersonFullName}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>										
 											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
-											<smartField:SmartField value="{Travp}" editable="{viewModel>/editable}"/>
+											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
 										</cells>
 									</ColumnListItem>
 								</items>
