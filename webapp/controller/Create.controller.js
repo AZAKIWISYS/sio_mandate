@@ -68,9 +68,16 @@ sap.ui.define([
 					// groupId: "createGroup",
 					// context: that.getView().getBindingContext(),
 					created: function onCreated(oContext) {
-						debugger;
+						
 						that.getView().setBindingContext(oContext);
 						that.getView().setBusy(false);
+						
+						// debugger;
+						// // that.getView().byId("idMarsn").setSelectedKey(0);
+						// var RsntxPath = "/ZI_MANDREASONSRCHHELP(Spras='EN',Marsn='001')/Rsntx";
+						// var Rsntx = that.getView().getModel().getProperty(RsntxPath);
+						// that.getView().byId("idMarsn").setValue(Rsntx);
+						
 					},
 					success: function onSuccess(oSuccess) {
 						that.getView().setBusy(false);
