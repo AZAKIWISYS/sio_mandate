@@ -13,13 +13,13 @@
 			<uxap:expandedHeading>
 					<HBox>
 						<!-- <Avatar src="sap-icon://travel-itinerary" displaySize="M" class="sapUiTinyMarginEnd"/> -->
-						<Title text="{= ${i18n>Reqid} + ' ' + parseInt(${Reqid}) }" wrapping="true"/>
+						<Title text="{Reqid}" wrapping="true"/>
 					</HBox>
 				</uxap:expandedHeading>
 				<uxap:snappedHeading>
 					<FlexBox fitContainer="true" alignItems="Center">
 						<Avatar src="sap-icon://travel-itinerary" displaySize="S" class="sapUiTinyMarginEnd"/>
-						<Title text="{= ${i18n>Reqid} + ' ' + parseInt(${Reqid}) }" wrapping="true"/>
+						<Title text="{Reqid}" wrapping="true"/>
 					</FlexBox>
 				</uxap:snappedHeading>
 				<!--<uxap:heading>-->
@@ -57,7 +57,7 @@
 					<ObjectAttribute title="{i18n>Createdat}">
 					<customContent>
 						<Text text="{
-						path : 'CreateTimestamp',
+						path : 'Createdat',
 						type : 'sap.ui.model.odata.type.DateTimeOffset'
 					}" />
 					</customContent>
@@ -73,7 +73,7 @@
 					<ObjectAttribute title="{i18n>Changedat}">
 					<customContent>
 						<Text text="{
-						path : 'ChangeTimestamp', 
+						path : 'Changedat', 
 						type : 'sap.ui.model.odata.type.DateTimeOffset'
 					}" />
 					</customContent>
