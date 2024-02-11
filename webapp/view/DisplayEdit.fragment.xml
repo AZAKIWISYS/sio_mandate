@@ -41,9 +41,9 @@
 
 				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
 					<ObjectStatus
-			class="sapUiSmallMarginBottom"
-			text="{Status}"
-			state="Information" />
+						class="sapUiSmallMarginBottom"
+						text="{Statustxt}"
+						state="Information" />
 					<!-- <Link text="DeniseSmith@sap.com"/> -->
 				</layout:VerticalLayout>
 
@@ -106,8 +106,11 @@
 										<smartField:SmartField value="{Bocit}" visible="{= ${Inksa} === 'X' }"/>
 									</smartForm:GroupElement>
 									
-									<smartForm:GroupElement>
-										<smartField:SmartField id="idMarsn" value="{Marsn}"/>
+									<smartForm:GroupElement visible="{= ${viewModel>/editable} }" >
+										<smartField:SmartField id="idMarsn" value="{Marsn}" />
+									</smartForm:GroupElement>
+									<smartForm:GroupElement visible="{= !${viewModel>/editable} }" >
+										<smartField:SmartField id="idRsntx" value="{Rsntx}"/>
 									</smartForm:GroupElement>
 								</smartForm:Group>
 								<smartForm:Group>
@@ -123,9 +126,9 @@
 										<smartField:SmartField value="{Dscit}" visible="{= ${Inksa} === 'X' }"/>
 									</smartForm:GroupElement>
 									
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Mists}"/>
-									</smartForm:GroupElement>
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField value="{Mists}"/>-->
+									<!--</smartForm:GroupElement>-->
 								</smartForm:Group>
 								<smartForm:Group>
 									<smartForm:GroupElement>
@@ -191,6 +194,9 @@
 									<Column>
 										<Text text="{i18n>Mdtyp}"/>
 									</Column>
+									<Column>
+										<Text text="{i18n>Mists}"/>
+									</Column>
 								</columns>
 								<items>
 									<ColumnListItem>
@@ -200,6 +206,7 @@
 											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
 											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
+											<smartField:SmartField value="{Mists}" editable="{viewModel>/editable}"/>
 										</cells>
 									</ColumnListItem>
 								</items>

@@ -19,7 +19,7 @@
 					<smartFilterBar:ControlConfiguration id="Reqid" key="Reqid" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Status" key="Status" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Land1" key="Land1" visibleInAdvancedArea="true"/>
-					<smartFilterBar:ControlConfiguration id="Mists" key="Mists" visibleInAdvancedArea="true"/>
+					<!--<smartFilterBar:ControlConfiguration id="Mists" key="Mists" visibleInAdvancedArea="true"/>-->
 					
 					<!--<smartFilterBar:ControlConfiguration id="Status" key="Status" visibleInAdvancedArea="true">-->
 						<!--<smartFilterBar:defaultFilterValues>-->
