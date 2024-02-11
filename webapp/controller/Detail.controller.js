@@ -4,8 +4,11 @@ sap.ui.define([
 	"../model/formatter",
 	"sap/m/library",
 	"sap/ui/core/routing/History",
-	"sap/ui/Device"
-], function (BaseController, JSONModel, formatter, mobileLibrary, History, Device) {
+	"sap/ui/Device",
+	"sap/m/Button",
+	"sap/m/Text",
+	"sap/m/Dialog"
+], function (BaseController, JSONModel, formatter, mobileLibrary, History, Device, Button, Text, Dialog) {
 	"use strict";
 
 	// shortcut for sap.m.URLHelper
@@ -225,6 +228,72 @@ sap.ui.define([
 		onCancel: function (oEvent) {
 			var viewModel = this.getModel("viewModel");
 			viewModel.setProperty("/editable", false);
+			
+			//reset changse
+			var oLineItemTable = this.byId("lineItemsList");
+			var oDataModel = this.getModel();
+			debugger;
+			
+			// // oDataModel.getPendingChanges
+			// if(oDataModel.hasPendingChanges()){
+				
+			// 	if (!this.oEscapePreventDialog) {
+			// 		this.oEscapePreventDialog = new Dialog({
+			// 			title: "Dialog with prevent close",
+			// 			content: new Text({ text: "Try to close this Dialog with the Escape key" }).addStyleClass("sapUiSmallMargin"),
+			// 			buttons: [
+			// 				new Button({
+			// 					text: "Simply close",
+			// 					press: function () {
+			// 						this.oEscapePreventDialog.close();
+			// 					}.bind(this)
+			// 				})
+			// 			],
+			// 			escapeHandler: function (oPromise) {
+			// 				if (!this.oConfirmEscapePreventDialog) {
+			// 					this.oConfirmEscapePreventDialog = new Dialog({
+			// 						title: "Are you sure?",
+			// 						content: new Text({ text: "Your unsaved changes will be lost" }),
+			// 						type: DialogType.Message,
+			// 						icon: IconPool.getIconURI("message-information"),
+			// 						buttons: [
+			// 							new Button({
+			// 								text: "Yes",
+			// 								press: function () {
+			// 									this.oConfirmEscapePreventDialog.close();
+			// 									oPromise.resolve();
+			// 								}.bind(this)
+			// 							}),
+			// 							new Button({
+			// 								text: "No",
+			// 								press: function () {
+			// 									this.oConfirmEscapePreventDialog.close();
+			// 									oPromise.reject();
+			// 								}.bind(this)
+			// 							})
+			// 						]
+			// 					});
+			// 				}
+				
+			// 				this.oConfirmEscapePreventDialog.open();
+			// 			}.bind(this)
+			// 		});
+			// 	}
+
+			// }
+			// else{
+				
+				oDataModel.setChangeGroups({"*": {
+				        groupId: "changes"
+				    }
+				});
+				oDataModel.setDeferredGroups(["changes"]);
+				oDataModel.resetChanges();
+				oDataModel.refresh(true);
+				
+				oLineItemTable.getBinding("items").refresh();
+			
+			// }
 			
 		},
 		onSave: function (oEvent) {

@@ -64,7 +64,12 @@ sap.ui.define([
 				that.oContext = oDataModel.createEntry("/ZI_MANDREQ_HDR", {
 					// inactive: true,
 					refreshAfterChange: true,
-					Status: 'NEW',
+					properties: { //default values
+						Status: 'NEW',
+						Inksa: 'X',
+						Marsn: '001',	
+					},
+					
 					// groupId: "createGroup",
 					// context: that.getView().getBindingContext(),
 					created: function onCreated(oContext) {
