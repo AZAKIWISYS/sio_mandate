@@ -283,15 +283,17 @@ sap.ui.define([
 			// }
 			// else{
 				
-				oDataModel.setChangeGroups({"*": {
-				        groupId: "changes"
-				    }
-				});
-				oDataModel.setDeferredGroups(["changes"]);
+				// oDataModel.setChangeGroups({"*": {
+				//         groupId: "changes"
+				//     }
+				// });
+				// oDataModel.setDeferredGroups(["changes"]);
+				$.each(Object.keys(oDataModel.getPendingChanges()),function(index,sKey){oDataModel._discardEntityChanges(sKey, true);});
 				oDataModel.resetChanges();
-				oDataModel.refresh(true);
-				
-				oLineItemTable.getBinding("items").refresh();
+				// oDataModel.refresh(true);
+				oLineItemTable.getBinding("items").resetData();
+				oLineItemTable.getBinding("items").refresh(true)
+				oDataModel.updateBindings(true);
 			
 			// }
 			
