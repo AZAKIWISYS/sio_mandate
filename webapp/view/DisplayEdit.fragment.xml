@@ -86,7 +86,7 @@
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS1" title=" " titleUppercase="false">
 						<uxap:blocks>
-							<smartForm:SmartForm id="smartFormColumn" editable="{viewModel>/editable}" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
+							<smartForm:SmartForm id="smartFormColumn" editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
 								<smartForm:layout>
 									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
 								</smartForm:layout>
@@ -197,6 +197,9 @@
 									<Column>
 										<Text text="{i18n>Mists}"/>
 									</Column>
+									<Column visible="{= ${Status} !== 'NEW' }">
+										<Text text="{i18n>Approved}"/>
+									</Column>
 								</columns>
 								<items>
 									<ColumnListItem>
@@ -207,6 +210,7 @@
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
 											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
 											<smartField:SmartField value="{Mists}" editable="{viewModel>/editable}"/>
+											<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} === 'X' }"/>
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -272,7 +276,8 @@
 					press=".handleMessagePopoverPress"
 					ariaHasPopup="Dialog"/>
 				<ToolbarSpacer/>
-				<Button id="editButton" text="{i18n>Edit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }"
+				<!-- visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }" -->
+				<Button id="editButton" text="{i18n>Edit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} }"
 					press=".onEdit" icon="sap-icon://edit" type="Emphasized"/>
 				<Button id="saveButton" text="{i18n>Save}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }" press=".onSave"
 					icon="sap-icon://save" type="Emphasized"/>
