@@ -33,13 +33,9 @@ sap.ui.define([
 			var oViewModel = new JSONModel({
 				busy: false,
 				delay: 0,
+				view: 'Create',
 				editable: true,
 				lineItemListTitle: this.getResourceBundle().getText("createLineItemTableHeading")
-				// ,
-				// to_items: [{
-				// 	Pernr: "",
-				// 	Reqid: ""
-				// }]
 			});
 			this.setModel(oViewModel, "viewModel");
 			this.initMsgPopup();

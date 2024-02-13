@@ -169,6 +169,30 @@
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" visible="{= ${viewModel>/view} === 'Detail' }">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
+						<uxap:blocks>
+							
+							<smartForm:SmartForm editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }" editTogglable="false" validationMode="Async">
+								<smartForm:layout>
+									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
+								</smartForm:layout>
+								<!--<smartForm:Group label="{i18n>QararInfo}">-->
+								<smartForm:Group>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Qcnum}" />
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField  value="{Qrbda}" editable="{viewModel>/editable}"/>
+									</smartForm:GroupElement>
+								</smartForm:Group>
+							</smartForm:SmartForm>
+							
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
 			<uxap:ObjectPageSection titleUppercase="false" id="EmployeesSec" title="{i18n>Employees}">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS2" title=" " titleUppercase="false">
@@ -221,29 +245,6 @@
 									</ColumnListItem>
 								</items>
 							</Table>
-						</uxap:blocks>
-					</uxap:ObjectPageSubSection>
-				</uxap:subSections>
-			</uxap:ObjectPageSection>
-			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}">
-				<uxap:subSections>
-					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
-						<uxap:blocks>
-							<smartForm:SmartForm editable="false" editTogglable="false" validationMode="Async">
-								<smartForm:layout>
-									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
-								</smartForm:layout>
-								<!--<smartForm:Group label="{i18n>QararInfo}">-->
-								<smartForm:Group>
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Qcnum}" />
-									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField  value="{Qrbda}" editable="{viewModel>/editable}"/>
-									</smartForm:GroupElement>
-								</smartForm:Group>
-							</smartForm:SmartForm>
-							
 						</uxap:blocks>
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>

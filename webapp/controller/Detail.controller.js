@@ -29,6 +29,7 @@ sap.ui.define([
 			var oViewModel = new JSONModel({
 				busy : false,
 				delay : 0,
+				view: 'Detail',
 				editable: false,
 				lineItemListTitle : this.getResourceBundle().getText("detailLineItemTableHeading")
 			});
