@@ -215,7 +215,7 @@
 											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
 											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
-											<smartField:SmartField value="{Mists}" editable="{viewModel>/editable}"/>
+											<smartField:SmartField value="{Mitxt}" enabled="false"/>
 											<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} === 'X' }"/>
 										</cells>
 									</ColumnListItem>

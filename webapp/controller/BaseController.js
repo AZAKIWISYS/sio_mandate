@@ -240,6 +240,7 @@ sap.ui.define([
 			}
 		},
 		onAddLine: function (oEvent) {
+			var oController = this;
 			var oItemsTable = this.byId("lineItemsList"); // table with "rows" bound with path "ToLineItems" (navigation property of sales order)
 			// var oItemsTable = oEvent.getSource().getParent().getParent();
 			var oItemsBinding = oItemsTable.getBinding("items");
@@ -252,7 +253,9 @@ sap.ui.define([
 			var newObj = {
 				Reqid: Reqid,
 				Reqno: Reqno,
-				Pernr: ""
+				Pernr: "",
+				Mists: "004",
+				Mitxt : oController.getResourceBundle().getText("Create")
 			};
 			var oItemContext = oItemsBinding.create(newObj);
 			// end-user may edit item data in a dialog
