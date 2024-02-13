@@ -102,9 +102,6 @@
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Inksa} === 'X' }"/>
 									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Bocit}" visible="{= ${Inksa} === 'X' }"/>
-									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement visible="{= ${viewModel>/editable} }" >
 										<smartField:SmartField id="idMarsn" value="{Marsn}" />
@@ -123,7 +120,11 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Dscit}" visible="{= ${Inksa} === 'X' }"/>
+										<smartField:SmartField value="{Bocit}" visible="{= ${Inksa} !== 'X' }"/>
+									</smartForm:GroupElement>
+									
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Cclas}" visible="{= ${Inksa} === 'X' }"/>
 									</smartForm:GroupElement>
 									
 									<!--<smartForm:GroupElement>-->
@@ -131,16 +132,21 @@
 									<!--</smartForm:GroupElement>-->
 								</smartForm:Group>
 								<smartForm:Group>
-									<smartForm:GroupElement>
+									
+									<smartForm:GroupElement visible="{= ${viewModel>/editable} }">
 										<smartField:SmartField value="{Inksa}" />
 									</smartForm:GroupElement>
+									<smartForm:GroupElement visible="{= !${viewModel>/editable} }">
+										<smartField:SmartField value="{Inksatx}" />
+									</smartForm:GroupElement>
+									
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Dscit}" visible="{= ${Inksa} !== 'X' }"/>
+									</smartForm:GroupElement>
+									
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Land1}" visible="{= ${Inksa} === 'X' }" change="onCountryChange"/>
 									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Cclas}" visible="{= ${Inksa} === 'X' }"/>
-									</smartForm:GroupElement>
-									
 									
 								</smartForm:Group>
 								<!-- <smartForm:GroupElement>
@@ -215,6 +221,29 @@
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection visible="{= !${viewModel>/editable} }" titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
+						<uxap:blocks>
+							<smartForm:SmartForm editable="false" editTogglable="false" validationMode="Async">
+								<smartForm:layout>
+									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
+								</smartForm:layout>
+								<!--<smartForm:Group label="{i18n>QararInfo}">-->
+								<smartForm:Group>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Qcnum}" />
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField  value="{Qrbda}" />
+									</smartForm:GroupElement>
+								</smartForm:Group>
+							</smartForm:SmartForm>
+							
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
 			<uxap:ObjectPageSection titleUppercase="false" id="ApprovalProcessSec" title="{i18n>ApprovalProcess}">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS3" title=" " titleUppercase="false">
@@ -252,15 +281,7 @@
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
 			
-			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}">
-				<uxap:subSections>
-					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
-						<uxap:blocks>
-							<Text text="{i18n>QararInfo}" />
-						</uxap:blocks>
-					</uxap:ObjectPageSubSection>
-				</uxap:subSections>
-			</uxap:ObjectPageSection>
+			
 		</uxap:sections>
 		<uxap:footer>
 			<OverflowToolbar>

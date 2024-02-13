@@ -215,7 +215,9 @@ sap.ui.define([
 			var oMsgModel = oController.getModel("msgModel");
 			if (oData.__batchResponses && oData.__batchResponses[0].response && oData.__batchResponses[0].response.body) {
 				if (JSON.parse(oData.__batchResponses[0].response.body).error) {
-					var error = JSON.parse(oData.__batchResponses[0].response.body).error.innererror.errordetails;
+					var err = JSON.parse(oData.__batchResponses[0].response.body).error.innererror;
+					var error = err.errordetails;
+					if(!error) return false;
 					error.map(function (oValue) {
 						oValue.counter = 1;
 						oValue.type = oValue.severity.charAt(0).toUpperCase() + oValue.severity.slice(1);
