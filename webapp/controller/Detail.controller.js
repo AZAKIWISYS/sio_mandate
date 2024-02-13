@@ -350,6 +350,7 @@ sap.ui.define([
 				success: function onSuccess(oData, oResponse) {
 					viewModel.setProperty("/editable", false);
 					that.getView().getElementBinding().refresh(true);
+					that.buildApprovalProcess("Reqid");
 					
 					that.getView().setBusy(false);
 					
