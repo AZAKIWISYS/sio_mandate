@@ -67,7 +67,8 @@ sap.ui.define([
 					properties: { //default values
 						Status: 'NEW',
 						Inksa: 'X',
-						Marsn: '001',	
+						Marsn: '002',
+						Statustxt: that.getResourceBundle().getText("New")	
 					},
 					
 					// groupId: "createGroup",

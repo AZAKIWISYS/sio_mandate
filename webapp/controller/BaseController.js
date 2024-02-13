@@ -310,6 +310,7 @@ sap.ui.define([
 			// this.byId("lineItemsList").getBinding("items").refresh();
 		},
 		buildApprovalProcess: function(sReqId){
+			var oController = this;
 			var oModel = this.getModel();
 			var oViewModel = this.getModel("viewModel");
 			var oFilter = new sap.ui.model.Filter("RequestId", sap.ui.model.FilterOperator.EQ, (sReqId)?sReqId:"");
@@ -345,7 +346,7 @@ sap.ui.define([
 								"titleAbbreviation": oValue.Username,
 								"children": (index !== oData.results.length-1)?[(index+1)*10]:null,
 								"state": (oData.results.length <= 2 && index === 0)?"Neutral":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":(oValue.Workitem === "999999999999")?"Planned":"Neutral",
-								"stateText": (oData.results.length <= 2 && index === 0)?"Submit":(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?"Submitted":"Pending",
+								"stateText": (oData.results.length <= 2 && index === 0)?oController.getResourceBundle().getText("Submit"):(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?oController.getResourceBundle().getText("Submitted"):oController.getResourceBundle().getText("Pending"),
 								"focused": false,
 								"highlighted": false,
 								"texts": oValue.PositionText
