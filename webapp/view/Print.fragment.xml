@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" 
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core">
+	PDFViewer not used as it leads to download file automatically
+	<PDFViewer source="{printModel>/Source}" title="{printModel>/Title}" height="{printModel>/Height}">
+		<layoutData>
+			<FlexItemData growFactor="1"/>
+		</layoutData>
+	</PDFViewer>
+
+	<!--<Dialog title ="{i18n>QararPrint}" icon="sap-icon://print" >-->
+		
+	<!--	<l:HorizontalLayout id="staticContentLayout" />-->
+	<!--	<endButton>-->
+	<!--		<Button text="{i18n>Close}" press="onClosePrint"/>-->
+	<!--	</endButton>-->
+	<!--</Dialog>	-->
+</core:FragmentDefinition>

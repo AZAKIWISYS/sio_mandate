@@ -42,6 +42,13 @@ sap.ui.define([
 			this.initMsgPopup();
 			
 			this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+			
+			var printModel = new JSONModel({
+				Source: "",
+				Title: "Qarar",
+				Height: "600px"
+			});
+			this.setModel(printModel, "printModel");
 		},
 
 		/* =========================================================== */
@@ -363,6 +370,55 @@ sap.ui.define([
 					that.getView().setBusy(false);
 				}
 			});
+		},
+		onClosePrint: function (oEvent) {
+			oEvent.getSource().getParent().close();
+			// this._printDialog.close();
+			// this._printDialog.destroy();
+		},
+		onPrint: function (oEvent) {
+			var bindingContext = this.getView().getBindingContext();
+			var Reqid = bindingContext.getProperty("Reqid");
+			
+			
+			// var path = "https://sapps4h.sio.gov.sa:8001/" + this.getModel().sServiceUrl + "/MandPrintoutSet('" + Reqid + "')/$value";
+			var path = this.getModel().sServiceUrl + "/MandPrintoutSet('" + Reqid + "')/$value";
+			this.getModel("printModel").setProperty("/Source", path);
+			
+			//open print dialog
+			// load asynchronous XML fragment
+			if (!this._printDialog) {
+				sap.ui.core.Fragment.load({
+					id: this.getView().getId(),
+					name: "sio.hcm.mandate.view.Print",
+					controller: this
+				}).then(function(oDialog){
+					// var sId = this.createId("htmlControl");
+					// var oHtml = new sap.ui.core.HTML(sId, {
+					// 	// content: "<embed src='" + encodeURI(path) + "' width='1200' height='800'>",
+					// 	content: "<iframe src='" + encodeURI(path) + "' width='1200' height='800'></iframe>",
+					// 	// content: "<iframe src='"+ encodeURI(path) + "&embedded="true" + "style='width:1200px; height:900px;' frameborder='0'></iframe>",
+					// 	preferDOM : false,
+					// 	// use the afterRendering event for 2 purposes
+					// 	afterRendering : function(oEvent) {
+							
+					// 	}.bind(this)
+					// });
+					// var oLayout = this.byId("staticContentLayout");
+					// oLayout.addContent(oHtml);
+					
+					this.getView().addDependent(oDialog);
+					var printModel =this.getModel("printModel");
+					oDialog.setModel("printModel", printModel);
+					oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+					this._printDialog = oDialog;
+					oDialog.open();
+				}.bind(this));
+			} else {
+				this._printDialog.open();
+			}
+			
+			
 		},
 		onNavBack: function () {
 			var sPreviousHash = History.getInstance().getPreviousHash(),

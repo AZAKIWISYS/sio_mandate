@@ -291,17 +291,6 @@ sap.ui.define([
 				this.getModel("appView").setProperty("/layout", this.getModel("appView").getProperty("/previousLayout"));
 			}
 		},
-		onCountryChange: function(oEvent){
-			//update value of test when test is changed
-			var oModel = this.getModel();
-			var country = oEvent.getParameter("newValue");
-			var oSelected = oModel.getProperty("/zmand_conf('"+country+"')");
-			debugger;
-			var sPath = this.getView().getBindingContext().getPath();
-			oModel.setProperty( sPath + "/Nmdys", oSelected.Nmdys);
-			oModel.setProperty( sPath + "/Trdsa", oSelected.Trdsa);
-			
-		},
 		onChagePernr: function (oEvent) {
 			var oModel = this.getModel();
 			var oSource = oEvent.getSource();
@@ -362,6 +351,34 @@ sap.ui.define([
 
 				}
 			});
+		},
+		dateChange: function(oEvent){
+			var value = oEvent.getParameter("value");
+			
+			if(oEvent.getSource().getId().includes("idBegda")){
+				var begda = new Date(value);
+			}
+			else{
+				var begda = this.getView().byId("idBegda").getProperty("value");
+			}
+			
+			if(oEvent.getSource().getId().includes("idEndda")){
+				var endda = new Date(value);
+			}
+			else{
+				var endda = this.getView().byId("idEndda").getProperty("value");
+			}
+			
+			// var begda = this.getView().byId("idBegda").getDateValue();
+			// var endda = this.getView().byId("idEndda").getDateValue();
+			
+			if(!begda || !endda || (begda > endda) )
+				return;
+				
+			var diff = Math.abs(endda.getTime() - begda.getTime());
+			var diffD = Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1; 
+			// alert(diffD);
+			this.getView().byId("idNumberOfDays").setText(diffD);
 		}
 
 	});
