@@ -62,7 +62,8 @@ sap.ui.define([
 					refreshAfterChange: true,
 					properties: { //default values
 						Status: 'NEW',
-						Inksa: 'X',
+						CurrentTask: '',
+						Location: 'IN',
 						Marsn: '002',
 						Statustxt: that.getResourceBundle().getText("New")	
 					},
@@ -70,7 +71,7 @@ sap.ui.define([
 					// groupId: "createGroup",
 					// context: that.getView().getBindingContext(),
 					created: function onCreated(oContext) {
-						
+						// debugger;
 						that.getView().setBindingContext(oContext);
 						that.getView().setBusy(false);
 						
@@ -326,21 +327,38 @@ sap.ui.define([
 			var ErrorMessage = this.getResourceBundle().getText("saveErrorMessage");
 
 			// this.getModel().setDeferredGroups(["createGroup"]);
+			that.getView().setBusy(true);
 			oModel.submitChanges({
 				// groupId: "createGroup",
 				success: function onSuccess(oData, oResponse) {
 					
-					// sap.m.MessageToast.show(SuccessMessage);
-					
-					that.messageBuilder(oData);
-					
+					that.messageBuilder(oData);// to display errors if occured
+					that.getView().setBusy(false);
 					var Reqid = that.getView().getBindingContext().getProperty("Reqid");; //oData.Reqid
-					if (Reqid){
+					if (!Reqid){
+						oModel.submitChanges({
+						// groupId: "createGroup",
+						success: function onSuccess(oData, oResponse) {
+							that.messageBuilder(oData);// to display errors if occured
+							that.getView().setBusy(false);
+							var Reqid = that.getView().getBindingContext().getProperty("Reqid");; //oData.Reqid
+							if (Reqid){
+								sap.m.MessageToast.show(SuccessMessage);
+								that.navtoDetail(Reqid);
+							}
+						},
+						error: function onError(oError) {
+							that.getView().setBusy(false);
+							sap.m.MessageToast.show(ErrorMessage);
+						}
+					});
+					} else{
+						sap.m.MessageToast.show(SuccessMessage);
 						that.navtoDetail(Reqid);
 					}
 				},
 				error: function onError(oError) {
-					
+					that.getView().setBusy(false);
 					sap.m.MessageToast.show(ErrorMessage);
 				}
 			});

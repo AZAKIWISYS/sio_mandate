@@ -1,4 +1,5 @@
 sap.ui.define([
+	"sap/ui/core/library",
 	"./BaseController",
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
@@ -8,11 +9,12 @@ sap.ui.define([
 	"sap/m/Button",
 	"sap/m/Text",
 	"sap/m/Dialog"
-], function (BaseController, JSONModel, formatter, mobileLibrary, History, Device, Button, Text, Dialog) {
+], function (coreLibrary, BaseController, JSONModel, formatter, mobileLibrary, History, Device, Button, Text, Dialog) {
 	"use strict";
 
 	// shortcut for sap.m.URLHelper
 	var URLHelper = mobileLibrary.URLHelper;
+	var ValueState = coreLibrary.ValueState;
 
 	return BaseController.extend("sio.hcm.mandate.controller.Detail", {
 
@@ -22,34 +24,41 @@ sap.ui.define([
 		/* lifecycle methods                                           */
 		/* =========================================================== */
 
-		onInit : function () {
+		onInit: function () {
 			// Model used to manipulate control states. The chosen values make sure,
 			// detail page is busy indication immediately so there is no break in
 			// between the busy indication for loading the view's meta data
 			var oViewModel = new JSONModel({
-				busy : false,
-				delay : 0,
-				view: 'Detail',
+				busy: false,
+				delay: 0,
+				// view: 'Detail',
 				editable: false,
-				lineItemListTitle : this.getResourceBundle().getText("detailLineItemTableHeading")
+				lineItemListTitle: this.getResourceBundle().getText("detailLineItemTableHeading")
 			});
 
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			this.getRouter().getRoute("wfobject").attachPatternMatched(this._onWFObjectMatched, this);
-			
 
 			this.setModel(oViewModel, "viewModel");
 			this.initMsgPopup();
-			
+
 			this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
-			
+
 			var printModel = new JSONModel({
 				Source: "",
-				Title: "Qarar",
+				Title: this.getResourceBundle().getText("QararPrint"),
 				Height: "600px"
 			});
 			this.setModel(printModel, "printModel");
 		},
+		// onAfterRendering: function(oEvent){
+		// 	//here to set foooter hidden if no buttons shown
+		// 	var ObjectPageLayout = this.getView().byId("ObjectPageLayout");
+		// 	if(ObjectPageLayout){
+		// 		debugger;
+		// 		// ObjectPageLayout.setShowFooter(false);
+		// 	}
+		// },
 
 		/* =========================================================== */
 		/* event handlers                                              */
@@ -59,7 +68,7 @@ sap.ui.define([
 		 * Event handler when the share by E-Mail button has been clicked
 		 * @public
 		 */
-		onSendEmailPress : function () {
+		onSendEmailPress: function () {
 			var oViewModel = this.getModel("viewModel");
 
 			URLHelper.triggerEmail(
@@ -73,14 +82,14 @@ sap.ui.define([
 		 * Event handler when the share in JAM button has been clicked
 		 * @public
 		 */
-		onShareInJamPress : function () {
+		onShareInJamPress: function () {
 			var oViewModel = this.getModel("viewModel"),
 				oShareDialog = sap.ui.getCore().createComponent({
-					name : "sap.collaboration.components.fiori.sharing.dialog",
-					settings : {
-						object :{
-							id : location.href,
-							share : oViewModel.getProperty("/shareOnJamTitle")
+					name: "sap.collaboration.components.fiori.sharing.dialog",
+					settings: {
+						object: {
+							id: location.href,
+							share: oViewModel.getProperty("/shareOnJamTitle")
 						}
 					}
 				});
@@ -93,7 +102,7 @@ sap.ui.define([
 		 * @param {object} oEvent an event containing the total number of items in the list
 		 * @private
 		 */
-		onListUpdateFinished : function (oEvent) {
+		onListUpdateFinished: function (oEvent) {
 			var sTitle,
 				iTotalItems = oEvent.getParameter("total"),
 				oViewModel = this.getModel("viewModel");
@@ -120,16 +129,21 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
 		 * @private
 		 */
-		_onObjectMatched : function (oEvent) {
-			
+		_onObjectMatched: function (oEvent) {
+
 			//to save aupdates
 			this.getModel().setDefaultBindingMode("TwoWay");
-				
-			var sObjectId =  oEvent.getParameter("arguments").objectId;
+
+			var sObjectId = oEvent.getParameter("arguments").objectId;
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
-			this.getModel().metadataLoaded().then( function() {
+
+			this.getModel("viewModel").setProperty("/view", "Detail");
+
+			this.resetMessages();
+
+			this.getModel().metadataLoaded().then(function () {
 				var sObjectPath = this.getModel().createKey("ZI_MANDREQ_HDR", {
-					Reqid :  sObjectId
+					Reqid: sObjectId
 				});
 				this._bindView("/" + sObjectPath);
 			}.bind(this));
@@ -138,17 +152,32 @@ sap.ui.define([
 			// debugger;
 
 			//to save aupdates
+			var viewModel = this.getModel("viewModel");
+			var printModel = this.getModel("printModel");
+
 			this.getModel().setDefaultBindingMode("TwoWay");
-				
-			// var sObjectId =  oEvent.getParameter("arguments").objectId;
-			var sObjectId = this.getOwnerComponent().getComponentData().startupParameters.RequestNumber[0]
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
-			this.getModel().metadataLoaded().then( function() {
-				var sObjectPath = this.getModel().createKey("ZI_MANDREQ_HDR", {
-					Reqid :  sObjectId
-				});
-				this._bindView("/" + sObjectPath);
-			}.bind(this));
+
+			viewModel.setProperty("/view", "WFDetail");
+			viewModel.setProperty("/editable", true);
+
+			//set models in core level to be able to access them from my inbox app (S3Custom.controller.js)
+			sap.ui.getCore().setModel(this.getModel(), "mandateModel");
+			sap.ui.getCore().setModel(viewModel, "viewModel");
+			sap.ui.getCore().setModel(printModel, "printModel");
+
+			if (this.getOwnerComponent().getComponentData().startupParameters && this.getOwnerComponent().getComponentData().startupParameters.ReqId) {
+				var sObjectId = this.getOwnerComponent().getComponentData().startupParameters.ReqId[0];
+
+				// this.getView().byId("editButton").setVisible(true);
+
+				this.getModel().metadataLoaded().then(function () {
+					var sObjectPath = this.getModel().createKey("ZI_MANDREQ_HDR", {
+						Reqid: sObjectId
+					});
+					this._bindView("/" + sObjectPath);
+				}.bind(this));
+			}
 		},
 
 		/**
@@ -158,7 +187,7 @@ sap.ui.define([
 		 * @param {string} sObjectPath path to the object to be bound to the view.
 		 * @private
 		 */
-		_bindView : function (sObjectPath) {
+		_bindView: function (sObjectPath) {
 			// Set busy indicator during view binding
 			var oViewModel = this.getModel("viewModel");
 
@@ -166,10 +195,10 @@ sap.ui.define([
 			oViewModel.setProperty("/busy", false);
 
 			this.getView().bindElement({
-				path : sObjectPath,
+				path: sObjectPath,
 				events: {
-					change : this._onBindingChange.bind(this),
-					dataRequested : function () {
+					change: this._onBindingChange.bind(this),
+					dataRequested: function () {
 						oViewModel.setProperty("/busy", true);
 					},
 					dataReceived: function () {
@@ -179,7 +208,7 @@ sap.ui.define([
 			});
 		},
 
-		_onBindingChange : function () {
+		_onBindingChange: function () {
 			var oView = this.getView(),
 				oElementBinding = oView.getElementBinding();
 
@@ -201,17 +230,17 @@ sap.ui.define([
 
 			this.getOwnerComponent().oListSelector.selectAListItem(sPath);
 
-			oViewModel.setProperty("/saveAsTileTitle",oResourceBundle.getText("shareSaveTileAppTitle", [sObjectName]));
+			oViewModel.setProperty("/saveAsTileTitle", oResourceBundle.getText("shareSaveTileAppTitle", [sObjectName]));
 			oViewModel.setProperty("/shareOnJamTitle", sObjectName);
 			oViewModel.setProperty("/shareSendEmailSubject",
 				oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
 			oViewModel.setProperty("/shareSendEmailMessage",
 				oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
-				this.buildApprovalProcess(sObjectId);
-				
+			this.buildApprovalProcess(sObjectId);
+
 		},
 
-		_onMetadataLoaded : function () {
+		_onMetadataLoaded: function () {
 			// Store original busy indicator delay for the detail view
 			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
 				oViewModel = this.getModel("viewModel"),
@@ -223,7 +252,7 @@ sap.ui.define([
 			oViewModel.setProperty("/delay", 0);
 			oViewModel.setProperty("/lineItemTableDelay", 0);
 
-			oLineItemTable.attachEventOnce("updateFinished", function() {
+			oLineItemTable.attachEventOnce("updateFinished", function () {
 				// Restore original busy indicator delay for line item table
 				oViewModel.setProperty("/lineItemTableDelay", iOriginalLineItemTableBusyDelay);
 			});
@@ -233,18 +262,68 @@ sap.ui.define([
 			// Restore original busy indicator delay for the detail view
 			oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		},
+		deleteEmptylines: function(){
+			debugger;
+			var oLineItemTable = this.byId("lineItemsList");
+			// oEvent.getParameter("listItem").getBindingContext().delete();
+		},
 		onCancel: function (oEvent) {
+			// debugger;
+			var viewModel = this.getModel("viewModel");
+				//warning dialog to confirm
+				if (!this.oApproveDialog) {
+					this.oApproveDialog = new sap.m.Dialog({
+						type: sap.m.DialogType.Message,
+						state: ValueState.Warning,
+						title: this.getResourceBundle().getText("Confirm"),
+						// content: new Text({ text: "Do you want to submit this order?" }),
+						content: new sap.m.Text({
+							text: this.getResourceBundle().getText("confirmLeaveDetailMsg")
+						}),
+						beginButton: new sap.m.Button({
+							type: sap.m.ButtonType.Emphasized,
+							text: this.getResourceBundle().getText("Confirm"),
+							press: function () {
+								viewModel.setProperty("/editable", false);
+								this.oApproveDialog.close();
+								this.deleteEmptylines();
+								this.getModel().resetChanges();
+								// this.getModel().deleteCreatedEntry(this.oContext);
+								this.getModel().refresh(true);
+								// this.onNavBack();
+							}.bind(this)
+						}),
+						endButton: new sap.m.Button({
+							text: this.getResourceBundle().getText("Cancel"),
+							press: function () {
+								this.oApproveDialog.close();
+							}.bind(this)
+						})
+					});
+				}
+
+				//this.getModel().hasPendingChanges()?
+				if (this.getModel().hasPendingChanges()) {
+					this.oApproveDialog.open();
+				} else {
+					// if no hanges just cancel without confirmation
+					
+					viewModel.setProperty("/editable", false);
+				}
+
+		},
+		onCancelOld: function (oEvent) {
 			var viewModel = this.getModel("viewModel");
 			viewModel.setProperty("/editable", false);
-			
+
 			//reset changse
 			var oLineItemTable = this.byId("lineItemsList");
 			var oDataModel = this.getModel();
 			debugger;
-			
+
 			// // oDataModel.getPendingChanges
 			// if(oDataModel.hasPendingChanges()){
-				
+
 			// 	if (!this.oEscapePreventDialog) {
 			// 		this.oEscapePreventDialog = new Dialog({
 			// 			title: "Dialog with prevent close",
@@ -262,7 +341,7 @@ sap.ui.define([
 			// 					this.oConfirmEscapePreventDialog = new Dialog({
 			// 						title: "Are you sure?",
 			// 						content: new Text({ text: "Your unsaved changes will be lost" }),
-			// 						type: DialogType.Message,
+			// 						type: sap.m.DialogType.Message,
 			// 						icon: IconPool.getIconURI("message-information"),
 			// 						buttons: [
 			// 							new Button({
@@ -282,7 +361,7 @@ sap.ui.define([
 			// 						]
 			// 					});
 			// 				}
-				
+
 			// 				this.oConfirmEscapePreventDialog.open();
 			// 			}.bind(this)
 			// 		});
@@ -290,26 +369,28 @@ sap.ui.define([
 
 			// }
 			// else{
-				
-				// oDataModel.setChangeGroups({"*": {
-				//         groupId: "changes"
-				//     }
-				// });
-				// oDataModel.setDeferredGroups(["changes"]);
-				$.each(Object.keys(oDataModel.getPendingChanges()),function(index,sKey){oDataModel._discardEntityChanges(sKey, true);});
-				oDataModel.resetChanges();
-				// oDataModel.refresh(true);
-				oLineItemTable.getBinding("items").resetData();
-				oLineItemTable.getBinding("items").refresh(true)
-				oDataModel.updateBindings(true);
-			
+
+			// oDataModel.setChangeGroups({"*": {
+			//         groupId: "changes"
+			//     }
+			// });
+			// oDataModel.setDeferredGroups(["changes"]);
+			$.each(Object.keys(oDataModel.getPendingChanges()), function (index, sKey) {
+				oDataModel._discardEntityChanges(sKey, true);
+			});
+			oDataModel.resetChanges();
+			// oDataModel.refresh(true);
+			oLineItemTable.getBinding("items").resetData();
+			oLineItemTable.getBinding("items").refresh(true)
+			oDataModel.updateBindings(true);
+
 			// }
-			
+
 		},
 		onSave: function (oEvent) {
 			var viewModel = this.getModel("viewModel");
 			viewModel.setProperty("/editable", false);
-			
+
 			//save request
 			var that = this;
 			var oModel = this.getModel();
@@ -320,10 +401,10 @@ sap.ui.define([
 			oModel.submitChanges({
 				// groupId: "createGroup",
 				success: function onSuccess(oData, oResponse) {
-					
+
 					// sap.m.MessageToast.show(SuccessMessage);
-					that.messageBuilder(oData);
-					
+					that.messageBuilder(oData, 'Update');
+
 					// that.navtoDetail(oData.Reqid);s
 				},
 				error: function onError(oError) {
@@ -331,13 +412,13 @@ sap.ui.define([
 					// sap.m.MessageToast.show(ErrorMessage);
 				}
 			});
-			
+
 		},
 		onEdit: function (oEvent) {
 			var viewModel = this.getModel("viewModel");
 			viewModel.setProperty("/editable", true);
 			// this.getView().byId("cancelButton").setEnabled(true);
-			
+
 		},
 		onSubmit: function (oEvent) {
 			var that = this;
@@ -345,31 +426,66 @@ sap.ui.define([
 			var oDataModel = this.getModel();
 			var bindingContext = this.getView().getBindingContext();
 			var Reqid = bindingContext.getProperty("Reqid");
-			
+
+			var ConfirmMsg = this.getResourceBundle().getText("Confirm");
+			var SubmitMsg = this.getResourceBundle().getText("Submit");
+			var CancelMsg = this.getResourceBundle().getText("Cancel");
 			var SuccessMessage = this.getResourceBundle().getText("submit_suc");
-			
-			that.getView().setBusy(true);
-			oDataModel.callFunction("/PostRequest", {
-				method: "POST",
-				urlParameters : {
-					Reqid: Reqid ? Reqid : ""
-				},
-				refreshAfterChange: true,
-				success: function onSuccess(oData, oResponse) {
-					viewModel.setProperty("/editable", false);
-					that.getView().getElementBinding().refresh(true);
-					that.buildApprovalProcess("Reqid");
-					
-					that.getView().setBusy(false);
-					
-					// that.messageBuilder(oData);
-					sap.m.MessageToast.show(SuccessMessage);
-				},
-				error: function onError(oError) {
-					that.messageBuilder(oError);
-					that.getView().setBusy(false);
-				}
-			});
+			var submit_conf = this.getResourceBundle().getText("submit_conf");
+
+			// confirm first
+			if (!this.oApproveSubmitDialog) {
+				this.oApproveSubmitDialog = new sap.m.Dialog({
+					type: sap.m.DialogType.Message,
+					title: ConfirmMsg,
+					content: new sap.m.Text({
+						text: submit_conf
+					}),
+					beginButton: new sap.m.Button({
+						type: sap.m.ButtonType.Emphasized,
+						text: SubmitMsg,
+						press: function () {
+
+							that.getView().setBusy(true);
+							oDataModel.callFunction("/PostRequest", {
+								method: "POST",
+								urlParameters: {
+									Reqid: Reqid ? Reqid : ""
+								},
+								refreshAfterChange: true,
+								success: function onSuccess(oData, oResponse) {
+									viewModel.setProperty("/editable", false);
+									that.getView().getElementBinding().refresh(true);
+									that.buildApprovalProcess("Reqid");
+
+									that.getView().setBusy(false);
+
+									// that.messageBuilder(oData);
+									sap.m.MessageToast.show(SuccessMessage);
+
+									//added logic to nav back to master page
+									// that.onNavBack();
+									that.getRouter().navTo("master", {}, true);
+								},
+								error: function onError(oError) {
+									that.messageBuilder(oError);
+									that.getView().setBusy(false);
+								}
+							});
+							this.oApproveSubmitDialog.close();
+						}.bind(this)
+					}),
+					endButton: new sap.m.Button({
+						text: CancelMsg,
+						press: function () {
+							this.oApproveSubmitDialog.close();
+						}.bind(this)
+					})
+				});
+			}
+
+			this.oApproveSubmitDialog.open();
+
 		},
 		onClosePrint: function (oEvent) {
 			oEvent.getSource().getParent().close();
@@ -379,12 +495,11 @@ sap.ui.define([
 		onPrint: function (oEvent) {
 			var bindingContext = this.getView().getBindingContext();
 			var Reqid = bindingContext.getProperty("Reqid");
-			
-			
+
 			// var path = "https://sapps4h.sio.gov.sa:8001/" + this.getModel().sServiceUrl + "/MandPrintoutSet('" + Reqid + "')/$value";
 			var path = this.getModel().sServiceUrl + "/MandPrintoutSet('" + Reqid + "')/$value";
 			this.getModel("printModel").setProperty("/Source", path);
-			
+
 			//open print dialog
 			// load asynchronous XML fragment
 			if (!this._printDialog) {
@@ -392,7 +507,7 @@ sap.ui.define([
 					id: this.getView().getId(),
 					name: "sio.hcm.mandate.view.Print",
 					controller: this
-				}).then(function(oDialog){
+				}).then(function (oDialog) {
 					// var sId = this.createId("htmlControl");
 					// var oHtml = new sap.ui.core.HTML(sId, {
 					// 	// content: "<embed src='" + encodeURI(path) + "' width='1200' height='800'>",
@@ -401,14 +516,14 @@ sap.ui.define([
 					// 	preferDOM : false,
 					// 	// use the afterRendering event for 2 purposes
 					// 	afterRendering : function(oEvent) {
-							
+
 					// 	}.bind(this)
 					// });
 					// var oLayout = this.byId("staticContentLayout");
 					// oLayout.addContent(oHtml);
-					
+
 					this.getView().addDependent(oDialog);
-					var printModel =this.getModel("printModel");
+					var printModel = this.getModel("printModel");
 					oDialog.setModel("printModel", printModel);
 					oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 					this._printDialog = oDialog;
@@ -417,8 +532,7 @@ sap.ui.define([
 			} else {
 				this._printDialog.open();
 			}
-			
-			
+
 		},
 		onNavBack: function () {
 			var sPreviousHash = History.getInstance().getPreviousHash(),

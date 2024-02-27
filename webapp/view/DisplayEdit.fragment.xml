@@ -48,11 +48,6 @@
 					<!-- <Link text="DeniseSmith@sap.com"/> -->
 				</layout:VerticalLayout>
 
-				<!-- <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd">
-					<Image src="./test-resources/sap/uxap/images/linkedin.png"/>
-					<Image src="./test-resources/sap/uxap/images/Twitter.png" class="sapUiSmallMarginBegin"/>
-			    </layout:HorizontalLayout> -->
-
 				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
 					<ObjectAttribute title="{i18n>Createdby}" text="{Createdby}" />
 					<ObjectAttribute title="{i18n>Createdat}">
@@ -87,7 +82,8 @@
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS1" title=" " titleUppercase="false">
 						<uxap:blocks>
-							<smartForm:SmartForm id="smartFormColumn" editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
+							<!--<smartForm:SmartForm id="smartFormColumn" editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">-->
+							<smartForm:SmartForm id="smartFormColumn" editable="{= ${viewModel>/editable} }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
 								<smartForm:layout>
 									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
 								</smartForm:layout>
@@ -101,7 +97,7 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Inksa} === 'X' }"/>
+										<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Location} === 'OUT' }"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement visible="{= ${viewModel>/editable} }" >
@@ -117,15 +113,15 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Inksa} === 'X' }"/>
+										<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Location} === 'OUT' }"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Bocit}" visible="{= ${Inksa} !== 'X' }"/>
+										<smartField:SmartField value="{Bocit}" visible="{= ${Location} === 'IN' }"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Cclas}" visible="{= ${Inksa} === 'X' }"/>
+										<smartField:SmartField value="{Cclas}" visible="{= ${Location} === 'OUT' }"/>
 									</smartForm:GroupElement>
 									
 									<!--<smartForm:GroupElement>-->
@@ -138,65 +134,49 @@
 										<smartField:SmartField value="{NumberOfDays}" visible="{= !${viewModel>/editable} }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement visible="{= ${viewModel>/editable} }">
-										<smartField:SmartField id="idInksa" value="{Inksa}" />
+										<smartField:SmartField id="idLocation" value="{Location}" />
 									</smartForm:GroupElement>
 									<smartForm:GroupElement visible="{= !${viewModel>/editable} }">
-										<smartField:SmartField value="{Inksatx}" />
+										<smartField:SmartField value="{LocationText}" />
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Dscit}" visible="{= ${Inksa} !== 'X' }"/>
+										<smartField:SmartField value="{Dscit}" visible="{= ${Location} === 'IN' }"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Land1}" visible="{= ${Inksa} === 'X' }"/>
+										<smartField:SmartField value="{Land1}" visible="{= ${Location} === 'OUT' }"/>
 									</smartForm:GroupElement>
 									
 								</smartForm:Group>
-								<smartForm:Group title="Mandate Reason">
+								<smartForm:Group title="{i18n>MandateDetails}">
 								<!--<smartForm:Group >-->
 									<smartForm:GroupElement>
 										<!--<smartField:SmartField id="idReason" value="{Reason}" -->
 										<!--	editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }"-->
 										<!--	app:multiLineSettings="{width: '100%', cols: 50, rows: 4, showExceededText: true, maxLength: 250}" />-->
 										
-										
-										<TextArea id="idReason" value="{Reason}" placeholder="Mandate Reason" 
-											editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }"
+										<!--editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }"-->
+										<TextArea id="idReason" value="{Reason}" placeholder="{i18n>MandateDetails}"
+											editable="{= ${viewModel>/editable} }"
 											growing="true" growingMaxLines="7" width="100%"/>
 									</smartForm:GroupElement>
 									
 								</smartForm:Group>
-								<!--<smartForm:GroupElement>-->
-								<!--		<smartField:SmartField value="{Reason}" />-->
-								<!--	</smartForm:GroupElement>-->
-								<!--</smartForm:Group>-->
-								<!-- <smartForm:GroupElement>
-										<smartField:SmartField value="{Changedat}"/>
-									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Changedby}"/>
-									</smartForm:GroupElement>
-									<smartForm:GroupElement >
-										<smartField:SmartField value="{Createdat}"/>
-									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Createdby}"/>
-									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Maorg}"/>
-									</smartForm:GroupElement> -->
 							</smartForm:SmartForm>
 						</uxap:blocks>
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
-			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" visible="{= ${viewModel>/view} === 'Detail' }">
+			<!--<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" visible="{= ${viewModel>/view} === 'Detail' &amp;&amp; ${WorkItemFlag} === 'X' }">-->
+			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" 
+				visible="{= ${viewModel>/view} === 'WFDetail' }">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
 						<uxap:blocks>
 							
-							<smartForm:SmartForm editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }" editTogglable="false" validationMode="Async">
+							<!--<smartForm:SmartForm editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }" editTogglable="false" validationMode="Async">-->
+							<smartForm:SmartForm editable="{= ${viewModel>/editable} }" editTogglable="false" validationMode="Async">
 								<smartForm:layout>
 									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
 								</smartForm:layout>
@@ -263,9 +243,11 @@
 											<smartField:SmartField value="{PersonFullName}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>										
 											<smartField:SmartField value="{OragnizationalUnitText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>											
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
-											<smartField:SmartField value="{Mdtyp}" editable="{viewModel>/editable}"/>
+											<smartField:SmartField value="{Mdtyp}" 
+												editable="{= ${viewModel>/editable} || ( ${CurrentTask} === 'TS99900016' || ${CurrentTask} === 'TS99900017' || ${CurrentTask} === 'TS99900018' ) }"/>
 											<smartField:SmartField value="{Mitxt}" enabled="false"/>
-											<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} === 'X' }"/>
+											<!--<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} === 'X' }"/>-->
+											<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} &amp;&amp; ${viewModel>/view} === 'WFDetail' }"/>
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -323,9 +305,9 @@
 					press=".handleMessagePopoverPress"
 					ariaHasPopup="Dialog"/>
 				<ToolbarSpacer/>
-				<!-- visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }" -->
-				<Button id="editButton" text="{i18n>Edit}" enabled="{= !${viewModel>/editable} }" visible="{= !${viewModel>/editable} }"
-					press=".onEdit" icon="sap-icon://edit" type="Emphasized"/>
+				<!-- enabled="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }" -->
+				<Button id="editButton" text="{i18n>Edit}" press=".onEdit" icon="sap-icon://edit" type="Emphasized"
+					visible="{= !${viewModel>/editable} &amp;&amp; ( ${Status} === 'NEW' || ${viewModel>/view} === 'WFDetail' ) }" />
 				<Button id="saveButton" text="{i18n>Save}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }" press=".onSave"
 					icon="sap-icon://save" type="Emphasized"/>
 				<Button id="cancelButton" text="{i18n>Cancel}" enabled="{= ${viewModel>/editable} }" visible="{= ${viewModel>/editable} }"
@@ -335,7 +317,8 @@
 					visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }" press=".onSubmit" icon="sap-icon://complete" type="Accept"/>
 				
 				<!--<Button id="submitButton" text="{i18n>Submit}" press=".onSubmit" icon="sap-icon://complete" type="Accept"/>-->
-				<Button id="printButton" text="{i18n>Print}" press=".onPrint" icon="sap-icon://print" type="Transparent"/>
+				<Button id="printButton" text="{i18n>QararPrint}" press=".onPrint" icon="sap-icon://print" type="Transparent"
+					visible="{= !${viewModel>/editable} &amp;&amp; ${CurrentTask} === 'TS99900012' }" />
 					
 			</OverflowToolbar>
 		</uxap:footer>

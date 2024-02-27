@@ -204,12 +204,16 @@ sap.ui.define([
 		initMessagePopup: function () {
 			this.buttonIconFormatter();
 			this.highestSeverityMessages();
-			
-			// //clear message property
-			// var oMsgModel = this.getModel("msgModel");
-			// oMsgModel.setProperty("/messageSet", []);
 		},
-		messageBuilder: function (oData) {
+		resetMessages: function () {
+			//clear messageSet property
+			var oMsgModel = this.getModel("msgModel");
+			if(oMsgModel){
+				oMsgModel.setProperty("/messageSet", []);
+			}
+			this.initMessagePopup();
+		},
+		messageBuilder: function (oData, Action) {
 			var oController = this;
 			var oView = oController.getView();
 			var oMsgModel = oController.getModel("msgModel");
@@ -238,6 +242,12 @@ sap.ui.define([
 					oController.initMessagePopup();
 				}
 			}
+			else{
+				if(Action && Action == "Update"){
+					var SuccessMessage = this.getResourceBundle().getText("saveSuccessMessage");
+					sap.m.MessageToast.show(SuccessMessage);
+				}
+			}
 		},
 		onAddLine: function (oEvent) {
 			var oController = this;
@@ -262,6 +272,7 @@ sap.ui.define([
 			// oCreateDialog.setBindingContext(oItemContext);
 		},
 		onDelete: function (oEvent) {
+			debugger;
 			oEvent.getParameter("listItem").getBindingContext().delete();
 			// 
 			// to delete from BE?
@@ -324,11 +335,11 @@ sap.ui.define([
 						oViewModel.setProperty("/lanes",lanes);
 						let oStateMap = {
 							"A" : "Positive",
-							"R" : "Nagative"
+							"R" : "Negative"
 						};
 						let oStateTextMap = {
-							"A" : "Approved",
-							"R" : "Rejected"
+							"A" : oController.getResourceBundle().getText("Approved"),
+							"R" : oController.getResourceBundle().getText("Rejected")
 						};
 						let nodes =oData.results.map(function(oValue,index){
 							return {
@@ -339,6 +350,7 @@ sap.ui.define([
 								"children": (index !== oData.results.length-1)?[(index+1)*10]:null,
 								"state": (oData.results.length <= 2 && index === 0)?"Neutral":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":(oValue.Workitem === "999999999999")?"Planned":"Neutral",
 								"stateText": (oData.results.length <= 2 && index === 0)?oController.getResourceBundle().getText("Submit"):(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?oController.getResourceBundle().getText("Submitted"):oController.getResourceBundle().getText("Pending"),
+								// "stateText":this.formatStateText(oData.results, oValue, index),
 								"focused": false,
 								"highlighted": false,
 								"texts": oValue.PositionText
@@ -379,6 +391,29 @@ sap.ui.define([
 			var diffD = Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1; 
 			// alert(diffD);
 			this.getView().byId("idNumberOfDays").setText(diffD);
+		},
+		formatStateText: function(results, oValue, index){
+			var stateText;
+			let oStateTextMap = {
+				"A" : "Approved",
+				"R" : "Rejected"
+			};
+			if(oData.results.length <= 2 && index === 0){
+				stateText = this.getResourceBundle().getText("Submit");
+			}else{
+				if(oStateTextMap[oValue.Decision]){
+					stateText = oStateTextMap[oValue.Decision];
+				}else{
+					if(index == 0){
+						stateText = this.getResourceBundle().getText("Submitted");
+					}
+					else{
+						stateText = this.getResourceBundle().getText("Pending");
+					}
+					
+				}
+			}
+			return stateText;
 		}
 
 	});

@@ -48,7 +48,7 @@
 			<!--ResponsiveTable-->
 			<smartTable:SmartTable id="smartTable" entitySet="ZI_MANDREQ_HDR" smartFilterId="smartFilterBar" tableType="ResponsiveTable"
 				useExportToExcel="true" beforeExport="onBeforeExport" useTablePersonalisation="true"
-				header="Requests" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" 
+				header="{i18n>Requests}" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" 
 				class="sapUiResponsiveContentPadding" editTogglable="false" app:useSmartToggle="true"
 				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqid,Qcnum,Status,Begda,Endda,Rsntx,Landx">
 				
