@@ -117,6 +117,24 @@ sap.ui.define([
 			// this.getRouter().navTo("object", {}, bReplace);
 			this.getRouter().navTo("create");
 			
+		},
+		onSearch: function(oEvent){
+			debugger;
+			var filterData = oEvent.getSource().getFilterData();
+			if(filterData && filterData.Pernr && filterData.Pernr.ranges){
+				var range = {
+					exclude: false,
+					keyField: "Pernr",
+					operation: "EQ",
+					tokenText: "=00000000",
+					value1: "00000000",
+					value2: ""
+				};
+				filterData.Pernr.ranges.push(range);                  
+				oEvent.getSource().setFilterData(filterData)
+			}
+			
+			
 		}
 
 	});

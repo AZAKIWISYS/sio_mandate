@@ -83,7 +83,7 @@
 					<uxap:ObjectPageSubSection id="section3_SS1" title=" " titleUppercase="false">
 						<uxap:blocks>
 							<!--<smartForm:SmartForm id="smartFormColumn" editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">-->
-							<smartForm:SmartForm id="smartFormColumn" editable="{= ${viewModel>/editable} }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
+							<smartForm:SmartForm id="smartFormColumn" editable="{= ${viewModel>/editable} &amp;&amp; ( ${viewModel>/view} === 'Detail' || ${viewModel>/view} === 'Create' ) }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
 								<smartForm:layout>
 									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
 								</smartForm:layout>

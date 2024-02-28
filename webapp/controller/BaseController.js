@@ -251,7 +251,7 @@ sap.ui.define([
 		},
 		onAddLine: function (oEvent) {
 			var oController = this;
-			var oItemsTable = this.byId("lineItemsList"); // table with "rows" bound with path "ToLineItems" (navigation property of sales order)
+			var oItemsTable = this.byId("lineItemsList"); // table with "rows" bound with path "ToLineItems"
 			// var oItemsTable = oEvent.getSource().getParent().getParent();
 			var oItemsBinding = oItemsTable.getBinding("items");
 			// var oModel = this.getView().getModel();
@@ -260,22 +260,37 @@ sap.ui.define([
 			var Reqno = this.getModel().getProperty("/Reqno");
 			
 			// create transient context for subentity (sales order line item) and display it in the items table
-			var newObj = {
+			var initialData = {
 				Reqid: Reqid,
 				Reqno: Reqno,
 				Pernr: "",
 				Mists: "004",
 				Mitxt : oController.getResourceBundle().getText("Create")
 			};
-			var oItemContext = oItemsBinding.create(newObj);
+			debugger;
+			var oItemContext = oItemsBinding.create(initialData, true);
 			// end-user may edit item data in a dialog
 			// oCreateDialog.setBindingContext(oItemContext);
 		},
 		onDelete: function (oEvent) {
+			var bindingContext = oEvent.getParameter("listItem").getBindingContext();
+			var oModel = this.getModel();
+			var path = bindingContext.getPath();
+			var oTable = this.byId("lineItemsList");
+			var oItemsBinding = oTable.getBinding("items");
+			var obj = oModel.getObject(path);
+			
+			
+			// bindingContext.delete(); //works on create view
+			// //bindingContext.destroy(); //dont do nothing
+			// oTable.removeItem(oEvent.getParameter("listItem")); //also working but cause error when add line
+			// obj.remove(); //generate error
 			debugger;
-			oEvent.getParameter("listItem").getBindingContext().delete();
-			// 
-			// to delete from BE?
+			
+			
+			
+			// oTable.refreshAggregation("items");
+			// oModel.refresh();
 		},
 		/**
 		 * Set the full screen mode to false and navigate to master page
