@@ -237,7 +237,7 @@
 									</Column>
 								</columns>
 								<items>
-									<ColumnListItem>
+									<ColumnListItem visible="{= !${Deleted} }">
 										<cells>
 											<smartField:SmartField value="{Pernr}" editable="{viewModel>/editable}" change="onChagePernr" textInEditModeSource="ValueList"/>
 											<smartField:SmartField value="{PersonFullName}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>										

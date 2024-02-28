@@ -280,7 +280,12 @@ sap.ui.define([
 			var oItemsBinding = oTable.getBinding("items");
 			var obj = oModel.getObject(path);
 			
-			
+			if(obj.Reqid){
+				oModel.setProperty(path+"/Deleted",true);
+			}else{
+				bindingContext.delete();
+			}
+			oModel.refresh(true);
 			// bindingContext.delete(); //works on create view
 			// //bindingContext.destroy(); //dont do nothing
 			// oTable.removeItem(oEvent.getParameter("listItem")); //also working but cause error when add line
