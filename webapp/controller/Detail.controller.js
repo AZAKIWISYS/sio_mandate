@@ -138,6 +138,8 @@ sap.ui.define([
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 
 			this.getModel("viewModel").setProperty("/view", "Detail");
+			var viewModel = this.getModel("viewModel");
+			viewModel.setProperty("/editable", false);
 
 			this.resetMessages();
 

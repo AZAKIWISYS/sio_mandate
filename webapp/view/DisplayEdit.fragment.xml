@@ -116,13 +116,22 @@
 										<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Location} === 'OUT' }"/>
 									</smartForm:GroupElement>
 									
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Bocit}" visible="{= ${Location} === 'IN' }"/>
-									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Cclas}" visible="{= ${Location} === 'OUT' }"/>
+										<smartField:SmartField value="{Bocit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} }"/>
 									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{RegionFrom}" visible="{= ${Location} === 'IN' &amp;&amp; !${viewModel>/editable} }"/>
+									</smartForm:GroupElement>
+									
+									
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Cclas}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} }"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{cclastx}" visible="{= ${Location} === 'OUT' &amp;&amp; !${viewModel>/editable} }"/>
+									</smartForm:GroupElement>
+									
 									
 									<!--<smartForm:GroupElement>-->
 									<!--	<smartField:SmartField value="{Mists}"/>-->
@@ -141,12 +150,19 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Dscit}" visible="{= ${Location} === 'IN' }"/>
+										<smartField:SmartField value="{Dscit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} }"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{RegionTo}" visible="{= ${Location} === 'IN' &amp;&amp; !${viewModel>/editable} }"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Land1}" visible="{= ${Location} === 'OUT' }"/>
+										<smartField:SmartField value="{Land1}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} }"/>
 									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField value="{Landx}" visible="{= ${Location} === 'OUT' &amp;&amp; !${viewModel>/editable} }"/>
+									</smartForm:GroupElement>
+									
 									
 								</smartForm:Group>
 								<smartForm:Group title="{i18n>MandateDetails}">
