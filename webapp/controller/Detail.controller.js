@@ -129,16 +129,18 @@ sap.ui.define([
 		 * @private
 		 */
 		_onObjectMatched: function (oEvent) {
-
+			var viewModel = this.getModel("viewModel");
 			//to save aupdates
 			this.getModel().setDefaultBindingMode("TwoWay");
 
 			var sObjectId = oEvent.getParameter("arguments").objectId;
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 
-			this.getModel("viewModel").setProperty("/view", "Detail");
-			var viewModel = this.getModel("viewModel");
+			viewModel.setProperty("/view", "Detail");
 			viewModel.setProperty("/editable", false);
+			// //simulate my inbox
+			// viewModel.setProperty("/view", "WFDetail");
+			// viewModel.setProperty("/editable", true);
 
 			this.resetMessages();
 
