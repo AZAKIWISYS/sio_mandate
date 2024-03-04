@@ -267,7 +267,6 @@ sap.ui.define([
 				Mists: "004",
 				Mitxt : oController.getResourceBundle().getText("Create")
 			};
-			debugger;
 			var oItemContext = oItemsBinding.create(initialData, true);
 			// end-user may edit item data in a dialog
 			// oCreateDialog.setBindingContext(oItemContext);
@@ -290,9 +289,6 @@ sap.ui.define([
 			// //bindingContext.destroy(); //dont do nothing
 			// oTable.removeItem(oEvent.getParameter("listItem")); //also working but cause error when add line
 			// obj.remove(); //generate error
-			debugger;
-			
-			
 			
 			// oTable.refreshAggregation("items");
 			// oModel.refresh();

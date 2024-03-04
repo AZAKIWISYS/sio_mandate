@@ -55,7 +55,6 @@ sap.ui.define([
 		// 	//here to set foooter hidden if no buttons shown
 		// 	var ObjectPageLayout = this.getView().byId("ObjectPageLayout");
 		// 	if(ObjectPageLayout){
-		// 		debugger;
 		// 		// ObjectPageLayout.setShowFooter(false);
 		// 	}
 		// },
@@ -265,7 +264,6 @@ sap.ui.define([
 			oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		},
 		deleteEmptylines: function(){
-			debugger;
 			var oLineItemTable = this.byId("lineItemsList");
 			// oEvent.getParameter("listItem").getBindingContext().delete();
 		},
@@ -321,7 +319,6 @@ sap.ui.define([
 			//reset changse
 			var oLineItemTable = this.byId("lineItemsList");
 			var oDataModel = this.getModel();
-			debugger;
 
 			// // oDataModel.getPendingChanges
 			// if(oDataModel.hasPendingChanges()){

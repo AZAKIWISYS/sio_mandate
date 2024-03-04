@@ -71,7 +71,6 @@ sap.ui.define([
 					// groupId: "createGroup",
 					// context: that.getView().getBindingContext(),
 					created: function onCreated(oContext) {
-						// debugger;
 						that.getView().setBindingContext(oContext);
 						that.getView().setBusy(false);
 						

@@ -119,7 +119,6 @@ sap.ui.define([
 			
 		},
 		onSearch: function(oEvent){
-			debugger;
 			var filterData = oEvent.getSource().getFilterData();
 			if(filterData && filterData.Pernr && filterData.Pernr.ranges){
 				var range = {
