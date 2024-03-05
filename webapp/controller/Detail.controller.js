@@ -136,11 +136,11 @@ sap.ui.define([
 			var sObjectId = oEvent.getParameter("arguments").objectId;
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 
-			// viewModel.setProperty("/view", "Detail");
-			// viewModel.setProperty("/editable", false);
+			viewModel.setProperty("/view", "Detail");
+			viewModel.setProperty("/editable", false);
 			//simulate my inbox
-			viewModel.setProperty("/view", "WFDetail");
-			viewModel.setProperty("/editable", true);
+			// viewModel.setProperty("/view", "WFDetail");
+			// viewModel.setProperty("/editable", true);
 
 			this.resetMessages();
 
