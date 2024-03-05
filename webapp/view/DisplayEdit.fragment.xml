@@ -17,7 +17,7 @@
 						<Title text="{Reqid}" wrapping="true"/>
 					</HBox>
 				</uxap:expandedHeading>
-				<uxap:snappedHeading>
+				<uxap:snappedHeading>s
 					<FlexBox fitContainer="true" alignItems="Center">
 						<Avatar src="sap-icon://travel-itinerary" displaySize="S" class="sapUiTinyMarginEnd"/>
 						<Title text="{Reqid}" wrapping="true"/>
@@ -97,13 +97,13 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Location} === 'OUT' }"/>
+										<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= ${Location} === 'OUT' &amp;&amp; ( !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
 									</smartForm:GroupElement>
 									
-									<smartForm:GroupElement visible="{= ${viewModel>/editable} }" >
+									<smartForm:GroupElement visible="{= ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }" >
 										<smartField:SmartField id="idMarsn" value="{Marsn}" />
 									</smartForm:GroupElement>
-									<smartForm:GroupElement visible="{= !${viewModel>/editable} }" >
+									<smartForm:GroupElement visible="{= !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' }" >
 										<smartField:SmartField id="idRsntx" value="{Rsntx}"/>
 									</smartForm:GroupElement>
 								</smartForm:Group>
@@ -113,23 +113,23 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= !${viewModel>/editable} &amp;&amp; ${Location} === 'OUT' }"/>
+										<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= ${Location} === 'OUT' &amp;&amp; ( !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
 									</smartForm:GroupElement>
 									
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Bocit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} }"/>
+										<smartField:SmartField value="{Bocit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{RegionFrom}" visible="{= ${Location} === 'IN' &amp;&amp; !${viewModel>/editable} }"/>
+										<smartField:SmartField value="{RegionFrom}" visible="{= ${Location} === 'IN' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail') }"/>
 									</smartForm:GroupElement>
 									
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Cclas}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} }"/>
+										<smartField:SmartField value="{Cclas}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{cclastx}" visible="{= ${Location} === 'OUT' &amp;&amp; !${viewModel>/editable} }"/>
+										<smartField:SmartField value="{cclastx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail')}"/>
 									</smartForm:GroupElement>
 									
 									
@@ -140,27 +140,27 @@
 								<smartForm:Group>
 									<smartForm:GroupElement>
 										<!--<Text id="idNumberOfDays"/>-->
-										<smartField:SmartField value="{NumberOfDays}" visible="{= !${viewModel>/editable} }"/>
+										<smartField:SmartField value="{NumberOfDays}" visible="{= !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' }"/>
 									</smartForm:GroupElement>
-									<smartForm:GroupElement visible="{= ${viewModel>/editable} }">
+									<smartForm:GroupElement visible="{= ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }">
 										<smartField:SmartField id="idLocation" value="{Location}" />
 									</smartForm:GroupElement>
-									<smartForm:GroupElement visible="{= !${viewModel>/editable} }">
+									<smartForm:GroupElement visible="{= !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' }">
 										<smartField:SmartField value="{LocationText}" />
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Dscit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} }"/>
+										<smartField:SmartField value="{Dscit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{RegionTo}" visible="{= ${Location} === 'IN' &amp;&amp; !${viewModel>/editable} }"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Land1}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} }"/>
+										<smartField:SmartField value="{Land1}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Landx}" visible="{= ${Location} === 'OUT' &amp;&amp; !${viewModel>/editable} }"/>
+										<smartField:SmartField value="{Landx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
 									</smartForm:GroupElement>
 									
 									
@@ -174,7 +174,7 @@
 										
 										<!--editable="{= ${Status} === 'NEW' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} !== 'X' }"-->
 										<TextArea id="idReason" value="{Reason}" placeholder="{i18n>MandateDetails}"
-											editable="{= ${viewModel>/editable} }"
+											editable="{= ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"
 											growing="true" growingMaxLines="7" width="100%"/>
 									</smartForm:GroupElement>
 									
@@ -186,7 +186,7 @@
 			</uxap:ObjectPageSection>
 			<!--<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" visible="{= ${viewModel>/view} === 'Detail' &amp;&amp; ${WorkItemFlag} === 'X' }">-->
 			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" 
-				visible="{= ${viewModel>/view} === 'WFDetail' }">
+				visible="{= ${viewModel>/view} === 'WFDetail' &amp;&amp; ${Qcnum} !== '' }">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
 						<uxap:blocks>
