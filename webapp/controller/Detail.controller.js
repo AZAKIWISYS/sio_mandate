@@ -136,11 +136,11 @@ sap.ui.define([
 			var sObjectId = oEvent.getParameter("arguments").objectId;
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 
-			viewModel.setProperty("/view", "Detail");
-			viewModel.setProperty("/editable", false);
-			// //simulate my inbox
-			// viewModel.setProperty("/view", "WFDetail");
-			// viewModel.setProperty("/editable", true);
+			// viewModel.setProperty("/view", "Detail");
+			// viewModel.setProperty("/editable", false);
+			//simulate my inbox
+			viewModel.setProperty("/view", "WFDetail");
+			viewModel.setProperty("/editable", true);
 
 			this.resetMessages();
 
@@ -496,13 +496,76 @@ sap.ui.define([
 		onPrint: function (oEvent) {
 			var bindingContext = this.getView().getBindingContext();
 			var Reqid = bindingContext.getProperty("Reqid");
-
+			
 			// var path = "https://sapps4h.sio.gov.sa:8001/" + this.getModel().sServiceUrl + "/MandPrintoutSet('" + Reqid + "')/$value";
-			var path = this.getModel().sServiceUrl + "/MandPrintoutSet('" + Reqid + "')/$value";
+			var oDataModel = this.getModel();
+			var path = oDataModel.sServiceUrl + "/MandPrintoutSet('" + Reqid + "')/$value";
 			this.getModel("printModel").setProperty("/Source", path);
-
-			//open print dialog
-			// load asynchronous XML fragment
+			
+			var functionConfirm = function(){
+				if(oDataModel.hasPendingChanges()){
+					//show confirmationDialog to save first
+					if (!this.oConfirmDialog) {
+						this.oConfirmDialog = new sap.m.Dialog({
+							type: sap.m.DialogType.Message,
+							state: ValueState.Warning,
+							title: this.getResourceBundle().getText("Confirm"),
+							// content: new Text({ text: "Do you want to submit this order?" }),
+							content: new sap.m.Text({
+								text: this.getResourceBundle().getText("confirmSaveMsg")
+							}),
+							beginButton: new sap.m.Button({
+								type: sap.m.ButtonType.Emphasized,
+								text: this.getResourceBundle().getText("Confirm"),
+								press: function () {
+									this.oConfirmDialog.close();
+									
+									// promise here to ensure saved success
+									var handleFulfilledA = function (e) {
+										debugger;
+										//if no response or response dont contain error
+										if( !e.__batchResponses[0].response || (e && e.__batchResponses && e.__batchResponses[0] && e.__batchResponses[0].response && e.__batchResponses[0].response.statusCode
+											&& e.__batchResponses[0].response.statusCode !== '400') ){ //if 400 request did not succeeded
+											
+											this._printDialog.open();
+										}
+										else{
+											this.messageBuilder(e);
+										}
+									}.bind(this);
+									var handleRejectedA = function (e) {
+										return false;
+									};
+									const myPromise = new Promise((resolve, reject)=>{
+									    oDataModel.submitChanges({
+										    success: (oData)=>{resolve(oData);},
+										    error: (oError)=>{reject(oError);}
+										});
+									});
+									myPromise.then(handleFulfilledA, handleRejectedA);
+					
+									// this.onSave();
+									// oDataModel.refresh(true);
+									
+									
+								}.bind(this)
+							}),
+							endButton: new sap.m.Button({
+								text: this.getResourceBundle().getText("Cancel"),
+								press: function () {
+									this.oConfirmDialog.close();
+								}.bind(this)
+							})
+						});
+					}
+					this.oConfirmDialog.open();
+				}
+				else{
+					this._printDialog.open();
+				}
+				
+			}.bind(this);
+			
 			if (!this._printDialog) {
 				sap.ui.core.Fragment.load({
 					id: this.getView().getId(),
@@ -528,11 +591,17 @@ sap.ui.define([
 					oDialog.setModel("printModel", printModel);
 					oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 					this._printDialog = oDialog;
-					oDialog.open();
+					// oDialog.open();
+				}.bind(this)).then(function (oEvent) {
+					//check here if hasPendingChanges?
+					functionConfirm();
 				}.bind(this));
-			} else {
-				this._printDialog.open();
 			}
+			else{
+				functionConfirm();
+			}
+			
+			
 
 		},
 		onNavBack: function () {
