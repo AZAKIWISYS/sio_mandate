@@ -17,7 +17,7 @@
 						<Title text="{Reqid}" wrapping="true"/>
 					</HBox>
 				</uxap:expandedHeading>
-				<uxap:snappedHeading>s
+				<uxap:snappedHeading>
 					<FlexBox fitContainer="true" alignItems="Center">
 						<Avatar src="sap-icon://travel-itinerary" displaySize="S" class="sapUiTinyMarginEnd"/>
 						<Title text="{Reqid}" wrapping="true"/>
