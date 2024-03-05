@@ -184,9 +184,10 @@
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
-			<!--<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" visible="{= ${viewModel>/view} === 'Detail' &amp;&amp; ${WorkItemFlag} === 'X' }">-->
+			
+			<!--visible="{= ${viewModel>/view} === 'WFDetail' &amp;&amp; ${Qcnum} !== '' }"-->
 			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" 
-				visible="{= ${viewModel>/view} === 'WFDetail' &amp;&amp; ${Qcnum} !== '' }">
+				visible="{= ${Qcnum} !== '' }">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
 						<uxap:blocks>
@@ -199,7 +200,9 @@
 								<!--<smartForm:Group label="{i18n>QararInfo}">-->
 								<smartForm:Group>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Qcnum}" />
+										
+										<Link text="{Qcnum}" press="onPrint" />
+										<!--<smartField:SmartField value="{Qcnum}" />-->
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField  value="{Qrbda}" editable="{viewModel>/editable}"/>
@@ -242,13 +245,20 @@
 									<Column>
 										<Text text="{i18n>PositionText}"/>
 									</Column>
-									<Column>
+									<Column visible="{= ${viewModel>/editable} }">
+										<Text text="{i18n>Mdtyp}"/>
+									</Column>
+									<Column visible="{= !${viewModel>/editable} }">
 										<Text text="{i18n>Mdtyp}"/>
 									</Column>
 									<Column>
 										<Text text="{i18n>Mists}"/>
 									</Column>
-									<Column visible="{= ${Status} !== 'NEW' }">
+									<!--${Status} !== 'NEW' &amp;&amp; ${viewModel>/view} === 'WFDetail'-->
+									<Column visible="{= ${Status} !== 'NEW' &amp;&amp; ${viewModel>/editable} }">
+										<Text text="{i18n>Approved}"/>
+									</Column>
+									<Column visible="{= ${Status} !== 'NEW' &amp;&amp; !${viewModel>/editable} }">
 										<Text text="{i18n>Approved}"/>
 									</Column>
 								</columns>
@@ -261,9 +271,11 @@
 											<smartField:SmartField value="{PositionText}" editable="{viewModel>/editable}" textInEditModeSource="ValueList"/>
 											<smartField:SmartField value="{Mdtyp}" 
 												editable="{= ${viewModel>/editable} || ( ${CurrentTask} === 'TS99900016' || ${CurrentTask} === 'TS99900017' || ${CurrentTask} === 'TS99900018' ) }"/>
+											<smartField:SmartField value="{Mdtyt}" editable="false"/>
 											<smartField:SmartField value="{Mitxt}" enabled="false"/>
 											<!--<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} &amp;&amp; ${WorkItemFlag} === 'X' }"/>-->
-											<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} &amp;&amp; ${viewModel>/view} === 'WFDetail' }"/>
+											<smartField:SmartField value="{Approved}" editable="{= ${viewModel>/editable} }"/>
+											<smartField:SmartField value="{ApprovedText}" editable="false"/>
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -333,8 +345,8 @@
 					visible="{= !${viewModel>/editable} &amp;&amp; ${Status} === 'NEW' }" press=".onSubmit" icon="sap-icon://complete" type="Accept"/>
 				
 				<!--<Button id="submitButton" text="{i18n>Submit}" press=".onSubmit" icon="sap-icon://complete" type="Accept"/>-->
-				<Button id="printButton" text="{i18n>QararPrint}" press=".onPrint" icon="sap-icon://print" type="Transparent"
-					visible="{= !${viewModel>/editable} &amp;&amp; ${CurrentTask} === 'TS99900012' }" />
+				<!--<Button id="printButton" text="{i18n>QararPrint}" press=".onPrint" icon="sap-icon://print" type="Transparent"-->
+				<!--	visible="{= !${viewModel>/editable} &amp;&amp; ${CurrentTask} === 'TS99900012' }" />-->
 					
 			</OverflowToolbar>
 		</uxap:footer>
