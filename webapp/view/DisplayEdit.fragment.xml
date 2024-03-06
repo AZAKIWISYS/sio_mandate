@@ -75,9 +75,38 @@
 					</customContent>
 					</ObjectAttribute>
 				</layout:VerticalLayout>
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<ObjectAttribute title="{i18n>MandateDays}" id="idMadur" text="{Madur}" />
+					<ObjectAttribute title="{i18n>MissionDays}" id="idDudif" text="{Dudif}" />
+				</layout:VerticalLayout>
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<ObjectAttribute title="{i18n>TravelBefore}" id="idNmdys" text="{Nmdys}" />
+					<ObjectAttribute title="{i18n>TravelAfter}" id="idTrdsa" text="{Trdsa}" />
+				</layout:VerticalLayout>
 			</FlexBox>
 		</uxap:headerContent>
 		<uxap:sections>
+			<uxap:ObjectPageSection titleUppercase="false" id="idMissionData" title="{i18n>MissionData}">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="section3_SS5" title=" " titleUppercase="false">
+						<uxap:blocks>
+							<smartForm:SmartForm id="smartFormColumn_1" editable="{= ${viewModel>/editable} &amp;&amp; ( ${viewModel>/view} === 'Detail' || ${viewModel>/view} === 'Create' ) }" editTogglable="false" validationMode="Async" editToggled="handleEditToggled">
+								<smartForm:layout>
+									<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
+								</smartForm:layout>
+								<smartForm:Group>
+									<smartForm:GroupElement>
+									<smartField:SmartField id="idMissBegda" value="{MissBegda}" change="mandateCalculation"/>
+									</smartForm:GroupElement>
+									<smartForm:GroupElement>
+										<smartField:SmartField id="idMissEndda" value="{MissEndda}" change="mandateCalculation"/>
+									</smartForm:GroupElement>
+								</smartForm:Group>
+							</smartForm:SmartForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
 			<uxap:ObjectPageSection titleUppercase="false" id="HeaderSec" title="{i18n>MandateData}">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS1" title=" " titleUppercase="false">
@@ -93,7 +122,7 @@
 										<smartField:SmartField value="{Reqid}"/>
 									</smartForm:GroupElement> -->
 									<smartForm:GroupElement>
-										<smartField:SmartField id="idBegda" value="{Begda}" change="dateChange"/>
+										<smartField:SmartField id="idBegda" editable="false" value="{Begda}" change="dateChange"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
@@ -109,7 +138,7 @@
 								</smartForm:Group>
 								<smartForm:Group>
 									<smartForm:GroupElement>
-										<smartField:SmartField id="idEndda" value="{Endda}" change="dateChange"/>
+										<smartField:SmartField id="idEndda" editable="false" value="{Endda}" change="dateChange"/>
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
@@ -157,7 +186,7 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Land1}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
+										<smartField:SmartField id="idLand1" value="{Land1}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }" change="mandateCalculation"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{Landx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
