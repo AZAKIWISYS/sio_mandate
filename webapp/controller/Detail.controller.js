@@ -105,11 +105,12 @@ sap.ui.define([
 			var sTitle,
 				iTotalItems = oEvent.getParameter("total"),
 				oViewModel = this.getModel("viewModel");
+				
 
 			// only update the counter if the length is final
 			if (this.byId("lineItemsList").getBinding("items").isLengthFinal()) {
-				if (iTotalItems) {
-					sTitle = this.getResourceBundle().getText("detailLineItemTableHeadingCount", [iTotalItems]);
+				if (oEvent.getSource().getVisibleItems().length) {
+					sTitle = this.getResourceBundle().getText("detailLineItemTableHeadingCount", [oEvent.getSource().getVisibleItems().length]);
 				} else {
 					//Display 'Line Items' instead of 'Line items (0)'
 					sTitle = this.getResourceBundle().getText("detailLineItemTableHeading");
