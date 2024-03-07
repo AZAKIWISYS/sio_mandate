@@ -139,6 +139,7 @@ sap.ui.define([
 
 			viewModel.setProperty("/view", "Detail");
 			viewModel.setProperty("/editable", false);
+			
 			//simulate my inbox
 			// viewModel.setProperty("/view", "WFDetail");
 			// viewModel.setProperty("/editable", true);
@@ -164,7 +165,7 @@ sap.ui.define([
 
 			viewModel.setProperty("/view", "WFDetail");
 			viewModel.setProperty("/editable", true);
-
+			
 			//set models in core level to be able to access them from my inbox app (S3Custom.controller.js)
 			sap.ui.getCore().setModel(this.getModel(), "mandateModel");
 			sap.ui.getCore().setModel(viewModel, "viewModel");
@@ -266,10 +267,6 @@ sap.ui.define([
 			// Restore original busy indicator delay for the detail view
 			oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		},
-		deleteEmptylines: function(){
-			var oLineItemTable = this.byId("lineItemsList");
-			// oEvent.getParameter("listItem").getBindingContext().delete();
-		},
 		onCancel: function (oEvent) {
 			// debugger;
 			var viewModel = this.getModel("viewModel");
@@ -289,7 +286,6 @@ sap.ui.define([
 							press: function () {
 								viewModel.setProperty("/editable", false);
 								this.oApproveDialog.close();
-								this.deleteEmptylines();
 								this.getModel().resetChanges();
 								// this.getModel().deleteCreatedEntry(this.oContext);
 								this.getModel().refresh(true);
@@ -383,7 +379,7 @@ sap.ui.define([
 			oDataModel.resetChanges();
 			// oDataModel.refresh(true);
 			oLineItemTable.getBinding("items").resetData();
-			oLineItemTable.getBinding("items").refresh(true)
+			oLineItemTable.getBinding("items").refresh(true);
 			oDataModel.updateBindings(true);
 
 			// }
@@ -392,7 +388,9 @@ sap.ui.define([
 		onSave: function (oEvent) {
 			var viewModel = this.getModel("viewModel");
 			viewModel.setProperty("/editable", false);
-
+			
+			var oLineItemTable = this.byId("lineItemsList");
+			
 			//save request
 			var that = this;
 			var oModel = this.getModel();
@@ -406,8 +404,12 @@ sap.ui.define([
 
 					// sap.m.MessageToast.show(SuccessMessage);
 					that.messageBuilder(oData, 'Update');
-
-					// that.navtoDetail(oData.Reqid);s
+					//refresh
+					
+					oLineItemTable.getBinding("items").refresh(true)
+					that.getModel().refresh(true);
+					that.getView().getElementBinding().refresh(true);
+					// that.navtoDetail(oData.Reqid);
 				},
 				error: function onError(oError) {
 					that.messageBuilder(oError);

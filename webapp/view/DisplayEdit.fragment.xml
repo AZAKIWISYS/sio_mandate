@@ -216,7 +216,7 @@
 			
 			<!--visible="{= ${viewModel>/view} === 'WFDetail' &amp;&amp; ${Qcnum} !== '' }"-->
 			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}" 
-				visible="{= ${Qcnum} !== '' }">
+				visible="{= ${Status} !== 'NEW' &amp;&amp; ${Qcnum} !== '' }">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
 						<uxap:blocks>

@@ -265,7 +265,7 @@ sap.ui.define([
 				Reqno: Reqno,
 				Pernr: "",
 				Mists: "004",
-				Mitxt : oController.getResourceBundle().getText("Create")
+				Mitxt : oController.getResourceBundle().getText("NEWREQUEST")
 			};
 			var oItemContext = oItemsBinding.create(initialData, true);
 			// end-user may edit item data in a dialog
@@ -441,29 +441,28 @@ sap.ui.define([
 				"Missbegda": oView.getBindingContext().getProperty('MissBegda')?oView.getBindingContext().getProperty('MissBegda'): new Date(),
 				"Missendda": oView.getBindingContext().getProperty('MissEndda')?oView.getBindingContext().getProperty('MissEndda'): new Date(),
 				"Land1": oView.getBindingContext().getProperty('Land1')?oView.getBindingContext().getProperty('Land1'):''
-
 			}
 			oViewModel.setProperty("/busy", true);
 			oController.getModel().callFunction("/MandCalculate", {
-								method: "POST",
-								urlParameters: oMandCalc,
-								refreshAfterChange: false,
-								success: function onSuccess(oData, oResponse) {
-									console.log(oData);
-									oViewModel.setProperty("/busy", false);
-									oView.byId("idBegda").setValue(oData.MandCalculate.Begda);
-									oView.byId("idEndda").setValue(oData.MandCalculate.Endda);
-									oView.byId("idMadur").setText(oData.MandCalculate.Madur);
-									oView.byId("idDudif").setText(oData.MandCalculate.Dudif);
-									oView.byId("idNmdys").setText(oData.MandCalculate.Nmdys);
-									oView.byId("idTrdsa").setText(oData.MandCalculate.Trdsa);
-									sap.m.MessageToast.show(oController.getResourceBundle().getText("MandateDatesUpdated"));
-								},
-								error: function onError(oError) {
-									oController.messageBuilder(oError);
-									oViewModel.setProperty("/busy", false);
-								}
-							});
+				method: "POST",
+				urlParameters: oMandCalc,
+				refreshAfterChange: false,
+				success: function onSuccess(oData, oResponse) {
+					console.log(oData);
+					oViewModel.setProperty("/busy", false);
+					oView.byId("idBegda").setValue(oData.MandCalculate.Begda);
+					oView.byId("idEndda").setValue(oData.MandCalculate.Endda);
+					oView.byId("idMadur").setText(oData.MandCalculate.Madur);
+					oView.byId("idDudif").setText(oData.MandCalculate.Dudif);
+					oView.byId("idNmdys").setText(oData.MandCalculate.Nmdys);
+					oView.byId("idTrdsa").setText(oData.MandCalculate.Trdsa);
+					sap.m.MessageToast.show(oController.getResourceBundle().getText("MandateDatesUpdated"));
+				},
+				error: function onError(oError) {
+					oController.messageBuilder(oError);
+					oViewModel.setProperty("/busy", false);
+				}
+			});
 		}
 
 	});
