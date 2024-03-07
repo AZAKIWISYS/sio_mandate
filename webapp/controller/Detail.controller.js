@@ -387,7 +387,6 @@ sap.ui.define([
 		},
 		onSave: function (oEvent) {
 			var viewModel = this.getModel("viewModel");
-			viewModel.setProperty("/editable", false);
 			
 			var oLineItemTable = this.byId("lineItemsList");
 			
@@ -396,26 +395,41 @@ sap.ui.define([
 			var oModel = this.getModel();
 			var SuccessMessage = this.getResourceBundle().getText("editSuccessMessage");
 			var ErrorMessage = this.getResourceBundle().getText("editErrorMessage");
+			var noChangesToSave = this.getResourceBundle().getText("noChangesToSave");
 
 			// this.getModel().setDeferredGroups(["createGroup"]);
-			oModel.submitChanges({
-				// groupId: "createGroup",
-				success: function onSuccess(oData, oResponse) {
-
-					// sap.m.MessageToast.show(SuccessMessage);
-					that.messageBuilder(oData, 'Update');
-					//refresh
-					
-					oLineItemTable.getBinding("items").refresh(true)
-					that.getModel().refresh(true);
-					that.getView().getElementBinding().refresh(true);
-					// that.navtoDetail(oData.Reqid);
-				},
-				error: function onError(oError) {
-					that.messageBuilder(oError);
-					// sap.m.MessageToast.show(ErrorMessage);
-				}
-			});
+			if(oModel.hasPendingChanges()){
+				oModel.submitChanges({
+					// groupId: "createGroup",
+					success: function onSuccess(oData, oResponse) {
+						if( !oData.__batchResponses[0].response || (oData && oData.__batchResponses && oData.__batchResponses[0] && oData.__batchResponses[0].response 
+							&& oData.__batchResponses[0].response.statusCode && oData.__batchResponses[0].response.statusCode !== '400') ){ //if 400 request did not succeeded
+							
+							viewModel.setProperty("/editable", false);
+							// sap.m.MessageToast.show(SuccessMessage);
+							that.messageBuilder(oData, 'Update');
+							//refresh
+							
+							oLineItemTable.getBinding("items").refresh(true);
+							that.getModel().refresh(true);
+							that.getView().getElementBinding().refresh(true);
+							// that.navtoDetail(oData.Reqid);
+								
+						}
+						else{
+							//show error messages
+							that.messageBuilder(oData,);
+						}
+					},
+					error: function onError(oError) {
+						that.messageBuilder(oError);
+						// sap.m.MessageToast.show(ErrorMessage);
+					}
+				});
+			}
+			else{
+				sap.m.MessageToast.show(noChangesToSave);
+			}
 
 		},
 		onEdit: function (oEvent) {
