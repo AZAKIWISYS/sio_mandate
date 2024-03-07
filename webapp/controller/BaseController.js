@@ -434,42 +434,34 @@ sap.ui.define([
 		mandateCalculation: function (oEvent){
 			var oController = this;
 			var oView = oController.getView();
+			var oViewModel = oController.getModel("viewModel");
 			var oModel = oController.getModel();
 			var sSourceId = oEvent.getSource().getId();
-			// var oMandMap = {
-			// 	"idMissBegda" : "Missbegda",
-			// 	"idMissEndda" : "Missendda",
-			// 	"idLand1" : "Land1"
-			// }
 			var oMandCalc = {
 				"Missbegda": oView.getBindingContext().getProperty('MissBegda')?oView.getBindingContext().getProperty('MissBegda'): new Date(),
 				"Missendda": oView.getBindingContext().getProperty('MissEndda')?oView.getBindingContext().getProperty('MissEndda'): new Date(),
 				"Land1": oView.getBindingContext().getProperty('Land1')?oView.getBindingContext().getProperty('Land1'):''
 
 			}
-			// Object.keys(oMandMap).forEach(function(oKey){
-			// 	oMandCalc[oMandMap[oKey]] = (oView.byId(oKey).getValue());//?oView.byId(oKey).getValue():'';
-			// });
-			oView.setBusy(true);
-			debugger;
+			oViewModel.setProperty("/busy", true);
 			oController.getModel().callFunction("/MandCalculate", {
 								method: "POST",
 								urlParameters: oMandCalc,
 								refreshAfterChange: false,
 								success: function onSuccess(oData, oResponse) {
 									console.log(oData);
-									oView.setBusy(false);
+									oViewModel.setProperty("/busy", false);
 									oView.byId("idBegda").setValue(oData.MandCalculate.Begda);
 									oView.byId("idEndda").setValue(oData.MandCalculate.Endda);
 									oView.byId("idMadur").setText(oData.MandCalculate.Madur);
 									oView.byId("idDudif").setText(oData.MandCalculate.Dudif);
 									oView.byId("idNmdys").setText(oData.MandCalculate.Nmdys);
 									oView.byId("idTrdsa").setText(oData.MandCalculate.Trdsa);
-									sap.m.MessageToast.show("Dates updated");
+									sap.m.MessageToast.show(oController.getResourceBundle().getText("MandateDatesUpdated"));
 								},
 								error: function onError(oError) {
 									oController.messageBuilder(oError);
-									oView.setBusy(false);
+									oViewModel.setProperty("/busy", false);
 								}
 							});
 		}
