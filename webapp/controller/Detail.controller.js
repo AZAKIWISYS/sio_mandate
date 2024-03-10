@@ -498,7 +498,11 @@ sap.ui.define([
 						press: function () {
 							this.oApproveSubmitDialog.close();
 						}.bind(this)
-					})
+					}),
+					afterClose: function(e){
+						this.oApproveSubmitDialog.destroy();
+						this.oApproveSubmitDialog = null;
+					}.bind(this)
 				});
 			}
 

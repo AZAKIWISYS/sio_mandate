@@ -238,7 +238,29 @@ sap.ui.define([
 					oMsgModel.setProperty("/messageSet", error);
 					oController.initMessagePopup();
 				}
-			} else {
+			}
+			else if(oData.responseText){
+				var error = JSON.parse(oData.responseText).error;
+				if(!error) return false;
+				var aError = [error];
+				
+				
+				aError.map(function (oValue) {
+					if(oValue.innererror && oValue.innererror.errordetails && oValue.innererror.errordetails[0] && oValue.innererror.errordetails[0].severity){
+						oValue.type = oValue.innererror.errordetails[0].severity;
+						oValue.type = oValue.type.charAt(0).toUpperCase() + oValue.type.slice(1);
+					}
+					
+					// oValue.type = 'Error';
+					oValue.counter = 1;
+					oValue.message = oValue.message.value;
+					return oValue;
+				});
+				oMsgModel.setProperty("/messageSet", aError);
+				oController.initMessagePopup();
+				
+			}
+			else {
 				if (Action && Action == "Update") {
 					var SuccessMessage = this.getResourceBundle().getText("saveSuccessMessage");
 					sap.m.MessageToast.show(SuccessMessage);
