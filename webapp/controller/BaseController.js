@@ -334,12 +334,14 @@ sap.ui.define([
 				success: function (oData, oResponse) {
 					if (oData.results.length > 0) {
 						let oIconsMap = {
-							0: "sap-icon://create-form"
+							0: "sap-icon://create-form",
+							"A": "sap-icon://employee-approvals",
+							"R": "sap-icon://employee-rejections"
 						}
 						let lanes = oData.results.map(function (oValue, index) {
 							return {
 								"id": index.toString(),
-								"icon": (oIconsMap[index]) ? oIconsMap[index] : (oValue.Decision === "A")? "sap-icon://employee-approvals" : "sap-icon://employee-rejections",
+								"icon": (oIconsMap[index]) ? oIconsMap[index] : (oIconsMap[oValue.Decision])? oIconsMap[oValue.Decision] : "sap-icon://person-placeholder",
 								"label": oValue.Username,
 								"position": parseInt(index)
 							};
