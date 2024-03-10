@@ -26,7 +26,8 @@
                      </smartFilterBar:ControlConfiguration>
                      
 					<smartFilterBar:ControlConfiguration id="Status" key="Status" visibleInAdvancedArea="true"/>
-					<smartFilterBar:ControlConfiguration id="Land1" key="Land1" visibleInAdvancedArea="true"/>
+					<!--<smartFilterBar:ControlConfiguration id="Land1" key="Land1" visibleInAdvancedArea="true"/>-->
+					<smartFilterBar:ControlConfiguration id="Cacnt" key="Cacnt" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Qrbda" key="Qrbda" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Begda" key="Begda" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Endda" key="Endda" visibleInAdvancedArea="true"/>
@@ -57,7 +58,8 @@
 				useExportToExcel="true" beforeExport="onBeforeExport" useTablePersonalisation="true"
 				header="{i18n>Requests}" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" 
 				class="sapUiResponsiveContentPadding" editTogglable="false" app:useSmartToggle="true"
-				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqid,Qcnum,Status,Begda,Endda,Rsntx,Landx">
+				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqid,Qcnum,Status,Begda,Endda,Rsntx,cacnx">
+				<!--Landx-->
 				
 				<Table mode="SingleSelectMaster" selectionChange=".onSelectionChange"></Table>
 				
