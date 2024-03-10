@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<QuickView id="quickView">
+		<QuickViewPage
+			header="{viewModel>title}"
+			title="{viewModel>texts}"
+			description="{viewModel>Comments}">
+			<avatar>
+				<Avatar src="{viewModel>icon}" backgroundColor="Transparent" />
+			</avatar>
+		</QuickViewPage>
+	</QuickView>
+</core:FragmentDefinition>

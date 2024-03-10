@@ -3,13 +3,10 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/ui/model/json/JSONModel",
 	'sap/m/MessagePopover',
-	'sap/m/MessageItem'
-], function (Controller, History, JSONModel, MessagePopover, MessageItem) {
+	'sap/m/MessageItem',
+	'sap/ui/core/Fragment'
+], function (Controller, History, JSONModel, MessagePopover, MessageItem, Fragment) {
 	"use strict";
-	
-	
-	
-
 
 	return Controller.extend("sio.hcm.mandate.controller.BaseController", {
 		oMessagePopover: new MessageItem({
@@ -19,7 +16,7 @@ sap.ui.define([
 			description: '{msgModel>message}',
 			subtitle: '{msgModel>message}',
 			counter: '{msgModel>counter}'
-			// link: oLink
+				// link: oLink
 		}),
 		/**
 		 * Convenience method for accessing the router in every controller of the application.
@@ -97,7 +94,6 @@ sap.ui.define([
 				counter: '{msgModel>counter}'
 			});
 
-
 			this.oMessagePopover = new MessagePopover({
 				items: {
 					path: 'msgModel>/messageSet',
@@ -109,8 +105,7 @@ sap.ui.define([
 						if (target.lastIndexOf("Pernr")) {
 							oController.byId("lineItemsList").getItems()[parseInt(target.replace(/\D/g, "")) - 1].getCells()[0].focus();
 						}
-					}
-					else{
+					} else {
 						oController.getView().byId(target).focus();
 					}
 					oController.oMessagePopover.close();
@@ -129,18 +124,19 @@ sap.ui.define([
 
 			aMessages.forEach(function (sMessage) {
 				switch (sMessage.type) {
-					case "Error":
-						sHighestSeverityIcon = "Negative";
-						break;
-					case "Warning":
-						sHighestSeverityIcon = sHighestSeverityIcon !== "Negative" ? "Critical" : sHighestSeverityIcon;
-						break;
-					case "Success":
-						sHighestSeverityIcon = sHighestSeverityIcon !== "Negative" && sHighestSeverityIcon !== "Critical" ? "Success" : sHighestSeverityIcon;
-						break;
-					default:
-						sHighestSeverityIcon = !sHighestSeverityIcon ? "Neutral" : sHighestSeverityIcon;
-						break;
+				case "Error":
+					sHighestSeverityIcon = "Negative";
+					break;
+				case "Warning":
+					sHighestSeverityIcon = sHighestSeverityIcon !== "Negative" ? "Critical" : sHighestSeverityIcon;
+					break;
+				case "Success":
+					sHighestSeverityIcon = sHighestSeverityIcon !== "Negative" && sHighestSeverityIcon !== "Critical" ? "Success" :
+						sHighestSeverityIcon;
+					break;
+				default:
+					sHighestSeverityIcon = !sHighestSeverityIcon ? "Neutral" : sHighestSeverityIcon;
+					break;
 				}
 			});
 
@@ -155,20 +151,21 @@ sap.ui.define([
 			var sHighestSeverityMessageType;
 
 			switch (sHighestSeverityIconType) {
-				case "Negative":
-					sHighestSeverityMessageType = "Error";
-					break;
-				case "Critical":
-					sHighestSeverityMessageType = "Warning";
-					break;
-				case "Success":
-					sHighestSeverityMessageType = "Success";
-					break;
-				default:
-					sHighestSeverityMessageType = !sHighestSeverityMessageType ? "Information" : sHighestSeverityMessageType;
-					break;
+			case "Negative":
+				sHighestSeverityMessageType = "Error";
+				break;
+			case "Critical":
+				sHighestSeverityMessageType = "Warning";
+				break;
+			case "Success":
+				sHighestSeverityMessageType = "Success";
+				break;
+			default:
+				sHighestSeverityMessageType = !sHighestSeverityMessageType ? "Information" : sHighestSeverityMessageType;
+				break;
 			}
-			oMsgModel.setProperty("/highestSeverityMessages", oMsgModel.getProperty("/messageSet").reduce(function (iNumberOfMessages, oMessageItem) {
+			oMsgModel.setProperty("/highestSeverityMessages", oMsgModel.getProperty("/messageSet").reduce(function (iNumberOfMessages,
+				oMessageItem) {
 				return oMessageItem.type === sHighestSeverityMessageType ? ++iNumberOfMessages : iNumberOfMessages;
 			}, 0));
 		},
@@ -181,18 +178,18 @@ sap.ui.define([
 
 			aMessages.forEach(function (sMessage) {
 				switch (sMessage.type) {
-					case "Error":
-						sIcon = "sap-icon://error";
-						break;
-					case "Warning":
-						sIcon = sIcon !== "sap-icon://error" ? "sap-icon://alert" : sIcon;
-						break;
-					case "Success":
-						sIcon = sIcon !== "sap-icon://error" && sIcon !== "sap-icon://alert" ? "sap-icon://sys-enter-2" : sIcon;
-						break;
-					default:
-						sIcon = !sIcon ? "sap-icon://information" : sIcon;
-						break;
+				case "Error":
+					sIcon = "sap-icon://error";
+					break;
+				case "Warning":
+					sIcon = sIcon !== "sap-icon://error" ? "sap-icon://alert" : sIcon;
+					break;
+				case "Success":
+					sIcon = sIcon !== "sap-icon://error" && sIcon !== "sap-icon://alert" ? "sap-icon://sys-enter-2" : sIcon;
+					break;
+				default:
+					sIcon = !sIcon ? "sap-icon://information" : sIcon;
+					break;
 				}
 			});
 			oMsgModel.setProperty("/messageButtonIcon", sIcon);
@@ -208,7 +205,7 @@ sap.ui.define([
 		resetMessages: function () {
 			//clear messageSet property
 			var oMsgModel = this.getModel("msgModel");
-			if(oMsgModel){
+			if (oMsgModel) {
 				oMsgModel.setProperty("/messageSet", []);
 			}
 			this.initMessagePopup();
@@ -221,7 +218,7 @@ sap.ui.define([
 				if (JSON.parse(oData.__batchResponses[0].response.body).error) {
 					var err = JSON.parse(oData.__batchResponses[0].response.body).error.innererror;
 					var error = err.errordetails;
-					if(!error) return false;
+					if (!error) return false;
 					error.map(function (oValue) {
 						oValue.counter = 1;
 						oValue.type = oValue.severity.charAt(0).toUpperCase() + oValue.severity.slice(1);
@@ -229,11 +226,11 @@ sap.ui.define([
 						if (oValue.target && oView.byId(oValue.target)) {
 							oView.byId(oValue.target).setValueState(oValue.type);
 							oView.byId(oValue.target).setValueStateText(oValue.message);
-						}
-						else if (oValue.target.lastIndexOf("to_items") > -1) {
+						} else if (oValue.target.lastIndexOf("to_items") > -1) {
 							if (oValue.target.lastIndexOf("Pernr")) {
 								oView.byId("lineItemsList").getItems()[parseInt(oValue.target.replace(/\D/g, "")) - 1].getCells()[0].setValueState(oValue.type);
-								oView.byId("lineItemsList").getItems()[parseInt(oValue.target.replace(/\D/g, "")) - 1].getCells()[0].setValueStateText(oValue.message);
+								oView.byId("lineItemsList").getItems()[parseInt(oValue.target.replace(/\D/g, "")) - 1].getCells()[0].setValueStateText(
+									oValue.message);
 							}
 						}
 						return oValue;
@@ -241,9 +238,8 @@ sap.ui.define([
 					oMsgModel.setProperty("/messageSet", error);
 					oController.initMessagePopup();
 				}
-			}
-			else{
-				if(Action && Action == "Update"){
+			} else {
+				if (Action && Action == "Update") {
 					var SuccessMessage = this.getResourceBundle().getText("saveSuccessMessage");
 					sap.m.MessageToast.show(SuccessMessage);
 				}
@@ -255,17 +251,17 @@ sap.ui.define([
 			// var oItemsTable = oEvent.getSource().getParent().getParent();
 			var oItemsBinding = oItemsTable.getBinding("items");
 			// var oModel = this.getView().getModel();
-			
+
 			var Reqid = this.getModel().getProperty("/Reqid");
 			var Reqno = this.getModel().getProperty("/Reqno");
-			
+
 			// create transient context for subentity (sales order line item) and display it in the items table
 			var initialData = {
 				Reqid: Reqid,
 				Reqno: Reqno,
 				Pernr: "",
 				Mists: "004",
-				Mitxt : oController.getResourceBundle().getText("NEWREQUEST")
+				Mitxt: oController.getResourceBundle().getText("NEWREQUEST")
 			};
 			var oItemContext = oItemsBinding.create(initialData, true);
 			// end-user may edit item data in a dialog
@@ -278,10 +274,10 @@ sap.ui.define([
 			var oTable = this.byId("lineItemsList");
 			var oItemsBinding = oTable.getBinding("items");
 			var obj = oModel.getObject(path);
-			
-			if(obj.Reqid){
-				oModel.setProperty(path+"/Deleted",true);
-			}else{
+
+			if (obj.Reqid) {
+				oModel.setProperty(path + "/Deleted", true);
+			} else {
 				bindingContext.delete();
 			}
 			oModel.refresh(true);
@@ -289,7 +285,7 @@ sap.ui.define([
 			// //bindingContext.destroy(); //dont do nothing
 			// oTable.removeItem(oEvent.getParameter("listItem")); //also working but cause error when add line
 			// obj.remove(); //generate error
-			
+
 			// oTable.refreshAggregation("items");
 			// oModel.refresh();
 		},
@@ -322,125 +318,155 @@ sap.ui.define([
 			var oModel = this.getModel();
 			var oSource = oEvent.getSource();
 			var sPath = oSource.getParent().getBindingContext().getPath();
-			var oSelected = oModel.getProperty("/ZI_MANAGERSEMPS('"+oEvent.getParameter("newValue")+"')");
-			oModel.setProperty( sPath + "/PersonFullName", oSelected.PersonFullName );
-			oModel.setProperty( sPath + "/OragnizationalUnitText", oSelected.OragnizationalUnitText );
-			oModel.setProperty( sPath + "/PositionText", oSelected.PositionText );
+			var oSelected = oModel.getProperty("/ZI_MANAGERSEMPS('" + oEvent.getParameter("newValue") + "')");
+			oModel.setProperty(sPath + "/PersonFullName", oSelected.PersonFullName);
+			oModel.setProperty(sPath + "/OragnizationalUnitText", oSelected.OragnizationalUnitText);
+			oModel.setProperty(sPath + "/PositionText", oSelected.PositionText);
 			// this.byId("lineItemsList").getBinding("items").refresh();
 		},
-		buildApprovalProcess: function(sReqId){
+		buildApprovalProcess: function (sReqId) {
 			var oController = this;
 			var oModel = this.getModel();
 			var oViewModel = this.getModel("viewModel");
-			var oFilter = new sap.ui.model.Filter("RequestId", sap.ui.model.FilterOperator.EQ, (sReqId)?sReqId:"");
-			oModel.read("/ApprovalProcessSet",{
-				filters:[oFilter],
-				success: function(oData,oResponse){
-					if( oData.results.length > 0){
+			var oFilter = new sap.ui.model.Filter("RequestId", sap.ui.model.FilterOperator.EQ, (sReqId) ? sReqId : "");
+			oModel.read("/ApprovalProcessSet", {
+				filters: [oFilter],
+				success: function (oData, oResponse) {
+					if (oData.results.length > 0) {
 						let oIconsMap = {
-							0 : "sap-icon://create-form"
+							0: "sap-icon://create-form"
 						}
-						let lanes = oData.results.map(function(oValue,index){
+						let lanes = oData.results.map(function (oValue, index) {
 							return {
 								"id": index.toString(),
-								"icon": (oIconsMap[index])? oIconsMap[index]: "sap-icon://employee-approvals",
+								"icon": (oIconsMap[index]) ? oIconsMap[index] : (oValue.Decision === "A")? "sap-icon://employee-approvals" : "sap-icon://employee-rejections",
 								"label": oValue.Username,
 								"position": parseInt(index)
 							};
 						});
-						oViewModel.setProperty("/lanes",lanes);
+						oViewModel.setProperty("/lanes", lanes);
 						let oStateMap = {
-							"A" : "Positive",
-							"R" : "Negative"
+							"A": "Positive",
+							"R": "Negative"
+						};
+						let oIconMap = {
+							"A": "sap-icon://employee-approvals",
+							"R": "sap-icon://employee-rejections"
 						};
 						let oStateTextMap = {
-							"A" : oController.getResourceBundle().getText("Approved"),
-							"R" : oController.getResourceBundle().getText("Rejected")
+							"A": oController.getResourceBundle().getText("Approved"),
+							"R": oController.getResourceBundle().getText("Rejected")
 						};
-						let nodes =oData.results.map(function(oValue,index){
+						let nodes = oData.results.map(function (oValue, index) {
 							return {
-								"id": (index*10).toString(),
+								"id": (index * 10).toString(),
 								"lane": index.toString(),
-								"title": (oValue.Fullname)?oValue.Fullname:oValue.Username,
+								"title": (oValue.Fullname) ? oValue.Fullname : oValue.Username,
 								"titleAbbreviation": oValue.Username,
-								"children": (index !== oData.results.length-1)?[(index+1)*10]:null,
-								"state": (oData.results.length <= 2 && index === 0)?"Neutral":(oStateMap[oValue.Decision])?oStateMap[oValue.Decision]:(index == 0)?"Positive":(oValue.Workitem === "999999999999")?"Planned":"Neutral",
-								"stateText": (oData.results.length <= 2 && index === 0)?oController.getResourceBundle().getText("Submit"):(oStateTextMap[oValue.Decision])?oStateTextMap[oValue.Decision]:(index == 0)?oController.getResourceBundle().getText("Submitted"):oController.getResourceBundle().getText("Pending"),
+								"children": (index !== oData.results.length - 1) ? [(index + 1) * 10] : null,
+								"state": (oData.results.length <= 2 && index === 0) ? "Neutral" : (oStateMap[oValue.Decision]) ? oStateMap[oValue.Decision] :
+									(index == 0) ? "Positive" : (oValue.Workitem === "999999999999") ? "Planned" : "Neutral",
+								"stateText": (oData.results.length <= 2 && index === 0) ? oController.getResourceBundle().getText("Submit") : (
+										oStateTextMap[oValue.Decision]) ? oStateTextMap[oValue.Decision] + ((oValue.Comments) ? "\n" + oController.getResourceBundle()
+										.getText("WithComments") : "") : (index == 0) ? oController.getResourceBundle().getText("Submitted") : oController.getResourceBundle()
+									.getText("Pending"),
 								// "stateText":this.formatStateText(oData.results, oValue, index),
 								"focused": false,
 								"highlighted": false,
-								"texts": oValue.PositionText
+								"texts": oValue.PositionText,
+								"Comments": oValue.Comments,
+								"icon": (oIconMap[oValue.Decision])? oIconMap[oValue.Decision] : "sap-icon://create-form"
 							};
 						});
-						oViewModel.setProperty("/nodes",nodes);
+						oViewModel.setProperty("/nodes", nodes);
 					}
 				},
-				error:function(oError){
+				error: function (oError) {
 
 				}
 			});
 		},
-		dateChange: function(oEvent){
-			var value = oEvent.getParameter("value");
-			
-			if(oEvent.getSource().getId().includes("idBegda")){
-				var begda = new Date(value);
+
+		onNodePress: function (oEvent) {
+			debugger;
+			var oNode = oEvent.getParameters();
+			var sPath = oNode.getBindingContext("viewModel").getPath();
+			if (oNode.getBindingContext("viewModel").getObject().Comments) {
+				if (!this.oQuickView) {
+					Fragment.load({
+						name: "sio.hcm.mandate.view.QuickView",
+						type: "XML"
+					}).then(function (oFragment) {
+						this.oQuickView = oFragment;
+						this.getView().addDependent(this.oQuickView);
+
+						this.oQuickView.bindElement({ path:sPath, model: "viewModel"});
+						this.oQuickView.openBy(oNode);
+					}.bind(this));
+				} else {
+					this.oQuickView.bindElement({ path:sPath, model: "viewModel"});
+					this.oQuickView.openBy(oNode);
+				}
 			}
-			else{
+		},
+		dateChange: function (oEvent) {
+			var value = oEvent.getParameter("value");
+
+			if (oEvent.getSource().getId().includes("idBegda")) {
+				var begda = new Date(value);
+			} else {
 				var begda = this.getView().byId("idBegda").getProperty("value");
 			}
-			
-			if(oEvent.getSource().getId().includes("idEndda")){
+
+			if (oEvent.getSource().getId().includes("idEndda")) {
 				var endda = new Date(value);
-			}
-			else{
+			} else {
 				var endda = this.getView().byId("idEndda").getProperty("value");
 			}
-			
+
 			// var begda = this.getView().byId("idBegda").getDateValue();
 			// var endda = this.getView().byId("idEndda").getDateValue();
-			
-			if(!begda || !endda || (begda > endda) )
+
+			if (!begda || !endda || (begda > endda))
 				return;
-				
+
 			var diff = Math.abs(endda.getTime() - begda.getTime());
-			var diffD = Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1; 
+			var diffD = Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1;
 			// alert(diffD);
 			this.getView().byId("idNumberOfDays").setText(diffD);
 		},
-		formatStateText: function(results, oValue, index){
+		formatStateText: function (results, oValue, index) {
 			var stateText;
 			let oStateTextMap = {
-				"A" : "Approved",
-				"R" : "Rejected"
+				"A": "Approved",
+				"R": "Rejected"
 			};
-			if(oData.results.length <= 2 && index === 0){
+			if (oData.results.length <= 2 && index === 0) {
 				stateText = this.getResourceBundle().getText("Submit");
-			}else{
-				if(oStateTextMap[oValue.Decision]){
+			} else {
+				if (oStateTextMap[oValue.Decision]) {
 					stateText = oStateTextMap[oValue.Decision];
-				}else{
-					if(index == 0){
+				} else {
+					if (index == 0) {
 						stateText = this.getResourceBundle().getText("Submitted");
-					}
-					else{
+					} else {
 						stateText = this.getResourceBundle().getText("Pending");
 					}
-					
+
 				}
 			}
 			return stateText;
 		},
-		mandateCalculation: function (oEvent){
+		mandateCalculation: function (oEvent) {
 			var oController = this;
 			var oView = oController.getView();
 			var oViewModel = oController.getModel("viewModel");
 			var oModel = oController.getModel();
 			var sSourceId = oEvent.getSource().getId();
 			var oMandCalc = {
-				"Missbegda": oView.getBindingContext().getProperty('MissBegda')?oView.getBindingContext().getProperty('MissBegda'): new Date(),
-				"Missendda": oView.getBindingContext().getProperty('MissEndda')?oView.getBindingContext().getProperty('MissEndda'): new Date(),
-				"Cacnt": oView.getBindingContext().getProperty('Cacnt')?oView.getBindingContext().getProperty('Cacnt'):''
+				"Missbegda": oView.getBindingContext().getProperty('MissBegda') ? oView.getBindingContext().getProperty('MissBegda') : new Date(),
+				"Missendda": oView.getBindingContext().getProperty('MissEndda') ? oView.getBindingContext().getProperty('MissEndda') : new Date(),
+				"Cacnt": oView.getBindingContext().getProperty('Cacnt') ? oView.getBindingContext().getProperty('Cacnt') : ''
 			}
 			debugger;
 			oViewModel.setProperty("/busy", true);
