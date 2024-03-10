@@ -440,8 +440,9 @@ sap.ui.define([
 			var oMandCalc = {
 				"Missbegda": oView.getBindingContext().getProperty('MissBegda')?oView.getBindingContext().getProperty('MissBegda'): new Date(),
 				"Missendda": oView.getBindingContext().getProperty('MissEndda')?oView.getBindingContext().getProperty('MissEndda'): new Date(),
-				"Land1": oView.getBindingContext().getProperty('Land1')?oView.getBindingContext().getProperty('Land1'):''
+				"Cacnt": oView.getBindingContext().getProperty('Cacnt')?oView.getBindingContext().getProperty('Cacnt'):''
 			}
+			debugger;
 			oViewModel.setProperty("/busy", true);
 			oController.getModel().callFunction("/MandCalculate", {
 				method: "POST",
@@ -452,6 +453,7 @@ sap.ui.define([
 					oViewModel.setProperty("/busy", false);
 					oView.byId("idBegda").setValue(oData.MandCalculate.Begda);
 					oView.byId("idEndda").setValue(oData.MandCalculate.Endda);
+					oView.byId("idCclas").setValue(oData.MandCalculate.Cclas);
 					oView.byId("idMadur").setText(oData.MandCalculate.Madur);
 					oView.byId("idDudif").setText(oData.MandCalculate.Dudif);
 					oView.byId("idNmdys").setText(oData.MandCalculate.Nmdys);

@@ -155,7 +155,7 @@
 									
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Cclas}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
+										<smartField:SmartField id="idCclas" value="{Cclas}" editable="false" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{cclastx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail')}"/>
@@ -185,11 +185,18 @@
 										<smartField:SmartField value="{RegionTo}" visible="{= ${Location} === 'IN' &amp;&amp; !${viewModel>/editable} }"/>
 									</smartForm:GroupElement>
 									
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField id="idLand1" value="{Land1}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }" change="mandateCalculation"/>-->
+									<!--</smartForm:GroupElement>-->
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField value="{Landx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>-->
+									<!--</smartForm:GroupElement>-->
+									
 									<smartForm:GroupElement>
-										<smartField:SmartField id="idLand1" value="{Land1}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }" change="mandateCalculation"/>
+										<smartField:SmartField id="idCacnt" value="{Cacnt}" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }" change="mandateCalculation"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Landx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
+										<smartField:SmartField value="{cacnx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
 									</smartForm:GroupElement>
 									
 									
