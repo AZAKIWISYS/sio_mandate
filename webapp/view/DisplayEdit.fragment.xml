@@ -240,9 +240,9 @@
 										<Link text="{Qcnum}" press="onPrint" />
 										<!--<smartField:SmartField value="{Qcnum}" />-->
 									</smartForm:GroupElement>
-									<smartForm:GroupElement>
-										<smartField:SmartField  value="{Qrbda}" editable="{viewModel>/editable}"/>
-									</smartForm:GroupElement>
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField  value="{Qrbda}" editable="{viewModel>/editable}"/>-->
+									<!--</smartForm:GroupElement>-->
 									<smartForm:GroupElement>
 										<smartField:SmartField  value="{QararDate}" editable="{viewModel>/editable}"/>
 									</smartForm:GroupElement>
