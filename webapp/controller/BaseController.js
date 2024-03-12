@@ -488,8 +488,8 @@ sap.ui.define([
 			var oModel = oController.getModel();
 			var sSourceId = oEvent.getSource().getId();
 			var oMandCalc = {
-				"Missbegda": oView.getBindingContext().getProperty('MissBegda') ? oView.getBindingContext().getProperty('MissBegda') : new Date(),
-				"Missendda": oView.getBindingContext().getProperty('MissEndda') ? oView.getBindingContext().getProperty('MissEndda') : new Date(),
+				"Missbegda": oView.getBindingContext().getProperty('MissBegda') ? oView.getBindingContext().getProperty('MissBegda') :oView.getBindingContext().getProperty('MissEndda') ? oView.getBindingContext().getProperty('MissEndda') : new Date(),
+				"Missendda": oView.getBindingContext().getProperty('MissEndda') ? oView.getBindingContext().getProperty('MissEndda') : oView.getBindingContext().getProperty('MissBegda') ? oView.getBindingContext().getProperty('MissBegda') : new Date(),
 				"Cacnt": oView.getBindingContext().getProperty('Cacnt') ? oView.getBindingContext().getProperty('Cacnt') : ''
 			}
 			debugger;
