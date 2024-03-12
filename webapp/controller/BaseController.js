@@ -457,7 +457,7 @@ sap.ui.define([
 			var diff = Math.abs(endda.getTime() - begda.getTime());
 			var diffD = Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1;
 			// alert(diffD);
-			this.getView().byId("idNumberOfDays").setText(diffD);
+			// this.getView().byId("idNumberOfDays").setText(diffD);
 		},
 		formatStateText: function (results, oValue, index) {
 			var stateText;

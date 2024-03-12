@@ -167,10 +167,10 @@
 									<!--</smartForm:GroupElement>-->
 								</smartForm:Group>
 								<smartForm:Group>
-									<smartForm:GroupElement>
+									<!--<smartForm:GroupElement>-->
 										<!--<Text id="idNumberOfDays"/>-->
-										<smartField:SmartField value="{NumberOfDays}" visible="{= !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' }"/>
-									</smartForm:GroupElement>
+									<!--	<smartField:SmartField value="{NumberOfDays}" visible="{= !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' }"/>-->
+									<!--</smartForm:GroupElement>-->
 									<smartForm:GroupElement visible="{= ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }">
 										<smartField:SmartField id="idLocation" value="{Location}" />
 									</smartForm:GroupElement>
