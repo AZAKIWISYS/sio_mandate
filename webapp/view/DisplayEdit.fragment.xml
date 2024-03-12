@@ -154,11 +154,18 @@
 									</smartForm:GroupElement>
 									
 									
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField id="idCclas" value="{Cclas}" editable="false" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>-->
+									<!--</smartForm:GroupElement>-->
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField value="{cclastx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail')}"/>-->
+									<!--</smartForm:GroupElement>-->
+									
 									<smartForm:GroupElement>
-										<smartField:SmartField id="idCclas" value="{Cclas}" editable="false" visible="{= ${Location} === 'OUT' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
+										<smartField:SmartField id="idCclas" value="{Cclas}" editable="false" visible="false"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{cclastx}" visible="{= ${Location} === 'OUT' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail')}"/>
+										<smartField:SmartField id="idCclastx" value="{cclastx}" editable="false" visible="{= ${Location} === 'OUT' }"/>
 									</smartForm:GroupElement>
 									
 									

@@ -504,6 +504,7 @@ sap.ui.define([
 					oView.byId("idBegda").setValue(oData.MandCalculate.Begda);
 					oView.byId("idEndda").setValue(oData.MandCalculate.Endda);
 					oView.byId("idCclas").setValue(oData.MandCalculate.Cclas);
+					oView.byId("idCclastx").setValue(oData.MandCalculate.Cclastx? oData.MandCalculate.Cclastx : "");
 					oView.byId("idMadur").setText(oData.MandCalculate.Madur);
 					oView.byId("idDudif").setText(oData.MandCalculate.Dudif);
 					oView.byId("idNmdys").setText(oData.MandCalculate.Nmdys);
