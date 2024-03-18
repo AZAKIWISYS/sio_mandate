@@ -58,7 +58,8 @@
 				useExportToExcel="true" beforeExport="onBeforeExport" useTablePersonalisation="true"
 				header="{i18n>Requests}" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" 
 				class="sapUiResponsiveContentPadding" editTogglable="false" app:useSmartToggle="true"
-				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqid,Qcnum,Status,Begda,Endda,Rsntx,cacnx">
+				showFullScreenButton="true" showDetailsButton="true" initiallyVisibleFields="Reqid,Qcnum,Status,Begda,Endda,Rsntx,cacnx"
+				beforeRebindTable="onBeforeRebindTable">
 				<!--Landx-->
 				
 				<Table mode="SingleSelectMaster" selectionChange=".onSelectionChange"></Table>

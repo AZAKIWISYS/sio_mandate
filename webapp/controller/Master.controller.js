@@ -130,10 +130,16 @@ sap.ui.define([
 					value2: ""
 				};
 				filterData.Pernr.ranges.push(range);                  
-				oEvent.getSource().setFilterData(filterData)
+				oEvent.getSource().setFilterData(filterData,true)
 			}
-			
-			
+		},
+		onBeforeRebindTable: function(oEvent){
+			debugger;
+			let filterData = this.byId("smartFilterBar").getFilterData();
+			if( filterData && filterData.Pernr && filterData.Pernr.ranges){
+				filterData.Pernr.ranges=[];
+				this.byId("smartFilterBar").setFilterData(filterData,true);
+			}
 		}
 
 	});
