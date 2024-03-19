@@ -134,7 +134,6 @@ sap.ui.define([
 			}
 		},
 		onBeforeRebindTable: function(oEvent){
-			debugger;
 			let filterData = this.byId("smartFilterBar").getFilterData();
 			if( filterData && filterData.Pernr && filterData.Pernr.ranges){
 				filterData.Pernr.ranges=[];
