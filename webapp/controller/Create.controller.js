@@ -7,7 +7,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/ui/Device",
 	'sap/m/MessagePopover',
-	'sap/m/MessageItem',
+	'sap/m/MessageItem'
 ], function (coreLibrary, BaseController, JSONModel, formatter, mobileLibrary, History, Device, MessagePopover,MessageItem) {
 	"use strict";
 
@@ -324,43 +324,64 @@ sap.ui.define([
 			var oModel = this.getModel();
 			var SuccessMessage = this.getResourceBundle().getText("saveSuccessMessage");
 			var ErrorMessage = this.getResourceBundle().getText("saveErrorMessage");
+			var noChangesToSave = this.getResourceBundle().getText("noChangesToSave");
 
 			// this.getModel().setDeferredGroups(["createGroup"]);
-			that.getView().setBusy(true);
-			oModel.submitChanges({
-				// groupId: "createGroup",
-				success: function onSuccess(oData, oResponse) {
-					
-					that.messageBuilder(oData);// to display errors if occured
-					that.getView().setBusy(false);
-					var Reqid = that.getView().getBindingContext().getProperty("Reqid");; //oData.Reqid
-					if (!Reqid){
-						oModel.submitChanges({
-						// groupId: "createGroup",
-						success: function onSuccess(oData, oResponse) {
-							that.messageBuilder(oData);// to display errors if occured
-							that.getView().setBusy(false);
+			
+			if(oModel.hasPendingChanges()){
+				that.getView().setBusy(true);
+				oModel.submitChanges({
+					// groupId: "createGroup",
+					success: function onSuccess(oData, oResponse) {
+						// debugger;
+						// that.getView().setBusy(false);
+						
+						if( (oData && oData.__batchResponses && oData.__batchResponses[0] && !oData.__batchResponses[0].response ) || 
+							(oData && oData.__batchResponses && oData.__batchResponses[0] && oData.__batchResponses[0].response && 
+							oData.__batchResponses[0].response.statusCode && oData.__batchResponses[0].response.statusCode !== '400') ){ //if 400 request did not succeeded
+							
 							var Reqid = that.getView().getBindingContext().getProperty("Reqid");; //oData.Reqid
-							if (Reqid){
+							if (!Reqid){
+								oModel.submitChanges({
+								// groupId: "createGroup",
+								success: function onSuccess(oData2, oResponse) {
+									debugger;
+									that.messageBuilder(oData2);
+									that.getView().setBusy(false);
+									var Reqid = that.getView().getBindingContext().getProperty("Reqid");
+									if (Reqid){
+										sap.m.MessageToast.show(SuccessMessage);
+										that.navtoDetail(Reqid);
+									}
+								},
+								error: function onError(oError) {
+									that.getView().setBusy(false);
+									sap.m.MessageToast.show(ErrorMessage);
+								}
+							});
+							} else{
 								sap.m.MessageToast.show(SuccessMessage);
 								that.navtoDetail(Reqid);
 							}
-						},
-						error: function onError(oError) {
+							
+						} else{
 							that.getView().setBusy(false);
-							sap.m.MessageToast.show(ErrorMessage);
+							that.messageBuilder(oData);
 						}
-					});
-					} else{
-						sap.m.MessageToast.show(SuccessMessage);
-						that.navtoDetail(Reqid);
+						
+						
+					},
+					error: function onError(oError) {
+						that.getView().setBusy(false);
+						sap.m.MessageToast.show(ErrorMessage);
 					}
-				},
-				error: function onError(oError) {
-					that.getView().setBusy(false);
-					sap.m.MessageToast.show(ErrorMessage);
-				}
-			});
+				});
+				
+			}
+			else{
+				//show 
+				sap.m.MessageToast.show(noChangesToSave);
+			}
 
 		},
 		navtoDetail: function (Reqid) {
