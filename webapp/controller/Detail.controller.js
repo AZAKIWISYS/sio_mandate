@@ -133,7 +133,7 @@ sap.ui.define([
 			var viewModel = this.getModel("viewModel");
 			//to save aupdates
 			this.getModel().setDefaultBindingMode("TwoWay");
-
+			
 			var sObjectId = oEvent.getParameter("arguments").objectId;
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 
@@ -145,6 +145,7 @@ sap.ui.define([
 			// viewModel.setProperty("/editable", true);
 
 			this.resetMessages();
+			this.initiateValueState();
 
 			this.getModel().metadataLoaded().then(function () {
 				var sObjectPath = this.getModel().createKey("ZI_MANDREQ_HDR", {
@@ -170,7 +171,10 @@ sap.ui.define([
 			sap.ui.getCore().setModel(this.getModel(), "mandateModel");
 			sap.ui.getCore().setModel(viewModel, "viewModel");
 			sap.ui.getCore().setModel(printModel, "printModel");
-
+			
+			this.resetMessages();
+			this.initiateValueState();
+			
 			if (this.getOwnerComponent().getComponentData().startupParameters && this.getOwnerComponent().getComponentData().startupParameters.ReqId) {
 				var sObjectId = this.getOwnerComponent().getComponentData().startupParameters.ReqId[0];
 
@@ -435,7 +439,8 @@ sap.ui.define([
 		onEdit: function (oEvent) {
 			var viewModel = this.getModel("viewModel");
 			viewModel.setProperty("/editable", true);
-			// this.getView().byId("cancelButton").setEnabled(true);
+			
+			this.initiateValueState();
 
 		},
 		onSubmit: function (oEvent) {
@@ -479,6 +484,9 @@ sap.ui.define([
 									that.getView().setBusy(false);
 
 									// that.messageBuilder(oData);
+									that.resetMessages();
+									that.initiateValueState();
+									
 									sap.m.MessageToast.show(SuccessMessage);
 
 									//added logic to nav back to master page

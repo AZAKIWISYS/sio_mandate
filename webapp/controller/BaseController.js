@@ -516,6 +516,19 @@ sap.ui.define([
 					oViewModel.setProperty("/busy", false);
 				}
 			});
+		},
+		initiateValueState: function(){
+			if(this.byId("idMissBegda")){
+				this.byId("idMissBegda").setValueState("None");}
+			if(this.byId("idMissEndda")){
+				this.byId("idMissEndda").setValueState("None");}
+			
+			if(this.byId("idBocit")){
+				this.byId("idBocit").setValueState("None");}
+			if(this.byId("idDscit")){
+				this.byId("idDscit").setValueState("None");}
+			if(this.byId("idCacnt")){
+				this.byId("idCacnt").setValueState("None");}
 		}
 
 	});

@@ -51,6 +51,9 @@ sap.ui.define([
 			var that = this;
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 			
+			this.resetMessages();
+			this.initiateValueState();
+			
 			//bind context
 			var oDataModel = this.getModel();
 			
