@@ -31,6 +31,7 @@
 					<smartFilterBar:ControlConfiguration id="Qrbda" key="Qrbda" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Begda" key="Begda" visibleInAdvancedArea="true"/>
 					<smartFilterBar:ControlConfiguration id="Endda" key="Endda" visibleInAdvancedArea="true"/>
+					<smartFilterBar:ControlConfiguration id="Qcnum" key="Qcnum" visibleInAdvancedArea="true"/>
 					
 					<!--<smartFilterBar:ControlConfiguration id="Mists" key="Mists" visibleInAdvancedArea="true"/>-->
 					

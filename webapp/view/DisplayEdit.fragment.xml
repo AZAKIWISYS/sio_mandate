@@ -125,9 +125,9 @@
 										<smartField:SmartField id="idBegda" editable="false" value="{Begda}" change="dateChange"/>
 									</smartForm:GroupElement>
 									
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= ${Location} === 'OUT' &amp;&amp; ( !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
-									</smartForm:GroupElement>
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField value="{Nmdys}" enabled="false" visible="{= ${Location} === 'OUT' &amp;&amp; ( !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>-->
+									<!--</smartForm:GroupElement>-->
 									
 									<smartForm:GroupElement visible="{= ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }" >
 										<smartField:SmartField id="idMarsn" value="{Marsn}" />
@@ -141,13 +141,13 @@
 										<smartField:SmartField id="idEndda" editable="false" value="{Endda}" change="dateChange"/>
 									</smartForm:GroupElement>
 									
-									<smartForm:GroupElement>
-										<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= ${Location} === 'OUT' &amp;&amp; ( !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>
-									</smartForm:GroupElement>
+									<!--<smartForm:GroupElement>-->
+									<!--	<smartField:SmartField value="{Trdsa}" enabled="false" visible="{= ${Location} === 'OUT' &amp;&amp; ( !${viewModel>/editable} || ${viewModel>/view} === 'WFDetail' ) }"/>-->
+									<!--</smartForm:GroupElement>-->
 									
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Bocit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
+										<smartField:SmartField id="idBocit" value="{Bocit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{RegionFrom}" visible="{= ${Location} === 'IN' &amp;&amp; (!${viewModel>/editable} || ${viewModel>/view} === 'WFDetail') }"/>
@@ -186,7 +186,7 @@
 									</smartForm:GroupElement>
 									
 									<smartForm:GroupElement>
-										<smartField:SmartField value="{Dscit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
+										<smartField:SmartField id="idDscit" value="{Dscit}" visible="{= ${Location} === 'IN' &amp;&amp; ${viewModel>/editable} &amp;&amp; ${viewModel>/view} !== 'WFDetail' }"/>
 									</smartForm:GroupElement>
 									<smartForm:GroupElement>
 										<smartField:SmartField value="{RegionTo}" visible="{= ${Location} === 'IN' &amp;&amp; !${viewModel>/editable} }"/>
