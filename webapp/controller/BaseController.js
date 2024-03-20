@@ -505,10 +505,10 @@ sap.ui.define([
 					oView.byId("idEndda").setValue(oData.MandCalculate.Endda);
 					oView.byId("idCclas").setValue(oData.MandCalculate.Cclas);
 					oView.byId("idCclastx").setValue(oData.MandCalculate.Cclastx? oData.MandCalculate.Cclastx : "");
-					oView.byId("idMadur").setText(oData.MandCalculate.Madur);
-					oView.byId("idDudif").setText(oData.MandCalculate.Dudif);
-					oView.byId("idNmdys").setText(oData.MandCalculate.Nmdys);
-					oView.byId("idTrdsa").setText(oData.MandCalculate.Trdsa);
+					oView.byId("idMadur").setNumber(oData.MandCalculate.Madur);
+					oView.byId("idDudif").setNumber(oData.MandCalculate.Dudif);
+					oView.byId("idNmdys").setNumber(oData.MandCalculate.Nmdys);
+					oView.byId("idTrdsa").setNumber(oData.MandCalculate.Trdsa);
 					sap.m.MessageToast.show(oController.getResourceBundle().getText("MandateDatesUpdated"));
 				},
 				error: function onError(oError) {
