@@ -8,7 +8,7 @@
 				<uxap:expandedHeading>
 					<HBox>
 						<!-- <Avatar src="sap-icon://travel-itinerary" displaySize="M" class="sapUiTinyMarginEnd"/> -->
-						<Title text="{Reqid}" wrapping="true"/>
+						<Title visible="{= ${Reqid}!=='' }" text="{Reqid}" wrapping="true"/>
 					</HBox>
 				</uxap:expandedHeading>
 				<uxap:snappedHeading>
@@ -37,7 +37,7 @@
 					<ObjectStatus class="sapUiSmallMarginBottom" text="{Statustxt}" state="Information"/>
 					<!-- <Link text="DeniseSmith@sap.com"/> -->
 				</layout:VerticalLayout>
-				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${Createdby}!=='' }">
 					<ObjectAttribute title="{i18n>Createdby}" text="{Createdby}"/>
 					<ObjectAttribute title="{i18n>Createdat}">
 						<customContent>
@@ -49,7 +49,7 @@
 						<ProgressIndicator percentValue="30" displayValue="30%"/>
 					</VBox> -->
 				</layout:VerticalLayout>
-				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${Changedby}!=='' }">
 					<ObjectAttribute title="{i18n>Changedby}" text="{Changedby}"/>
 					<ObjectAttribute title="{i18n>Changedat}">
 						<customContent>
@@ -73,6 +73,9 @@
 		</uxap:headerContent>
 		<uxap:sections>
 			<uxap:ObjectPageSection titleUppercase="false" id="idMissionData" title="{i18n>MissionData}">
+				<uxap:customAnchorBarButton>
+					<Button text="{i18n>MissionData}" icon="sap-icon://task" />
+				</uxap:customAnchorBarButton>
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS5" title=" " titleUppercase="false">
 						<uxap:blocks>
@@ -96,6 +99,9 @@
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
 			<uxap:ObjectPageSection titleUppercase="false" id="HeaderSec" title="{i18n>MandateData}">
+				<uxap:customAnchorBarButton>
+					<Button text="{i18n>MandateData}" icon="sap-icon://suitcase" />
+				</uxap:customAnchorBarButton>
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS1" title=" " titleUppercase="false">
 						<uxap:blocks>
@@ -208,6 +214,9 @@
 			<!--visible="{= ${viewModel>/view} === 'WFDetail' &amp;&amp; ${Qcnum} !== '' }"-->
 			<uxap:ObjectPageSection titleUppercase="false" id="QararInfoSec" title="{i18n>QararInfo}"
 				visible="{= ${Status} !== 'NEW' &amp;&amp; ${Qcnum} !== '' }">
+				<uxap:customAnchorBarButton>
+					<Button text="{i18n>QararInfo}" icon="sap-icon://approvals" />
+				</uxap:customAnchorBarButton>
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS4" title=" " titleUppercase="false">
 						<uxap:blocks>
@@ -235,6 +244,9 @@
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
 			<uxap:ObjectPageSection titleUppercase="false" id="EmployeesSec" title="{i18n>Employees}">
+				<uxap:customAnchorBarButton>
+					<Button text="{i18n>Employees}" icon="sap-icon://employee" />
+				</uxap:customAnchorBarButton>
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS2" title=" " titleUppercase="false">
 						<uxap:blocks>
@@ -302,6 +314,9 @@
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
 			<uxap:ObjectPageSection titleUppercase="false" id="ApprovalProcessSec" title="{i18n>ApprovalProcess}">
+				<uxap:customAnchorBarButton>
+					<Button text="{i18n>ApprovalProcess}" icon="sap-icon://process" />
+				</uxap:customAnchorBarButton>
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection id="section3_SS3" title=" " titleUppercase="false">
 						<uxap:blocks>

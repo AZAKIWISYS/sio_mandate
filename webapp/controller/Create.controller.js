@@ -65,7 +65,10 @@ sap.ui.define([
 					refreshAfterChange: true,
 					properties: { //default values
 						Status: 'NEW',
+						Reqid:'',
 						CurrentTask: '',
+						Changedby: '',
+						Createdby:'',
 						Location: 'IN',
 						Marsn: '002',
 						Statustxt: that.getResourceBundle().getText("New")	
